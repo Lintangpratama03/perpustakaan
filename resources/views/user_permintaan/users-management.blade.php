@@ -18,14 +18,8 @@
                                 <div class="col-6">
                                     <h5 class="">Kelola Anggota</h5>
                                     <p class="mb-0 text-sm">
-                                        Data Anggota
+                                        Data Anggota Yang Mengajukan RFID
                                     </p>
-                                </div>
-                                <div class="col-6 text-end">
-                                    <a href="#" class="btn btn-dark btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#addMemberModal">
-                                        <i class="fas fa-user-plus me-2"></i> Tambah Anggota
-                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -109,13 +103,11 @@
                                                     <a href="#" class="mx-3 edit-btn" data-bs-toggle="modal"
                                                         data-bs-target="#editMemberModal"
                                                         data-id="{{ $user->id }}">
-                                                        <i class="fas fa-user-edit text-secondary"></i>
+                                                        <i class="fas fa-eye text-secondary"></i>
                                                     </a>
                                                     <a href="#" class="mx-3 deleteIcon"
-                                                        data-id="{{ $user->id }}"
-                                                        data-name="{{ $user->name }}>
-                                                        <i class="cursor-pointer
-                                                        fas fa-trash text-secondary"></i>
+                                                        data-id="{{ $user->id }}" data-name="{{ $user->name }}">
+                                                        <i class="cursor-pointer fas fa-arrow-up text-secondary"></i>
                                                     </a>
                                                 </td>
                                             </tr>
@@ -125,131 +117,6 @@
 
                             </table>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="modal-form"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body p-0">
-                            <div class="card card-plain">
-                                <div class="card-header pb-0 text-left">
-                                    <h3 class="font-weight-bolder text-dark">Form Data Anggota</h3>
-                                </div>
-                                <div class="card-body">
-                                    <form role="form text-left" id="addMemberForm">
-                                        @csrf
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Name</label>
-                                                    <div class="input-group mb-3">
-                                                        <input type="text" class="form-control" placeholder="Name"
-                                                            name="name" aria-label="Name"
-                                                            aria-describedby="name-addon">
-                                                    </div>
-                                                    <span class="text-danger error-name"
-                                                        style="font-size: 0.8rem;"></span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Email</label>
-                                                    <div class="input-group mb-3">
-                                                        <input type="email" class="form-control" placeholder="Email"
-                                                            name="email" aria-label="Email"
-                                                            aria-describedby="email-addon">
-                                                    </div>
-                                                    <span class="text-danger error-email"
-                                                        style="font-size: 0.8rem;"></span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Password</label>
-                                                    <div class="input-group mb-3">
-                                                        <input type="password" class="form-control"
-                                                            placeholder="Password" name="password"
-                                                            aria-label="Password" aria-describedby="password-addon">
-                                                    </div>
-                                                    <span class="text-danger error-password"
-                                                        style="font-size: 0.8rem;"></span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="image">Foto</label>
-                                                    <input type="file" name="image" id="image"
-                                                        accept="image/*" onchange="previewImage(event)"
-                                                        class="form-control">
-                                                    <span class="text-danger error-image"
-                                                        style="font-size: 0.8rem;"></span>
-                                                    <img id="image-preview" alt="image Preview"
-                                                        style="max-width: 100px; max-height: 100px; margin-top: 5px;">
-                                                </div>
-                                                <script>
-                                                    function previewImage(event) {
-                                                        var reader = new FileReader();
-                                                        var output = document.getElementById('image-preview');
-
-                                                        reader.onload = function() {
-                                                            output.src = reader.result;
-                                                            output.style.display = 'block';
-                                                        }
-
-                                                        reader.readAsDataURL(event.target.files[0]);
-                                                    }
-                                                </script>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>NIS</label>
-                                                    <div class="input-group mb-3">
-                                                        <input type="number" class="form-control" placeholder="NIS"
-                                                            name="nis" aria-label="NIS"
-                                                            aria-describedby="nis-addon">
-                                                    </div>
-                                                    <span class="text-danger error-nis"
-                                                        style="font-size: 0.8rem;"></span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Username</label>
-                                                    <div class="input-group mb-3">
-                                                        <input type="text" class="form-control"
-                                                            placeholder="Username" name="username"
-                                                            aria-label="Username" aria-describedby="username-addon">
-                                                    </div>
-                                                    <span class="text-danger error-username"
-                                                        style="font-size: 0.8rem;"></span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>HP</label>
-                                                    <div class="input-group mb-3">
-                                                        <input type="text" class="form-control" placeholder="HP"
-                                                            name="hp" aria-label="HP"
-                                                            aria-describedby="hp-addon">
-                                                    </div>
-                                                    <span class="text-danger error-hp"
-                                                        style="font-size: 0.8rem;"></span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Alamat</label>
-                                                    <div class="input-group mb-3">
-                                                        <textarea class="form-control" placeholder="Alamat" name="alamat"></textarea>
-                                                    </div>
-                                                    <span class="text-danger error-alamat"
-                                                        style="font-size: 0.8rem;"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="text-center">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" id="add_anggota_btn" class="btn btn-primary">Add
-                                                anggota</button>
-                                        </div>
-                                    </form>
-
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -276,7 +143,7 @@
                                                     <div class="input-group mb-3">
                                                         <input type="text" class="form-control" placeholder="Name"
                                                             name="name" aria-label="Name"
-                                                            aria-describedby="name-addon">
+                                                            aria-describedby="name-addon" disabled>
                                                     </div>
                                                     <span class="text-danger error-name"
                                                         style="font-size: 0.8rem;"></span>
@@ -284,9 +151,9 @@
                                                 <div class="form-group">
                                                     <label>Email</label>
                                                     <div class="input-group mb-3">
-                                                        <input type="email" class="form-control"
-                                                            placeholder="Email" name="email" aria-label="Email"
-                                                            aria-describedby="email-addon">
+                                                        <input type="email" class="form-control" placeholder="Email"
+                                                            name="email" aria-label="Email"
+                                                            aria-describedby="email-addon" disabled>
                                                     </div>
                                                     <span class="text-danger error-email"
                                                         style="font-size: 0.8rem;"></span>
@@ -296,16 +163,14 @@
                                                     <div class="input-group mb-3">
                                                         <input type="password" class="form-control"
                                                             placeholder="Password" name="password"
-                                                            aria-label="Password" aria-describedby="password-addon">
+                                                            aria-label="Password" aria-describedby="password-addon"
+                                                            disabled>
                                                     </div>
                                                     <span class="text-danger error-password"
                                                         style="font-size: 0.8rem;"></span>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="image">Foto</label>
-                                                    <input type="file" name="image" id="image"
-                                                        accept="image/*" onchange="previewImage1(event)"
-                                                        class="form-control">
                                                     <span class="text-danger error-image"
                                                         style="font-size: 0.8rem;"></span>
                                                     <img id="image-preview-edit" alt="image Preview"
@@ -331,7 +196,7 @@
                                                     <div class="input-group mb-3">
                                                         <input type="number" class="form-control" placeholder="NIS"
                                                             name="nis" aria-label="NIS"
-                                                            aria-describedby="nis-addon">
+                                                            aria-describedby="nis-addon" disabled>
                                                     </div>
                                                     <span class="text-danger error-nis"
                                                         style="font-size: 0.8rem;"></span>
@@ -341,7 +206,8 @@
                                                     <div class="input-group mb-3">
                                                         <input type="text" class="form-control"
                                                             placeholder="Username" name="username"
-                                                            aria-label="Username" aria-describedby="username-addon">
+                                                            aria-label="Username" aria-describedby="username-addon"
+                                                            disabled>
                                                     </div>
                                                     <span class="text-danger error-username"
                                                         style="font-size: 0.8rem;"></span>
@@ -351,7 +217,7 @@
                                                     <div class="input-group mb-3">
                                                         <input type="text" class="form-control" placeholder="HP"
                                                             name="hp" aria-label="HP"
-                                                            aria-describedby="hp-addon">
+                                                            aria-describedby="hp-addon" disabled>
                                                     </div>
                                                     <span class="text-danger error-hp"
                                                         style="font-size: 0.8rem;"></span>
@@ -359,7 +225,7 @@
                                                 <div class="form-group">
                                                     <label>Alamat</label>
                                                     <div class="input-group mb-3">
-                                                        <textarea class="form-control" placeholder="Alamat" name="alamat"></textarea>
+                                                        <textarea class="form-control" placeholder="Alamat" name="alamat" disabled></textarea>
                                                     </div>
                                                     <span class="text-danger error-alamat"
                                                         style="font-size: 0.8rem;"></span>
@@ -370,9 +236,6 @@
                                             <div class="text-center">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" id="edit_anggota_btn"
-                                                    class="btn btn-primary">Edit
-                                                    Anggota</button>
                                             </div>
                                         </div>
                                     </form>
@@ -393,86 +256,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(function() {
-        $("#addMemberForm").submit(function(e) {
-            e.preventDefault();
-            const fd = new FormData(this);
-            $("#add_anggota_btn").text('Adding...');
-            $.ajax({
-                url: '{{ route('users.store') }}',
-                method: 'post',
-                _token: '{{ csrf_token() }}',
-                data: fd,
-                cache: false,
-                contentType: false,
-                processData: false,
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status == 200) {
-                        Swal.fire(
-                            'Added!',
-                            'Anggota Added Successfully!',
-                            'success'
-                        );
-                        $("#addMemberModal").modal('hide');
-                        window.location.reload();
-                    }
-                    $("#add_anggota_btn").text('Add anggota');
-                    $("#addMemberModal").modal('hide');
-                },
-                error: function(xhr) {
-                    if (xhr.status === 422) {
-                        let errors = xhr.responseJSON.errors;
-                        $('.text-danger').text('');
-                        $.each(errors, function(key, value) {
-                            $('.error-' + key).text(value[0]);
-                        });
-                    }
-                    $("#add_anggota_btn").text('Add anggota');
-                }
-
-            });
-        });
-
-        $("#editMemberForm").submit(function(e) {
-            e.preventDefault();
-            let id = $('#id').val();
-            const form = document.getElementById("editMemberForm");
-            const fd = new FormData(form);
-            $("#edit_anggota_btn").text('Updating...');
-            $.ajax({
-                url: '/kelola-user/users-management/update/' + id,
-                method: 'POST',
-                data: fd,
-                cache: false,
-                contentType: false,
-                processData: false,
-                dataType: 'json',
-                success: function(response) {
-                    // console.log(response);
-                    if (response.status == 200) {
-                        Swal.fire(
-                            'Updated!',
-                            'Anggota Updated Successfully!',
-                            'success'
-                        );
-                        $("#editMemberModal").modal('hide');
-                        window.location.reload();
-                    }
-                    $("#edit_anggota_btn").text('Edit anggota');
-                    $("#editMemberModal").modal('hide');
-                },
-                error: function(xhr) {
-                    if (xhr.status === 422) {
-                        let errors = xhr.responseJSON.errors;
-                        $('.text-danger').text('');
-                        $.each(errors, function(key, value) {
-                            $('.error-' + key).text(value[0]);
-                        });
-                    }
-                    $("#edit_anggota_btn").text('Edit Anggota');
-                }
-            });
-        });
 
         $(document).on('click', '.edit-btn', function() {
             let id = $(this).data('id');
@@ -483,7 +266,7 @@
             $('#image-preview-edit').hide();
 
             $.ajax({
-                url: '/kelola-user/users-management/' + id + '/edit',
+                url: '/kelola-user-upgrade/users-management/' + id + '/edit',
                 method: 'GET',
                 success: function(data) {
                     $('#editMemberModal').find('input[name="name"]').val(data.name);
@@ -507,26 +290,26 @@
             let id = $(this).data('id');
             let name = $(this).data('name');
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert deleting user: " + name,
+                title: 'APAKAH KAMU YAKIN?',
+                text: "Nama yang mengajukan rfid : " + name,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: 'Iya, Saya Yakin!'
             }).then((result) => {
                 if (result.isConfirmed) {
                     let token = $('meta[name="csrf-token"]').attr(
                         'content');
                     $.ajax({
-                        url: '/kelola-user/users-management/delete/' + id,
+                        url: '/kelola-user-upgrade/users-management/delete/' + id,
                         method: 'POST',
                         data: {
                             _token: token
                         },
                         success: function(response) {
                             Swal.fire({
-                                title: 'Deleted!',
+                                title: 'UPGRADE RFID!',
                                 text: response.message,
                                 icon: 'success',
                                 timer: 1500,

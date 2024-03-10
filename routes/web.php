@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\UserUpgradeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,15 +106,12 @@ Route::prefix('kelola-user-rfid')->middleware('auth')->group(function () {
     Route::post('/users-management/delete/{user}', [AnggotaRFIDController::class, 'hapus'])->name('usersrfid.destroy');
     Route::post('/users-management/rfid/{user}', [AnggotaRFIDController::class, 'rfid'])->name('usersrfid.rfid');
 });
-Route::prefix('kelola-user-hapus')->middleware('auth')->group(function () {
-    Route::get('/users-management', [AnggotaHapusController::class, 'index'])->name('usersHapus-management');
-    Route::get('/users-management/create', [AnggotaHapusController::class, 'create'])->name('usersHapus.create');
-    Route::post('/users-management', [AnggotaHapusController::class, 'store'])->name('usersHapus.store');
-    Route::get('/users-management/{user}', [AnggotaHapusController::class, 'show'])->name('usersHapus.show');
-    Route::get('/users-management/{user}/edit', [AnggotaHapusController::class, 'edit'])->name('usersHapus.edit');
-    Route::post('/users-management/update/{user}', [AnggotaHapusController::class, 'update'])->name('usersHapus.update');
-    Route::post('/users-management/delete/{user}', [AnggotaHapusController::class, 'hapus'])->name('usersHapus.destroy');
+Route::prefix('kelola-user-upgrade')->middleware('auth')->group(function () {
+    Route::get('/users-management', [UserUpgradeController::class, 'index'])->name('usersUpgrade-management');
+    Route::get('/users-management/{user}/edit', [UserUpgradeController::class, 'edit'])->name('usersUpgrade.edit');
+    Route::post('/users-management/delete/{user}', [UserUpgradeController::class, 'hapus'])->name('usersUpgrade.destroy');
 });
+
 
 Route::prefix('kelola-buku')->middleware('auth')->group(function () {
 });

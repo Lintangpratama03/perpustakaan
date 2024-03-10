@@ -29,9 +29,9 @@
                         <ul>
                             <li><a href="{{ route('users.profile') }}" class="text-white">Profil Saya</a></li>
                             <li><a href="{{ route('users-management') }}" class="text-white">Anggota</a></li>
-                            <li><a href="{{ route('usersrfid-management') }}" class="text-white">Anggota RFID</a></li>
-                            <li><a href="{{ route('usersHapus-management') }}" class="text-white">Anggota Dihapus</a>
+                            <li><a href="{{ route('usersUpgrade-management') }}" class="text-white">Pengajuan RFID</a>
                             </li>
+                            <li><a href="{{ route('usersrfid-management') }}" class="text-white">Anggota RFID</a></li>
                         </ul>
                     </div>
                 </li>
