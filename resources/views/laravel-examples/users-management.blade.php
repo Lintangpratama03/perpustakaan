@@ -103,6 +103,11 @@
                                                     @else
                                                         {{ 'N/A' }}
                                                     @endif
+                                                    <a href="#" class="mx-1 upgrade"
+                                                        data-id="{{ $user->id }}">
+                                                        <i
+                                                            class="cursor-pointer fas fa-arrow-alt-circle-up text-secondary"></i>
+                                                    </a>
                                                 </td>
 
 
@@ -116,11 +121,6 @@
                                                     <a href="#" class="mx-3 deleteIcon"
                                                         data-id="{{ $user->id }}">
                                                         <i class="cursor-pointer fas fa-trash text-secondary"></i>
-                                                    </a>
-                                                    <a href="#" class="mx-3 upgrade"
-                                                        data-id="{{ $user->id }}">
-                                                        <i
-                                                            class="cursor-pointer fas fa-arrow-alt-circle-up text-secondary"></i>
                                                     </a>
                                                 </td>
                                             </tr>
@@ -190,6 +190,19 @@
                                                     <img id="image-preview" alt="image Preview"
                                                         style="max-width: 100px; max-height: 100px; margin-top: 5px;">
                                                 </div>
+                                                <script>
+                                                    function previewImage(event) {
+                                                        var reader = new FileReader();
+                                                        var output = document.getElementById('image-preview');
+
+                                                        reader.onload = function() {
+                                                            output.src = reader.result;
+                                                            output.style.display = 'block';
+                                                        }
+
+                                                        reader.readAsDataURL(event.target.files[0]);
+                                                    }
+                                                </script>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -262,61 +275,99 @@
                                         @csrf
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <input type="hidden" name="id" id="id">
-                                                <label>Name</label>
-                                                <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" placeholder="Name"
-                                                        name="name" aria-label="Name"
-                                                        aria-describedby="name-addon">
+                                                <div class="form-group">
+                                                    <label>Name</label>
+                                                    <input type="hidden" name="id" id="id">
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control" placeholder="Name"
+                                                            name="name" aria-label="Name"
+                                                            aria-describedby="name-addon">
+                                                    </div>
+                                                    <span class="text-danger error-name"
+                                                        style="font-size: 0.8rem;"></span>
                                                 </div>
-                                                <label>Email</label>
-                                                <div class="input-group mb-3">
-                                                    <input type="email" class="form-control" placeholder="Email"
-                                                        name="email" aria-label="Email"
-                                                        aria-describedby="email-addon">
+                                                <div class="form-group">
+                                                    <label>Email</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="email" class="form-control"
+                                                            placeholder="Email" name="email" aria-label="Email"
+                                                            aria-describedby="email-addon">
+                                                    </div>
+                                                    <span class="text-danger error-email"
+                                                        style="font-size: 0.8rem;"></span>
                                                 </div>
-                                                <label>Password</label>
-                                                <div class="input-group mb-3">
-                                                    <input type="password" class="form-control"
-                                                        placeholder="Password" name="password" aria-label="Password"
-                                                        aria-describedby="password-addon">
+                                                <div class="form-group">
+                                                    <label>Password</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="password" class="form-control"
+                                                            placeholder="Password" name="password"
+                                                            aria-label="Password" aria-describedby="password-addon">
+                                                    </div>
+                                                    <span class="text-danger error-password"
+                                                        style="font-size: 0.8rem;"></span>
                                                 </div>
-                                                <label>ID Posisi</label>
-                                                <div class="input-group mb-3">
-                                                    <input type="number" class="form-control"
-                                                        placeholder="ID Posisi" name="id_posisi"
-                                                        aria-label="ID Posisi" aria-describedby="id-posisi-addon">
+                                                <div class="form-group">
+                                                    <label for="image">Foto</label>
+                                                    <input type="file" name="image" id="image"
+                                                        accept="image/*" onchange="previewImage1(event)"
+                                                        class="form-control">
+                                                    <span class="text-danger error-image"
+                                                        style="font-size: 0.8rem;"></span>
+                                                    <img id="image-preview-edit" alt="image Preview"
+                                                        style="max-width: 100px; max-height: 100px; margin-top: 5px;">
                                                 </div>
+                                                <script>
+                                                    function previewImage1(event) {
+                                                        var reader = new FileReader();
+                                                        var output = document.getElementById('image-preview-edit');
+
+                                                        reader.onload = function() {
+                                                            output.src = reader.result;
+                                                            output.style.display = 'block';
+                                                        }
+
+                                                        reader.readAsDataURL(event.target.files[0]);
+                                                    }
+                                                </script>
                                             </div>
                                             <div class="col-md-6">
-                                                <label>NIS</label>
-                                                <div class="input-group mb-3">
-                                                    <input type="number" class="form-control" placeholder="NIS"
-                                                        name="nis" aria-label="NIS" aria-describedby="nis-addon">
-                                                </div>
-                                                <label>Username</label>
-                                                <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" placeholder="Username"
-                                                        name="username" aria-label="Username"
-                                                        aria-describedby="username-addon">
-                                                </div>
-                                                <label>HP</label>
-                                                <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" placeholder="HP"
-                                                        name="hp" aria-label="HP" aria-describedby="hp-addon">
-                                                </div>
-                                                <label>Alamat</label>
-                                                <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" placeholder="Alamat"
-                                                        name="alamat" aria-label="Alamat"
-                                                        aria-describedby="alamat-addon">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label>Photo</label>
+                                                <div class="form-group">
+                                                    <label>NIS</label>
                                                     <div class="input-group mb-3">
-                                                        <img src="" alt="User Photo" class="img-fluid"
-                                                            style="max-width: 200px;">
+                                                        <input type="number" class="form-control" placeholder="NIS"
+                                                            name="nis" aria-label="NIS"
+                                                            aria-describedby="nis-addon">
                                                     </div>
+                                                    <span class="text-danger error-nis"
+                                                        style="font-size: 0.8rem;"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Username</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Username" name="username"
+                                                            aria-label="Username" aria-describedby="username-addon">
+                                                    </div>
+                                                    <span class="text-danger error-username"
+                                                        style="font-size: 0.8rem;"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>HP</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control" placeholder="HP"
+                                                            name="hp" aria-label="HP"
+                                                            aria-describedby="hp-addon">
+                                                    </div>
+                                                    <span class="text-danger error-hp"
+                                                        style="font-size: 0.8rem;"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Alamat</label>
+                                                    <div class="input-group mb-3">
+                                                        <textarea class="form-control" placeholder="Alamat" name="alamat"></textarea>
+                                                    </div>
+                                                    <span class="text-danger error-alamat"
+                                                        style="font-size: 0.8rem;"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -414,6 +465,16 @@
                     }
                     $("#edit_anggota_btn").text('Edit anggota');
                     $("#editMemberModal").modal('hide');
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422) {
+                        let errors = xhr.responseJSON.errors;
+                        $('.text-danger').text('');
+                        $.each(errors, function(key, value) {
+                            $('.error-' + key).text(value[0]);
+                        });
+                    }
+                    $("#edit_anggota_btn").text('Edit Anggota');
                 }
             });
         });
@@ -423,6 +484,9 @@
             $('#editMemberModal').modal('show');
             $('#editMemberModal').trigger('reset');
             $('#id').val(id);
+            $('#image-preview-edit').attr('src', '');
+            $('#image-preview-edit').hide();
+
             $.ajax({
                 url: '/kelola-user/users-management/' + id + '/edit',
                 method: 'GET',
@@ -431,11 +495,15 @@
                     $('#editMemberModal').find('input[name="email"]').val(data.email);
                     $('#editMemberModal').find('input[name="id_posisi"]').val(data
                         .id_posisi);
+                    $('#editMemberModal').find('input[name="password"]').val(data.password);
                     $('#editMemberModal').find('input[name="nis"]').val(data.nis);
                     $('#editMemberModal').find('input[name="username"]').val(data.username);
                     $('#editMemberModal').find('input[name="hp"]').val(data.hp);
-                    $('#editMemberModal').find('input[name="alamat"]').val(data.alamat);
-                    $('#editMemberModal').find('img').attr('src', data.image);
+                    $('#editMemberModal').find('textarea[name="alamat"]').val(data.alamat);
+                    if (data.image) {
+                        $('#image-preview-edit').attr('src', data.image);
+                        $('#image-preview-edit').show();
+                    }
                 }
             });
         });
