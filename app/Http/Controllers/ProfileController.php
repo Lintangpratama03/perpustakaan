@@ -28,13 +28,16 @@ class ProfileController extends Controller
             'alamat' => 'max:255',
             'hp' => 'numeric|digits:10',
             'nis' => 'max:255',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image file
         ], [
             'name.required' => 'Name Harus Di Isi',
             'email.required' => 'Email Harus Di Isi',
             'username.required' => 'Username Harus Di Isi',
             'email.unique' => 'Email Sudah Dipakai.',
             'username.unique' => 'Username Sudah Dipakai',
-
+            'image.image' => 'File harus berupa gambar',
+            'image.mimes' => 'Format gambar yang diperbolehkan adalah jpeg, png, jpg, atau gif',
+            'image.max' => 'Ukuran gambar tidak boleh lebih dari 2MB',
         ]);
 
         if ($validator->fails()) {
@@ -50,6 +53,16 @@ class ProfileController extends Controller
             'nis' => $request->nis,
             'username' => $request->username,
         ]);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $imagePath = $imageName;
+            $image->move(public_path('assets/img/foto-profil'), $imageName);
+            $user->image = $imagePath;
+        }
+
+        $user->save();
 
         return back()->with('success', 'Profile updated successfully.');
     }

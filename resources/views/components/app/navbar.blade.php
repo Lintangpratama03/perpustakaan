@@ -30,13 +30,33 @@
                     </a>
                 </form>
             </div>
-            <ul class="navbar-nav  justify-content-end">
-                <li class="nav-item ps-2 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-body p-0">
-                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm" alt="avatar" />
+            <ul class="navbar-nav justify-content-end">
+                <li class="nav-item ps-2 d-flex align-items-center dropdown">
+                    <a href="javascript:;" class="nav-link text-body p-0" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="{{ asset('assets/img/foto-profil/' . (auth()->user()->image ?? 'default.jpg')) }}"
+                            class="avatar avatar-sm" alt="avatar" />
                     </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ route('users.profile') }}">Setting</a></li>
+                        <li><a class="dropdown-item" href="#">Ganti Password</a></li>
+                    </ul>
                 </li>
             </ul>
+            <style>
+                .dropdown-menu {
+                    background-color: #6c757d;
+                }
+
+                .dropdown-item {
+                    color: #ffffff;
+                }
+
+                .dropdown-item:hover {
+                    background-color: #007bff;
+                }
+            </style>
+
         </div>
     </div>
 </nav>

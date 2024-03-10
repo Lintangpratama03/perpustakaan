@@ -2,7 +2,7 @@
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <x-app.navbar />
         <div class="px-5 py-4 container-fluid mt-n8">
-            <form action={{ route('users.update_profile') }} method="POST">
+            <form action={{ route('users.update_profile') }} method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="mt-5 mb-5 mt-lg-9 row justify-content-center">
@@ -14,10 +14,12 @@
                             <div class="row z-index-2 justify-content-center align-items-center">
                                 <div class="col-sm-auto col-4">
                                     <div class="avatar avatar-xl position-relative">
-                                        <img src="../assets/img/team-2.jpg" alt="bruce"
+                                        <img src="{{ asset('assets/img/foto-profil/' . (auth()->user()->image ?? 'images/default.jpg')) }}"
+                                            alt="user-image"
                                             class="w-100 h-100 object-fit-cover border-radius-lg shadow-sm"
                                             id="preview">
                                     </div>
+
                                 </div>
                                 <div class="col-sm-auto col-8 my-auto">
                                     <div class="h-100">
@@ -25,8 +27,24 @@
                                             {{ auth()->user()->name }}
                                         </h5>
                                         <p class="mb-0 font-weight-bold text-sm">
-                                            {{ auth()->user()->id_posisi }}
+                                            @php
+                                                switch (auth()->user()->id_posisi) {
+                                                    case 1:
+                                                        echo 'ADMIN';
+                                                        break;
+                                                    case 2:
+                                                        echo 'Anggota RFID';
+                                                        break;
+                                                    case 3:
+                                                        echo 'Anggota';
+                                                        break;
+                                                    default:
+                                                        echo 'Posisi tidak valid';
+                                                        break;
+                                                }
+                                            @endphp
                                         </p>
+
                                     </div>
                                 </div>
                                 <div class="col-sm-auto ms-sm-auto mt-sm-0 mt-3 d-flex">
@@ -115,6 +133,33 @@
                                             <span class="text-danger text-sm">{{ $message }}</span>
                                         @enderror
                                     </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="image">Foto</label>
+                                            <input type="file" name="image" id="image" accept="image/*"
+                                                onchange="previewImage(event)" class="form-control">
+                                            <img id="image-preview"
+                                                src="{{ asset('assets/img/foto-profil/' . (auth()->user()->image ?? 'default.jpg')) }}"
+                                                alt="image Preview"
+                                                style="max-width: 100px; max-height: 100px; margin-top: 5px; @if (!auth()->user()->image) display: none; @endif">
+                                            @error('image')
+                                                <span class="text-danger text-sm">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <script>
+                                            function previewImage(event) {
+                                                var reader = new FileReader();
+                                                reader.onload = function() {
+                                                    var output = document.getElementById('image-preview');
+                                                    output.src = reader.result;
+                                                    output.style.display = 'block';
+                                                }
+                                                reader.readAsDataURL(event.target.files[0]);
+                                            }
+                                        </script>
+
+                                    </div>
+
                                 </div>
                                 <button type="submit" class="mt-6 mb-0 btn btn-white btn-sm float-end">Save
                                     changes</button>
