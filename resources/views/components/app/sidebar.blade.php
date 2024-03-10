@@ -36,136 +36,112 @@
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item mt-2">
-                <a class="nav-link d-flex align-items-center collapsed text-white" data-bs-toggle="collapse"
-                    href="#userManagementCollapse" role="button" aria-expanded="false"
-                    aria-controls="userManagementCollapse">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="ms-2 text-white"
-                        viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                        <path fill-rule="evenodd"
-                            d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    <span class="font-weight-normal text-md ms-2 text-white">Kelola User</span>
-                    <i class="fas fa-chevron-down ms-auto transition-transform text-white"></i>
-                </a>
-                <div class="collapse ms-4 transition-max-height" id="userManagementCollapse">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link rounded-pill text-white bullet-link {{ is_current_route('users.profile') ? 'active' : '' }}"
-                                href="{{ route('users.profile') }}">
-                                <span class="nav-link-text ms-1">Profil Saya</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link rounded-pill text-white bullet-link {{ is_current_route('users-management') ? 'active' : '' }}"
-                                href="{{ route('users-management') }}">
-                                <span class="nav-link-text ms-1">Anggota</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link rounded-pill text-white bullet-link {{ is_current_route('usersrfid-management') ? 'active' : '' }}"
-                                href="{{ route('usersrfid-management') }}">
-                                <span class="nav-link-text ms-1">Anggota RFID</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link rounded-pill text-white bullet-link {{ is_current_route('usersHapus-management') ? 'active' : '' }}"
-                                href="{{ route('usersHapus-management') }}">
-                                <span class="nav-link-text ms-1">Anggota Dihapus</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item mt-2">
-                <a class="nav-link d-flex align-items-center collapsed text-white" data-bs-toggle="collapse"
-                    href="#buku_collaps" role="button" aria-expanded="false" aria-controls="buku_collaps">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="ms-2 text-white"
-                        viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                        <path fill-rule="evenodd"
-                            d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    <span class="font-weight-normal text-md ms-2 text-white">Kelola Buku</span>
-                    <i class="fas fa-chevron-down ms-auto transition-transform text-white"></i>
-                </a>
-                <div class="collapse ms-4 transition-max-height" id="buku_collaps">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link rounded-pill text-white bullet-link {{ is_current_route('users.profile') ? 'active' : '' }}"
-                                href="{{ route('users.profile') }}">
-                                <span class="nav-link-text ms-1">User Profile</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link rounded-pill text-white bullet-link {{ is_current_route('users-management') ? 'active' : '' }}"
-                                href="{{ route('users-management') }}">
-                                <span class="nav-link-text ms-1">User Management</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item mt-2">
-                <a class="nav-link d-flex align-items-center collapsed text-white" data-bs-toggle="collapse"
-                    href="#pinjam_collaps" role="button" aria-expanded="false" aria-controls="pinjam_collaps">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="ms-2 text-white"
-                        viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                        <path fill-rule="evenodd"
-                            d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    <span class="font-weight-normal text-md ms-2 text-white">Kelola Pinjam</span>
-                    <i class="fas fa-chevron-down ms-auto transition-transform text-white"></i>
-                </a>
-                <div class="collapse ms-4 transition-max-height" id="pinjam_collaps">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link rounded-pill text-white bullet-link {{ is_current_route('users.profile') ? 'active' : '' }}"
-                                href="{{ route('users.profile') }}">
-                                <span class="nav-link-text ms-1">User Profile</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link rounded-pill text-white bullet-link {{ is_current_route('users-management') ? 'active' : '' }}"
-                                href="{{ route('users-management') }}">
-                                <span class="nav-link-text ms-1">User Management</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item mt-2">
-                <a class="nav-link d-flex align-items-center collapsed text-white" data-bs-toggle="collapse"
-                    href="#pengembalian_collaps" role="button" aria-expanded="false"
-                    aria-controls="pengembalian_collaps">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="ms-2 text-white"
-                        viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                        <path fill-rule="evenodd"
-                            d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    <span class="font-weight-normal text-md ms-2 text-white">Kelola Kembali</span>
-                    <i class="fas fa-chevron-down ms-auto transition-transform text-white"></i>
-                </a>
-                <div class="collapse ms-4 transition-max-height" id="pengembalian_collaps">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link rounded-pill text-white bullet-link {{ is_current_route('users.profile') ? 'active' : '' }}"
-                                href="{{ route('users.profile') }}">
-                                <span class="nav-link-text ms-1">User Profile</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link rounded-pill text-white bullet-link {{ is_current_route('users-management') ? 'active' : '' }}"
-                                href="{{ route('users-management') }}">
-                                <span class="nav-link-text ms-1">User Management</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+            <ul class="collapsible">
+                <li>
+                    <a href="#" class="collapsible-header d-flex align-items-center collapsed text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="ms-2 text-white"
+                            viewBox="0 0 24 24" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span class="font-weight-normal text-md ms-2 text-white">Kelola User</span>
+                        <i class="fas fa-chevron-down ms-auto transition-transform text-white"></i>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="{{ route('users.profile') }}" class="text-white">Profil Saya</a></li>
+                            <li><a href="{{ route('users-management') }}" class="text-white">Anggota</a></li>
+                            <li><a href="{{ route('usersrfid-management') }}" class="text-white">Anggota RFID</a></li>
+                            <li><a href="{{ route('usersHapus-management') }}" class="text-white">Anggota Dihapus</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <ul class="collapsible">
+                <li>
+                    <a href="#" class="collapsible-header d-flex align-items-center collapsed text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="ms-2 text-white"
+                            viewBox="0 0 24 24" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span class="font-weight-normal text-md ms-2 text-white">Kelola Buku</span>
+                        <i class="fas fa-chevron-down ms-auto transition-transform text-white"></i>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="{{ route('users.profile') }}" class="text-white">Kelola Buku</a></li>
+                            <li><a href="{{ route('users-management') }}" class="text-white">Kelola Kategori</a></li>
+                            <li><a href="{{ route('usersrfid-management') }}" class="text-white">Kelola Penerbit</a>
+                            </li>
+                            <li><a href="{{ route('usersHapus-management') }}" class="text-white">Kelola Pengarang</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
         </ul>
     </div>
+    <style>
+        .collapsible {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .collapsible li {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .collapsible-header {
+            display: block;
+            padding: 10px;
+            background-color: #f5f5f500;
+            text-decoration: none;
+            /* Menghilangkan underline pada collapsible-header */
+            color: #333;
+            cursor: pointer;
+        }
+
+        .collapsible-body {
+            display: none;
+            padding: 10px;
+            background-color: #ffffff00;
+        }
+
+        .collapsible-body ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .collapsible-body li a {
+            display: block;
+            padding: 5px 10px;
+            color: #333;
+            text-decoration: none;
+            /* Menghilangkan underline pada collapsible-body li a */
+        }
+
+        .collapsible-body li a:hover {
+            background-color: #5508d1;
+        }
+    </style>
+    <script>
+        var collapsibleHeaders = document.querySelectorAll(".collapsible-header");
+
+        collapsibleHeaders.forEach(function(header) {
+            header.addEventListener("click", function() {
+                var collapsibleBody = this.nextElementSibling;
+                if (collapsibleBody.style.display === "none") {
+                    collapsibleBody.style.display = "block";
+                } else {
+                    collapsibleBody.style.display = "none";
+                }
+            });
+        });
+    </script>
 </aside>

@@ -113,3 +113,12 @@ Route::prefix('kelola-user-hapus')->middleware('auth')->group(function () {
     Route::post('/users-management/update/{user}', [AnggotaHapusController::class, 'update'])->name('usersHapus.update');
     Route::post('/users-management/delete/{user}', [AnggotaHapusController::class, 'hapus'])->name('usersHapus.destroy');
 });
+
+Route::prefix('kelola-buku')->middleware('auth')->group(function () {
+});
+Route::prefix('kelola-penerbit')->middleware('auth')->group(function () {
+});
+Route::prefix('kelola-pengarang')->middleware('auth')->group(function () {
+});
+Route::prefix('kelola-kategori')->middleware('auth')->group(function () {
+});
