@@ -49,7 +49,7 @@
                                     <tr>
                                         <th
                                             class="text-left text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
-                                            NIS</th>
+                                            ID KARTU</th>
                                         <th
                                             class="text-left text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
                                             Photo</th>
@@ -78,7 +78,18 @@
                                     @else
                                         @foreach ($users as $user)
                                             <tr>
-                                                <td class="text-left">{{ $user->nis }}</td>
+                                                <td class="text-left">
+                                                    @if ($user->id_card)
+                                                        {{ $user->id_card }}
+                                                    @else
+                                                        <a href="#" class="mx-1 upgrade"
+                                                            data-id="{{ $user->id }}">
+                                                            <i
+                                                                class="cursor-pointer fas fa-arrow-alt-circle-up text-secondary"></i>
+                                                        </a>
+                                                    @endif
+                                                </td>
+
                                                 <td class="text-left">
                                                     @if ($user->image)
                                                         <img src="{{ asset('assets/img/foto-profil/' . $user->image) }}"
@@ -185,6 +196,19 @@
                                                     <img id="image-preview" alt="image Preview"
                                                         style="max-width: 100px; max-height: 100px; margin-top: 5px;">
                                                 </div>
+                                                <script>
+                                                    function previewImage(event) {
+                                                        var reader = new FileReader();
+                                                        var output = document.getElementById('image-preview');
+
+                                                        reader.onload = function() {
+                                                            output.src = reader.result;
+                                                            output.style.display = 'block';
+                                                        }
+
+                                                        reader.readAsDataURL(event.target.files[0]);
+                                                    }
+                                                </script>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -291,13 +315,26 @@
                                                 <div class="form-group">
                                                     <label for="image">Foto</label>
                                                     <input type="file" name="image" id="image"
-                                                        accept="image/*" onchange="previewImage(event)"
+                                                        accept="image/*" onchange="previewImage1(event)"
                                                         class="form-control">
                                                     <span class="text-danger error-image"
                                                         style="font-size: 0.8rem;"></span>
-                                                    <img id="image-preview" alt="image Preview"
+                                                    <img id="image-preview-edit" alt="image Preview"
                                                         style="max-width: 100px; max-height: 100px; margin-top: 5px;">
                                                 </div>
+                                                <script>
+                                                    function previewImage1(event) {
+                                                        var reader = new FileReader();
+                                                        var output = document.getElementById('image-preview-edit');
+
+                                                        reader.onload = function() {
+                                                            output.src = reader.result;
+                                                            output.style.display = 'block';
+                                                        }
+
+                                                        reader.readAsDataURL(event.target.files[0]);
+                                                    }
+                                                </script>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -372,7 +409,7 @@
             const fd = new FormData(this);
             $("#add_anggota_btn").text('Adding...');
             $.ajax({
-                url: '{{ route('users.store') }}',
+                url: '{{ route('usersrfid.store') }}',
                 method: 'post',
                 _token: '{{ csrf_token() }}',
                 data: fd,
@@ -414,7 +451,7 @@
             const fd = new FormData(form);
             $("#edit_anggota_btn").text('Updating...');
             $.ajax({
-                url: '/kelola-user/users-management/update/' + id,
+                url: '/kelola-user-rfid/users-management/update/' + id,
                 method: 'POST',
                 data: fd,
                 cache: false,
@@ -453,19 +490,26 @@
             $('#editMemberModal').modal('show');
             $('#editMemberModal').trigger('reset');
             $('#id').val(id);
+            $('#image-preview-edit').attr('src', '');
+            $('#image-preview-edit').hide();
+
             $.ajax({
-                url: '/kelola-user/users-management/' + id + '/edit',
+                url: '/kelola-user-rfid/users-management/' + id + '/edit',
                 method: 'GET',
                 success: function(data) {
                     $('#editMemberModal').find('input[name="name"]').val(data.name);
                     $('#editMemberModal').find('input[name="email"]').val(data.email);
                     $('#editMemberModal').find('input[name="id_posisi"]').val(data
                         .id_posisi);
+                    $('#editMemberModal').find('input[name="password"]').val(data.password);
                     $('#editMemberModal').find('input[name="nis"]').val(data.nis);
                     $('#editMemberModal').find('input[name="username"]').val(data.username);
                     $('#editMemberModal').find('input[name="hp"]').val(data.hp);
-                    $('#editMemberModal').find('input[name="alamat"]').val(data.alamat);
-                    $('#editMemberModal').find('img').attr('src', data.image);
+                    $('#editMemberModal').find('textarea[name="alamat"]').val(data.alamat);
+                    if (data.image) {
+                        $('#image-preview-edit').attr('src', data.image);
+                        $('#image-preview-edit').show();
+                    }
                 }
             });
         });
@@ -486,7 +530,7 @@
                     let token = $('meta[name="csrf-token"]').attr(
                         'content');
                     $.ajax({
-                        url: '/kelola-user/users-management/delete/' + id,
+                        url: '/kelola-user-rfid/users-management/delete/' + id,
                         method: 'POST',
                         data: {
                             _token: token
@@ -509,5 +553,48 @@
                 }
             });
         });
+        $(document).on('click', '.upgrade', function(e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            let name = $(this).data('name');
+            Swal.fire({
+                title: 'Are you sure?',
+                html: '<input id="id_card" class="swal2-input" placeholder="Enter new ID Card">',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, update it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let idCard = $('#id_card').val();
+                    let token = $('meta[name="csrf-token"]').attr('content');
+                    $.ajax({
+                        url: '/kelola-user-rfid/users-management/rfid/' +
+                            id, // perbaikan pada url
+                        method: 'POST',
+                        data: {
+                            _token: token,
+                            id_card: idCard
+                        },
+                        success: function(response) {
+                            Swal.fire({
+                                title: 'Updated!',
+                                text: response.message,
+                                icon: 'success',
+                                timer: 1500,
+                                timerProgressBar: true,
+                                allowOutsideClick: false,
+                                showConfirmButton: false
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+
     });
 </script>

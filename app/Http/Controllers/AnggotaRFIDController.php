@@ -93,7 +93,7 @@ class AnggotaRFIDController extends Controller
     public function edit($id)
     {
         $anggota = User::find($id);
-        $image = $anggota->image ? asset('storage/' . $anggota->image) : asset('assets/img/default-image.png');
+        $image = $anggota->image ? asset('assets/img/foto-profil/' . $anggota->image) : asset('assets/img/default-image.png');
         return response()->json([
             'id' => $anggota->id,
             'name' => $anggota->name,
@@ -102,12 +102,11 @@ class AnggotaRFIDController extends Controller
             'nis' => $anggota->nis,
             'username' => $anggota->username,
             'hp' => $anggota->hp,
+            'password' => $anggota->password,
             'alamat' => $anggota->alamat,
             'image' => $image
         ]);
     }
-
-
     public function update(Request $request, $id)
     {
         $anggota = User::find($id);
@@ -159,7 +158,7 @@ class AnggotaRFIDController extends Controller
         // Simpan perubahan data dari request
         $anggota->name = $request->input('name');
         $anggota->email = $request->input('email');
-        $anggota->id_posisi = $request->input('id_posisi');
+        $anggota->id_posisi = 3;
         $anggota->nis = $request->input('nis');
         $anggota->username = $request->input('username');
         $anggota->hp = $request->input('hp');
@@ -175,7 +174,7 @@ class AnggotaRFIDController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/assets/img/foto-profil', $fileName);
+            $file->move(public_path('assets/img/foto-profil'), $fileName);
             if ($anggota->image) {
                 Storage::delete('public/assets/img/foto-profil/' . $anggota->image);
             }
@@ -190,7 +189,6 @@ class AnggotaRFIDController extends Controller
             'status' => 200,
         ]);
     }
-
     public function hapus($id)
     {
         $anggota = User::find($id);
@@ -207,6 +205,25 @@ class AnggotaRFIDController extends Controller
         return response()->json([
             'status' => 200,
             'message' => 'User ' . $anggota->name . ' has been deleted.'
+        ]);
+    }
+
+    public function rfid(Request $request, $id)
+    {
+        $anggota = User::find($id);
+        if (!$anggota) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'User not found.'
+            ], 404);
+        }
+
+        $anggota->id_card = $request->input('id_card');
+        $anggota->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'User ' . $anggota->name . '\'s ID Card has been updated.'
         ]);
     }
 }

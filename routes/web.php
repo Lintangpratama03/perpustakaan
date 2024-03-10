@@ -103,6 +103,7 @@ Route::prefix('kelola-user-rfid')->middleware('auth')->group(function () {
     Route::get('/users-management/{user}/edit', [AnggotaRFIDController::class, 'edit'])->name('usersrfid.edit');
     Route::post('/users-management/update/{user}', [AnggotaRFIDController::class, 'update'])->name('usersrfid.update');
     Route::post('/users-management/delete/{user}', [AnggotaRFIDController::class, 'hapus'])->name('usersrfid.destroy');
+    Route::post('/users-management/rfid/{user}', [AnggotaRFIDController::class, 'rfid'])->name('usersrfid.rfid');
 });
 Route::prefix('kelola-user-hapus')->middleware('auth')->group(function () {
     Route::get('/users-management', [AnggotaHapusController::class, 'index'])->name('usersHapus-management');

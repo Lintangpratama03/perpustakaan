@@ -103,11 +103,6 @@
                                                     @else
                                                         {{ 'N/A' }}
                                                     @endif
-                                                    <a href="#" class="mx-1 upgrade"
-                                                        data-id="{{ $user->id }}">
-                                                        <i
-                                                            class="cursor-pointer fas fa-arrow-alt-circle-up text-secondary"></i>
-                                                    </a>
                                                 </td>
 
 
