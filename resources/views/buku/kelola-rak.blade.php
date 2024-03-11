@@ -119,7 +119,7 @@
                                                     <div class="form-group">
                                                         <label>Kode Rak</label>
                                                         <div class="input-group mb-3">
-                                                            <input type="kode" class="form-control"
+                                                            <input type="text" class="form-control"
                                                                 placeholder="kode" name="kode" aria-label="kode"
                                                                 aria-describedby="kode-addon">
                                                         </div>
@@ -129,7 +129,7 @@
                                                     <div class="form-group">
                                                         <label>Lokasi</label>
                                                         <div class="input-group mb-3">
-                                                            <input type="lokasi" class="form-control"
+                                                            <input type="text" class="form-control"
                                                                 placeholder="lokasi" name="lokasi" aria-label="lokasi"
                                                                 aria-describedby="lokasi-addon">
                                                         </div>

@@ -9,4 +9,10 @@ class Pengarang extends Model
 {
     use HasFactory;
     protected $table = "pengarang";
+    protected $fillable = [
+        'name',
+        'alamat',
+        'telp',
+    ];
+    public $timestamps = false;
 }

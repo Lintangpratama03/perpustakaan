@@ -42,21 +42,7 @@ class BukuController extends Controller
         return view('buku.kelola-pengarang', compact('pengarang'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    // Rak
     public function store_rak(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -158,22 +144,105 @@ class BukuController extends Controller
             'message' => 'Rak ' . $rak->name . ' has been deleted.'
         ]);
     }
-    public function show(Buku $buku)
+
+
+    // Pengarang
+    public function store_pengarang(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'alamat' => 'required|max:255',
+            'telp' => 'required|numeric',
+        ], [
+            'name.required' => 'Nama harus diisi.',
+            'name.string' => 'Nama harus berupa string.',
+            'name.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+            'telp.required' => 'telp harus diisi.',
+            'telp.numeric' => 'telp harus berupa Angka.',
+            'alamat.required' => 'alamat rak harus diisi.',
+            'alamat.max' => 'alamat rak tidak boleh lebih dari 255 karakter.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $pengarang = [
+            'name' => $request->name,
+            'alamat' => $request->alamat,
+            'telp' => $request->telp,
+        ];
+
+        Pengarang::create($pengarang);
+
+        return response()->json([
+            'status' => 200,
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Buku $buku)
+    public function edit_pengarang($id)
     {
+        $pengarang = Pengarang::find($id);
+        return response()->json([
+            'id' => $pengarang->id,
+            'name' => $pengarang->name,
+            'alamat' => $pengarang->alamat,
+            'telp' => $pengarang->telp,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Buku $buku)
+    public function update_pengarang(Request $request, $id)
     {
+        $pengarang = Pengarang::find($id);
+        // dd($id);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'alamat' => 'required|string|max:255',
+            'telp' => 'required|numeric',
+        ], [
+            'name.required' => 'Nama harus diisi.',
+            'name.string' => 'Nama harus berupa string.',
+            'name.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+            'alamat.required' => 'Alamat harus diisi.',
+            'alamat.string' => 'Alamat harus berupa string.',
+            'alamat.max' => 'Alamat tidak boleh lebih dari 255 karakter.',
+            'telp.required' => 'telp harus diisi.',
+            'telp.numeric' => 'telp harus berupa Angka.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // Simpan perubahan data dari request
+        $pengarang->name = $request->input('name');
+        $pengarang->alamat = $request->input('alamat');
+        $pengarang->telp = $request->input('telp');
+
+        // Simpan perubahan ke database
+        $pengarang->save();
+
+        return response()->json([
+            'status' => 200,
+        ]);
+    }
+
+    public function hapus_pengarang($id)
+    {
+        $pengarang = Pengarang::find($id);
+        if (!$pengarang) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'pengarang not found.'
+            ], 404);
+        }
+
+        $pengarang->is_deleted = 1;
+        $pengarang->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'pengarang ' . $pengarang->name . ' has been deleted.'
+        ]);
     }
 }
