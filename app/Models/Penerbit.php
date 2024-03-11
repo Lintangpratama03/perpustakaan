@@ -9,4 +9,10 @@ class Penerbit extends Model
 {
     use HasFactory;
     protected $table = "penerbit";
+    protected $fillable = [
+        'name',
+        'alamat',
+        'telp',
+    ];
+    public $timestamps = false;
 }

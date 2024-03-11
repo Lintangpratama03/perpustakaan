@@ -145,7 +145,6 @@ class BukuController extends Controller
         ]);
     }
 
-
     // Pengarang
     public function store_pengarang(Request $request)
     {
@@ -243,6 +242,106 @@ class BukuController extends Controller
         return response()->json([
             'status' => 200,
             'message' => 'pengarang ' . $pengarang->name . ' has been deleted.'
+        ]);
+    }
+
+    // penerbit
+    public function store_penerbit(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'alamat' => 'required|max:255',
+            'telp' => 'required|numeric',
+        ], [
+            'name.required' => 'Nama harus diisi.',
+            'name.string' => 'Nama harus berupa string.',
+            'name.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+            'telp.required' => 'telp harus diisi.',
+            'telp.numeric' => 'telp harus berupa Angka.',
+            'alamat.required' => 'alamat penerbit harus diisi.',
+            'alamat.max' => 'alamat penerbit tidak boleh lebih dari 255 karakter.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $penerbit = [
+            'name' => $request->name,
+            'alamat' => $request->alamat,
+            'telp' => $request->telp,
+        ];
+
+        penerbit::create($penerbit);
+
+        return response()->json([
+            'status' => 200,
+        ]);
+    }
+
+    public function edit_penerbit($id)
+    {
+        $penerbit = penerbit::find($id);
+        return response()->json([
+            'id' => $penerbit->id,
+            'name' => $penerbit->name,
+            'alamat' => $penerbit->alamat,
+            'telp' => $penerbit->telp,
+        ]);
+    }
+
+    public function update_penerbit(Request $request, $id)
+    {
+        $penerbit = Penerbit::find($id);
+        // dd($id);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'alamat' => 'required|string|max:255',
+            'telp' => 'required|numeric',
+        ], [
+            'name.required' => 'Nama harus diisi.',
+            'name.string' => 'Nama harus berupa string.',
+            'name.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+            'alamat.required' => 'Alamat harus diisi.',
+            'alamat.string' => 'Alamat harus berupa string.',
+            'alamat.max' => 'Alamat tidak boleh lebih dari 255 karakter.',
+            'telp.required' => 'telp harus diisi.',
+            'telp.numeric' => 'telp harus berupa Angka.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // Simpan perubahan data dari request
+        $penerbit->name = $request->input('name');
+        $penerbit->alamat = $request->input('alamat');
+        $penerbit->telp = $request->input('telp');
+
+        // Simpan perubahan ke database
+        $penerbit->save();
+
+        return response()->json([
+            'status' => 200,
+        ]);
+    }
+
+    public function hapus_penerbit($id)
+    {
+        $penerbit = Penerbit::find($id);
+        if (!$penerbit) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'penerbit not found.'
+            ], 404);
+        }
+
+        $penerbit->is_deleted = 1;
+        $penerbit->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'penerbit ' . $penerbit->name . ' has been deleted.'
         ]);
     }
 }

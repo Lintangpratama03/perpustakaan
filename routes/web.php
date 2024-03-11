@@ -122,6 +122,10 @@ Route::prefix('kelola-buku')->middleware('auth')->group(function () {
 });
 Route::prefix('kelola-penerbit')->middleware('auth')->group(function () {
     Route::get('/', [BukuController::class, 'index_penerbit'])->name('penerbit');
+    Route::post('/tambah', [BukuController::class, 'store_penerbit'])->name('penerbit.store');
+    Route::get('/edit/{id}', [BukuController::class, 'edit_penerbit'])->name('penerbit.edit');
+    Route::post('/update/{id}', [BukuController::class, 'update_penerbit'])->name('penerbit.update');
+    Route::post('/delete/{id}', [BukuController::class, 'hapus_penerbit'])->name('penerbit.destroy');
 });
 Route::prefix('kelola-pengarang')->middleware('auth')->group(function () {
     Route::get('/', [BukuController::class, 'index_pengarang'])->name('pengarang');
