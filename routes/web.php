@@ -119,6 +119,10 @@ Route::prefix('kelola-user-upgrade')->middleware('auth')->group(function () {
 // Menu Kelola Buku
 Route::prefix('kelola-buku')->middleware('auth')->group(function () {
     Route::get('/', [BukuController::class, 'index'])->name('buku');
+    Route::post('/tambah', [BukuController::class, 'store_buku'])->name('buku.store');
+    Route::get('/edit/{id}', [BukuController::class, 'edit_buku'])->name('buku.edit');
+    Route::post('/update/{id}', [BukuController::class, 'update_buku'])->name('buku.update');
+    Route::post('/delete/{id}', [BukuController::class, 'hapus_buku'])->name('buku.destroy');
 });
 Route::prefix('kelola-penerbit')->middleware('auth')->group(function () {
     Route::get('/', [BukuController::class, 'index_penerbit'])->name('penerbit');

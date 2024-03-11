@@ -16,13 +16,19 @@ class BukuController extends Controller
      */
     public function index()
     {
-        $buku = Buku::where('buku.is_deleted', 0)
-            ->leftJoin('rak', 'buku.rak_kode_rak', '=', 'rak.kode_rak')
-            ->leftJoin('penerbit', 'buku.id_card', '=', 'penerbit.id')
-            ->leftJoin('pengarang', 'buku.id_card', '=', 'pengarang.id')
+        $buku = Buku::select('buku.*', 'buku.name as name_buku', 'rak.kode as kode_rak')
+            ->where('buku.is_deleted', 0)
+            ->leftJoin('rak', 'buku.rak_kode_rak', '=', 'rak.id')
+            ->leftJoin('penerbit', 'buku.penerbit_id', '=', 'penerbit.id')
+            ->leftJoin('pengarang', 'buku.pengarang_id', '=', 'pengarang.id')
             ->get();
-        return view('buku.kelola-buku', compact('buku'));
+        $pengarang = Pengarang::all();
+        $penerbit = Penerbit::all();
+        $rak = Rak::all();
+        return view('buku.kelola-buku', compact('buku', 'pengarang', 'penerbit', 'rak'));
     }
+
+
     public function index_rak()
     {
         $rak = Rak::where('rak.is_deleted', 0)
@@ -342,6 +348,176 @@ class BukuController extends Controller
         return response()->json([
             'status' => 200,
             'message' => 'penerbit ' . $penerbit->name . ' has been deleted.'
+        ]);
+    }
+
+    public function store_buku(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'tahun_terbit' => 'required|numeric',
+            'jumlah' => 'required|numeric',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'isbn' => 'required|string|max:255',
+            'pengarang' => 'required|exists:pengarang,id',
+            'penerbit' => 'required|exists:penerbit,id',
+            'rak' => 'required|exists:rak,id',
+        ], [
+            'name.required' => 'Nama harus diisi.',
+            'name.string' => 'Nama harus berupa string.',
+            'name.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+            'tahun_terbit.required' => 'Tahun terbit harus diisi.',
+            'tahun_terbit.numeric' => 'Tahun terbit harus berupa angka.',
+            'jumlah.required' => 'Jumlah harus diisi.',
+            'jumlah.numeric' => 'Jumlah harus berupa angka.',
+            'image.required' => 'Foto buku harus diunggah.',
+            'image.image' => 'Foto harus berupa file gambar.',
+            'image.mimes' => 'Format gambar yang diperbolehkan adalah: jpeg, png, jpg, gif.',
+            'image.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
+            'isbn.required' => 'ISBN harus diisi.',
+            'isbn.string' => 'ISBN harus berupa string.',
+            'isbn.max' => 'ISBN tidak boleh lebih dari 255 karakter.',
+            'pengarang.required' => 'Pengarang harus dipilih.',
+            'pengarang.exists' => 'Pengarang yang dipilih tidak valid.',
+            'penerbit.required' => 'Penerbit harus dipilih.',
+            'penerbit.exists' => 'Penerbit yang dipilih tidak valid.',
+            'rak.required' => 'Rak harus dipilih.',
+            'rak.exists' => 'Rak yang dipilih tidak valid.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $imagePath = 'assets/img/buku/' . $fileName;
+            $file->move(public_path('assets/img/buku'), $fileName);
+        }
+
+        $buku = [
+            'name' => $request->name,
+            'tahun_terbit' => $request->tahun_terbit,
+            'jumlah' => $request->jumlah,
+            'image' => $fileName,
+            'isbn' => $request->isbn,
+            'pengarang_id' => $request->pengarang,
+            'penerbit_id' => $request->penerbit,
+            'rak_kode_rak' => $request->rak,
+        ];
+
+        Buku::create($buku);
+
+        return response()->json([
+            'status' => 200,
+        ]);
+    }
+    public function edit_buku($id)
+    {
+        $buku = Buku::find($id);
+        // dd($buku);
+        if (!$buku) {
+            return response()->json(['message' => 'Buku not found'], 404);
+        }
+        $image = $buku->image ? asset('assets/img/buku/' . $buku->image) : asset('assets/img/default-image.png');
+        return response()->json([
+            'id' => $buku->id,
+            'name' => $buku->name,
+            'tahun_terbit' => $buku->tahun_terbit,
+            'jumlah' => $buku->jumlah,
+            'isbn' => $buku->isbn,
+            'pengarang_id' => $buku->pengarang_id,
+            'penerbit_id' => $buku->penerbit_id,
+            'rak_kode_rak' => $buku->rak_kode_rak,
+            'image' => $image
+        ]);
+    }
+
+
+
+    public function update_buku(Request $request, $id)
+    {
+        $buku = Buku::find($id);
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'tahun_terbit' => 'required|numeric',
+            'jumlah' => 'required|numeric',
+            'isbn' => 'required|string|max:255',
+            'pengarang' => 'required|exists:pengarang,id',
+            'penerbit' => 'required|exists:penerbit,id',
+            'rak' => 'required|exists:rak,id',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required' => 'Nama harus diisi.',
+            'name.string' => 'Nama harus berupa string.',
+            'name.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+            'tahun_terbit.required' => 'Tahun terbit harus diisi.',
+            'tahun_terbit.numeric' => 'Tahun terbit harus berupa angka.',
+            'jumlah.required' => 'Jumlah harus diisi.',
+            'jumlah.numeric' => 'Jumlah harus berupa angka.',
+            'isbn.required' => 'ISBN harus diisi.',
+            'isbn.string' => 'ISBN harus berupa string.',
+            'isbn.max' => 'ISBN tidak boleh lebih dari 255 karakter.',
+            'pengarang.required' => 'Pengarang harus dipilih.',
+            'pengarang.exists' => 'Pengarang yang dipilih tidak valid.',
+            'penerbit.required' => 'Penerbit harus dipilih.',
+            'penerbit.exists' => 'Penerbit yang dipilih tidak valid.',
+            'rak.required' => 'Rak harus dipilih.',
+            'rak.exists' => 'Rak yang dipilih tidak valid.',
+            'image.image' => 'File yang diunggah harus berupa gambar.',
+            'image.mimes' => 'Format gambar yang diizinkan adalah jpeg, png, jpg, gif.',
+            'image.max' => 'Ukuran gambar tidak boleh lebih dari 2048 KB.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $buku->name = $request->input('name');
+        $buku->tahun_terbit = $request->input('tahun_terbit');
+        $buku->jumlah = $request->input('jumlah');
+        $buku->isbn = $request->input('isbn');
+        $buku->pengarang_id = $request->input('pengarang');
+        $buku->penerbit_id = $request->input('penerbit');
+        $buku->rak_kode_rak = $request->input('rak');
+
+        // Jika ada file image baru, simpan ke penyimpanan dan update path gambar
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('assets/img/buku'), $fileName);
+            if ($buku->image) {
+                unlink(public_path('assets/img/buku/' . $buku->image));
+            }
+            $buku->image = $fileName;
+        }
+        // Simpan perubahan ke database
+        $buku->save();
+
+        // Beri respons bahwa perubahan berhasil
+        return response()->json([
+            'status' => 200,
+        ]);
+    }
+
+
+    public function hapus_buku($id)
+    {
+        $buku = Buku::find($id);
+        if (!$buku) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Buku not found.'
+            ], 404);
+        }
+
+        $buku->is_deleted = 1;
+        $buku->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Buku ' . $buku->name . ' has been deleted.'
         ]);
     }
 }
