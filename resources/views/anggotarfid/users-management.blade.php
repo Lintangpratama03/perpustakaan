@@ -125,7 +125,7 @@
                                                         <i class="fas fa-user-edit text-secondary"></i>
                                                     </a>
                                                     <a href="#" class="mx-3 deleteIcon"
-                                                        data-id="{{ $user->id }}">
+                                                        data-id="{{ $user->id }}" data-name="{{ $user->name }}">
                                                         <i class="cursor-pointer fas fa-trash text-secondary"></i>
                                                     </a>
                                                 </td>
@@ -518,13 +518,13 @@
             let id = $(this).data('id');
             let name = $(this).data('name');
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert deleting user: " + name,
+                title: 'Apakah Kamu Yakin?',
+                text: "Nama user yang ingin kamu hapus : " + name,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: 'Iya, Saya Yakin!'
             }).then((result) => {
                 if (result.isConfirmed) {
                     let token = $('meta[name="csrf-token"]').attr(

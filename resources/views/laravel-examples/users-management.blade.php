@@ -112,9 +112,9 @@
                                                         <i class="fas fa-user-edit text-secondary"></i>
                                                     </a>
                                                     <a href="#" class="mx-3 deleteIcon"
-                                                        data-id="{{ $user->id }}"
-                                                        data-name="{{ $user->name }}>
-                                                        <i class="cursor-pointer
+                                                        data-id="{{ $user->id }}" data-name="{{ $user->name }}">
+                                                        <i
+                                                            class="cursor-pointer
                                                         fas fa-trash text-secondary"></i>
                                                     </a>
                                                 </td>
