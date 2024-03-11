@@ -11,7 +11,7 @@ class AnggotaRFIDController extends Controller
 {
     public function index()
     {
-        $users = User::where('is_deleted', 0)->where('id_posisi', 2)->get();
+        $users = User::where('is_deleted', 0)->where('id_posisi', 2)->paginate(10);
         return view('anggotarfid.users-management', compact('users'));
     }
 

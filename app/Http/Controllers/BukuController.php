@@ -21,7 +21,7 @@ class BukuController extends Controller
             ->leftJoin('rak', 'buku.rak_kode_rak', '=', 'rak.id')
             ->leftJoin('penerbit', 'buku.penerbit_id', '=', 'penerbit.id')
             ->leftJoin('pengarang', 'buku.pengarang_id', '=', 'pengarang.id')
-            ->get();
+            ->paginate(10);
         $pengarang = Pengarang::all();
         $penerbit = Penerbit::all();
         $rak = Rak::all();

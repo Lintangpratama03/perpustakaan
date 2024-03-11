@@ -104,8 +104,7 @@
                                                     </a>
                                                     <a href="#" class="mx-3 deleteIcon"
                                                         data-id="{{ $book->id }}"
-                                                        data-name="{{ $book->buku_name }}">
-                                                        <!-- Diganti menjadi buku_name -->
+                                                        data-name="{{ $book->name_buku }}">
                                                         <i class="cursor-pointer fas fa-trash text-secondary"></i>
                                                     </a>
                                                 </td>
@@ -113,10 +112,46 @@
                                         @endforeach
                                     @endif
                                 </tbody>
-
-
                             </table>
+                            <div class="border-top py-3 px-3 d-flex align-items-center">
+                                <button class="btn btn-sm btn-white d-sm-block d-none mb-0">Previous</button>
+                                <nav aria-label="..." class="ms-auto">
+                                    <ul class="pagination pagination-light mb-0">
+                                        @if ($buku->onFirstPage())
+                                            <li class="page-item disabled">
+                                                <span class="page-link font-weight-bold">
+                                                    << </span>
+                                            </li>
+                                        @else
+                                            <li class="page-item">
+                                                <a class="page-link border-0 font-weight-bold"
+                                                    href="{{ $buku->previousPageUrl() }}">
+                                                    << </a>
+                                            </li>
+                                        @endif
 
+                                        @foreach ($buku->getUrlRange(1, $buku->lastPage()) as $page => $url)
+                                            <li class="page-item {{ $page == $buku->currentPage() ? 'active' : '' }}"
+                                                aria-current="page">
+                                                <a class="page-link font-weight-bold"
+                                                    href="{{ $url }}">{{ $page }}</a>
+                                            </li>
+                                        @endforeach
+
+                                        @if ($buku->hasMorePages())
+                                            <li class="page-item">
+                                                <a class="page-link border-0 font-weight-bold"
+                                                    href="{{ $buku->nextPageUrl() }}"> >> </a>
+                                            </li>
+                                        @else
+                                            <li class="page-item disabled">
+                                                <span class="page-link font-weight-bold"> >> </span>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </nav>
+                                <button class="btn btn-sm btn-white d-sm-block d-none mb-0 ms-auto">Next</button>
+                            </div>
                         </div>
                     </div>
                 </div>

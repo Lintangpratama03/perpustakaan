@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::where('is_deleted', 0)->where('id_posisi', 3)->get();
+        $users = User::where('is_deleted', 0)->where('id_posisi', 3)->paginate(10);
         return view('laravel-examples.users-management', compact('users'));
     }
 

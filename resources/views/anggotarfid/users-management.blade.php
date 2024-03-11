@@ -107,7 +107,7 @@
                                                 <td class="text-center">
                                                     @if ($user->id_posisi == 2)
                                                         <span
-                                                            class="badge badge-sm border border-success text-success bg-success">{{ 'Anggota RFID' }}</span>
+                                                            class="badge badge-sm border border-success text-success bg-success">{{ 'Anggota users' }}</span>
                                                     @elseif ($user->id_posisi == 3)
                                                         <span
                                                             class="badge badge-sm border border-info text-info bg-info">{{ 'Anggota' }}</span>
@@ -136,6 +136,45 @@
 
                             </table>
 
+                        </div>
+                        <div class="border-top py-3 px-3 d-flex align-items-center">
+                            <button class="btn btn-sm btn-white d-sm-block d-none mb-0">Previous</button>
+                            <nav aria-label="..." class="ms-auto">
+                                <ul class="pagination pagination-light mb-0">
+                                    @if ($users->onFirstPage())
+                                        <li class="page-item disabled">
+                                            <span class="page-link font-weight-bold">
+                                                << </span>
+                                        </li>
+                                    @else
+                                        <li class="page-item">
+                                            <a class="page-link border-0 font-weight-bold"
+                                                href="{{ $users->previousPageUrl() }}">
+                                                << </a>
+                                        </li>
+                                    @endif
+
+                                    @foreach ($users->getUrlRange(1, $users->lastPage()) as $page => $url)
+                                        <li class="page-item {{ $page == $users->currentPage() ? 'active' : '' }}"
+                                            aria-current="page">
+                                            <a class="page-link font-weight-bold"
+                                                href="{{ $url }}">{{ $page }}</a>
+                                        </li>
+                                    @endforeach
+
+                                    @if ($users->hasMorePages())
+                                        <li class="page-item">
+                                            <a class="page-link border-0 font-weight-bold"
+                                                href="{{ $users->nextPageUrl() }}"> >> </a>
+                                        </li>
+                                    @else
+                                        <li class="page-item disabled">
+                                            <span class="page-link font-weight-bold"> >> </span>
+                                        </li>
+                                    @endif
+                                </ul>
+                            </nav>
+                            <button class="btn btn-sm btn-white d-sm-block d-none mb-0 ms-auto">Next</button>
                         </div>
                     </div>
                 </div>
@@ -169,8 +208,8 @@
                                                 <div class="form-group">
                                                     <label>Email</label>
                                                     <div class="input-group mb-3">
-                                                        <input type="email" class="form-control" placeholder="Email"
-                                                            name="email" aria-label="Email"
+                                                        <input type="email" class="form-control"
+                                                            placeholder="Email" name="email" aria-label="Email"
                                                             aria-describedby="email-addon">
                                                     </div>
                                                     <span class="text-danger error-email"
@@ -451,7 +490,7 @@
             const fd = new FormData(form);
             $("#edit_anggota_btn").text('Updating...');
             $.ajax({
-                url: '/kelola-user-rfid/users-management/update/' + id,
+                url: '/kelola-user-users/users-management/update/' + id,
                 method: 'POST',
                 data: fd,
                 cache: false,
@@ -494,7 +533,7 @@
             $('#image-preview-edit').hide();
 
             $.ajax({
-                url: '/kelola-user-rfid/users-management/' + id + '/edit',
+                url: '/kelola-user-users/users-management/' + id + '/edit',
                 method: 'GET',
                 success: function(data) {
                     $('#editMemberModal').find('input[name="name"]').val(data.name);
@@ -530,7 +569,7 @@
                     let token = $('meta[name="csrf-token"]').attr(
                         'content');
                     $.ajax({
-                        url: '/kelola-user-rfid/users-management/delete/' + id,
+                        url: '/kelola-user-users/users-management/delete/' + id,
                         method: 'POST',
                         data: {
                             _token: token
@@ -570,7 +609,7 @@
                     let idCard = $('#id_card').val();
                     let token = $('meta[name="csrf-token"]').attr('content');
                     $.ajax({
-                        url: '/kelola-user-rfid/users-management/rfid/' +
+                        url: '/kelola-user-users/users-management/users/' +
                             id, // perbaikan pada url
                         method: 'POST',
                         data: {
