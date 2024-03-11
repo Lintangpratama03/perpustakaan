@@ -40,15 +40,15 @@
                 <li>
                     <a href="#" class="collapsible-header d-flex align-items-center collapsed text-white">
                         <i class="fas fa-book fa-fw me-2 text-white"></i>
-                        <span class="font-weight-normal text-md ms-2 text-white">Kelola Buku</span>
+                        <span class="font-weight-normal text-md ms-2 text-white">Buku</span>
                         <i class="fas fa-chevron-down ms-auto transition-transform text-white"></i>
                     </a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a href="" class="text-white">Kelola Buku</a></li>
-                            <li><a href="" class="text-white">Kelola Kategori</a></li>
-                            <li><a href="" class="text-white">Kelola Penerbit</a></li>
-                            <li><a href="" class="text-white">Kelola Pengarang</a></li>
+                            <li><a href="{{ route('buku') }}" class="text-white">Kelola Buku</a></li>
+                            <li><a href="{{ route('rak') }}" class="text-white">Kelola Rak Buku</a></li>
+                            <li><a href="{{ route('penerbit') }}" class="text-white">Kelola Penerbit</a></li>
+                            <li><a href="{{ route('pengarang') }}" class="text-white">Kelola Pengarang</a></li>
                         </ul>
                     </div>
                 </li>
@@ -62,8 +62,7 @@
                     </a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a href="" class="text-white">Ajuan Peminjaman</a></li>
-                            <li><a href="" class="text-white">Peminjaman Pending</a></li>
+                            <li><a href="{{ route('ajuan') }}" class="text-white">Ajuan Peminjaman</a></li>
                             <li><a href="" class="text-white">Peminjaman Sukses</a></li>
                         </ul>
                     </div>

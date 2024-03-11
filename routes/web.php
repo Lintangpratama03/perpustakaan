@@ -9,6 +9,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\BukuController;
+use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\UserUpgradeController;
 
 /*
@@ -87,6 +89,8 @@ Route::get('/kelola-user/user-profile', [ProfileController::class, 'index'])->na
 Route::put('/kelola-user/user-profile/update', [ProfileController::class, 'update'])->name('users.update_profile')->middleware('auth');
 Route::get('/kelola-user/users-management', [UserController::class, 'index'])->name('users-management')->middleware('auth');
 
+
+// Menu Kelola User
 Route::prefix('kelola-user')->middleware('auth')->group(function () {
     Route::get('/users-management', [UserController::class, 'index'])->name('users-management');
     Route::get('/users-management/create', [UserController::class, 'create'])->name('users.create');
@@ -112,12 +116,27 @@ Route::prefix('kelola-user-upgrade')->middleware('auth')->group(function () {
     Route::post('/users-management/delete/{user}', [UserUpgradeController::class, 'hapus'])->name('usersUpgrade.destroy');
 });
 
-
+// Menu Kelola Buku
 Route::prefix('kelola-buku')->middleware('auth')->group(function () {
+    Route::get('/', [BukuController::class, 'index'])->name('buku');
 });
 Route::prefix('kelola-penerbit')->middleware('auth')->group(function () {
+    Route::get('/', [BukuController::class, 'index_penerbit'])->name('penerbit');
 });
 Route::prefix('kelola-pengarang')->middleware('auth')->group(function () {
+    Route::get('/', [BukuController::class, 'index_pengarang'])->name('pengarang');
 });
-Route::prefix('kelola-kategori')->middleware('auth')->group(function () {
+Route::prefix('kelola-rak')->middleware('auth')->group(function () {
+    Route::get('/', [BukuController::class, 'index_rak'])->name('rak');
+    Route::post('/tambah', [BukuController::class, 'store_rak'])->name('rak.store');
+    Route::get('/edit/{id}', [BukuController::class, 'edit_rak'])->name('rak.edit');
+    Route::post('/update/{id}', [BukuController::class, 'update_rak'])->name('rak.update');
+    Route::post('/delete/{id}', [BukuController::class, 'hapus_rak'])->name('rak.destroy');
+});
+
+// Menu Kelola Peminjaman
+Route::prefix('kelola-pinjam-ajuan')->middleware('auth')->group(function () {
+    Route::get('/', [PeminjamanController::class, 'index'])->name('ajuan');
+});
+Route::prefix('kelola-pengarang-sukses')->middleware('auth')->group(function () {
 });
