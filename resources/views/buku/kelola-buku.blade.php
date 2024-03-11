@@ -6,19 +6,27 @@
             <div class="mt-4 row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="pb-0 card-header">
+                        <div class="card-header pb-0 text-left">
                             <div class="row">
                                 <div class="col-6">
                                     <h5 class="">Kelola Buku</h5>
-                                    <p class="mb-0 text-sm">
-                                        Data Buku
-                                    </p>
+                                    <p class="mb-0 text-sm">Data Buku</p>
                                 </div>
                                 <div class="col-6 text-end">
                                     <a href="#" class="btn btn-dark btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#addBukuModal">
                                         <i class="fas fa-user-plus me-2"></i> Tambah Buku
                                     </a>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" id="searchName"
+                                        placeholder="Cari Nama Buku">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" id="searchRak"
+                                        placeholder="Cari Rak Buku">
                                 </div>
                             </div>
                         </div>
@@ -410,6 +418,34 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(function() {
+        $('#searchName').on('keyup', function() {
+            var searchTerm = $(this).val().toLowerCase();
+            $('tbody tr').each(function() {
+                var bookName = $(this).find('td:nth-child(3)').text().toLowerCase();
+                if (bookName.includes(searchTerm)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
+        // Fungsi pencarian rak buku
+        $('#searchRak').on('keyup', function() {
+            var searchTerm = $(this).val().toLowerCase();
+            $('tbody tr').each(function() {
+                var rakName = $(this).find('td:nth-child(4)').text().toLowerCase();
+                if (rakName.includes(searchTerm)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
+
+
+
         $("#addBukuForm").submit(function(e) {
             e.preventDefault();
             const fd = new FormData(this);
