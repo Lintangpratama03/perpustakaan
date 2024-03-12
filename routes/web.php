@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\RFIDController;
 use App\Http\Controllers\UserUpgradeController;
 
 /*
@@ -115,6 +116,16 @@ Route::prefix('kelola-user-upgrade')->middleware('auth')->group(function () {
     Route::get('/users-management/{user}/edit', [UserUpgradeController::class, 'edit'])->name('usersUpgrade.edit');
     Route::post('/users-management/delete/{user}', [UserUpgradeController::class, 'hapus'])->name('usersUpgrade.destroy');
 });
+
+
+Route::prefix('kelola-rfid')->middleware('auth')->group(function () {
+    Route::get('/', [RFIDController::class, 'index'])->name('rfid');
+    Route::post('/tambah', [RFIDController::class, 'store'])->name('rfid.store');
+    Route::get('/edit/{id}', [RFIDController::class, 'edit'])->name('rfid.edit');
+    Route::post('/update/{id}', [RFIDController::class, 'update'])->name('rfid.update');
+    Route::post('/delete/{id}', [RFIDController::class, 'hapus'])->name('rfid.destroy');
+});
+// Route::post('/api/data', 'RFIDController@store');
 
 // Menu Kelola Buku
 Route::prefix('kelola-buku')->middleware('auth')->group(function () {

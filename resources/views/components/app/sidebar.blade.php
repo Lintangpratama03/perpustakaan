@@ -39,6 +39,20 @@
             <ul class="collapsible">
                 <li>
                     <a href="#" class="collapsible-header d-flex align-items-center collapsed text-white">
+                        <i class="fas fa-id-card fa-fw me-2 text-white"></i>
+                        <span class="font-weight-normal text-md ms-2 text-white">RFID</span>
+                        <i class="fas fa-chevron-down ms-auto transition-transform text-white"></i>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="{{ route('rfid') }}" class="text-white">Kelola RFID</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <ul class="collapsible">
+                <li>
+                    <a href="#" class="collapsible-header d-flex align-items-center collapsed text-white">
                         <i class="fas fa-book fa-fw me-2 text-white"></i>
                         <span class="font-weight-normal text-md ms-2 text-white">Buku</span>
                         <i class="fas fa-chevron-down ms-auto transition-transform text-white"></i>
