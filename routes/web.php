@@ -125,7 +125,7 @@ Route::prefix('kelola-rfid')->middleware('auth')->group(function () {
     Route::post('/update/{id}', [RFIDController::class, 'update'])->name('rfid.update');
     Route::post('/delete/{id}', [RFIDController::class, 'hapus'])->name('rfid.destroy');
 });
-// Route::post('/api/data', 'RFIDController@store');
+Route::post('/api/data', 'RFIDController@store');
 
 // Menu Kelola Buku
 Route::prefix('kelola-buku')->middleware('auth')->group(function () {

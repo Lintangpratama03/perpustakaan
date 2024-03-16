@@ -29,30 +29,51 @@ class RFIDController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    // public function store(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'id_kartu' => 'required|unique:rfid,id_kartu',
+    //     ], [
+    //         'id_kartu.required' => 'Kode RFID harus diisi.',
+    //         'id_kartu.unique' => 'Kode RFID sudah digunakan.',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json(['errors' => $validator->errors()], 422);
+    //     }
+
+    //     $rfid = [
+    //         'id_kartu' => $request->id_kartu,
+    //     ];
+
+    //     RFID::create($rfid);
+
+    //     return response()->json([
+    //         'status' => 'success',
+    //         'message' => 'Data RFID berhasil disimpan.',
+    //     ]);
+    // }
+
+
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'id_kartu' => 'required|unique:rfid,id_kartu',
-        ], [
-            'id_kartu.required' => 'Kode RFID harus diisi.',
-            'id_kartu.unique' => 'Kode RFID sudah digunakan.',
-        ]);
+        // Validasi data
+        // $request->validate([
+        //     "nama" => "required|string|max:255",
+        //     "email" => "required|string|email|max:255",
+        //     "usia" => "required|integer|min:18",
+        // ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
+        // Menyimpan data ke database
+        RFID::create($request->all());
 
-        $rfid = [
-            'id_kartu' => $request->id_kartu,
-        ];
-
-        RFID::create($rfid);
-
+        // Mengembalikan response
         return response()->json([
-            'status' => 'success',
-            'message' => 'Data RFID berhasil disimpan.',
-        ]);
+            "message" => "Data berhasil disimpan!"
+        ], 201);
     }
+
+
 
     /**
      * Display the specified resource.
