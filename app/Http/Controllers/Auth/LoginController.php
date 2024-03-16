@@ -19,15 +19,30 @@ class LoginController extends Controller
     {
         return view('auth.signin');
     }
-
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function create_admin()
+    {
+        return view('auth.signin-admin');
+    }
     public function store(Request $request)
+    {
+        $credentials = $request->only('username', 'password');
+        $credentials['id_posisi'] = 2;
+        if ($credentials['id_posisi'] !== 2) {
+            $credentials['id_posisi'] = 3;
+        }
+        $rememberMe = $request->rememberMe ? true : false;
+
+        if (Auth::attempt($credentials, $rememberMe)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/dashboard-anggota');
+        }
+
+        return back()->withErrors([
+            'message' => 'Username, password tidak sesuai.',
+        ])->withInput($request->only('username'));
+    }
+
+    public function store_admin(Request $request)
     {
         $credentials = $request->only('username', 'password');
         $credentials['id_posisi'] = 1;
@@ -61,5 +76,15 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/sign-in');
+    }
+    public function destroy_admin(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/admin');
     }
 }

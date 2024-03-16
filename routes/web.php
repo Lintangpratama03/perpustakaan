@@ -27,20 +27,8 @@ use App\Http\Controllers\UserUpgradeController;
 */
 
 Route::get('/', function () {
-    return redirect('/dashboard');
+    return redirect('/sign-in');
 })->middleware('auth');
-
-Route::get('/profile', function () {
-    return view('account-pages.profile');
-})->name('profile')->middleware('auth');
-
-Route::get('/signin', function () {
-    return view('account-pages.signin');
-})->name('signin');
-
-Route::get('/signup', function () {
-    return view('account-pages.signup');
-})->name('signup')->middleware('guest');
 
 Route::get('/sign-up', [RegisterController::class, 'create'])
     ->middleware('guest')
@@ -56,9 +44,9 @@ Route::get('/sign-in', [LoginController::class, 'create'])
 Route::post('/sign-in', [LoginController::class, 'store'])
     ->middleware('guest');
 
-Route::post('/logout', [LoginController::class, 'destroy'])
-    ->middleware('auth')
-    ->name('logout');
+// Route::post('/logout', [LoginController::class, 'destroy'])
+//     ->middleware('auth')
+//     ->name('logout');
 
 Route::get('/forgot-password', [ForgotPasswordController::class, 'create'])
     ->middleware('guest')
@@ -154,5 +142,12 @@ Route::prefix('kelola-rak')->middleware('auth')->group(function () {
 Route::prefix('kelola-pinjam-ajuan')->middleware('auth')->group(function () {
     Route::get('/', [PeminjamanController::class, 'index'])->name('ajuan');
 });
-Route::prefix('kelola-pengarang-sukses')->middleware('auth')->group(function () {
-});
+
+Route::get('/admin', [LoginController::class, 'create_admin'])
+    ->middleware('guest')
+    ->name('admin');
+Route::post('/logout', [LoginController::class, 'destroy_admin'])
+    ->middleware('auth')
+    ->name('logout');
+Route::post('/admin', [LoginController::class, 'store_admin'])
+    ->middleware('guest');

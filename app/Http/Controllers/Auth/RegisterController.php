@@ -47,17 +47,13 @@ class RegisterController extends Controller
             'terms.accepted' => 'You must accept the terms and conditions'
         ]);
 
-        $user = User::create([
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
             'username' => $request->username,
             'id_posisi' => 3,
             'password' => Hash::make($request->password),
         ]);
-
-
-        Auth::login($user);
-
 
         return redirect(RouteServiceProvider::HOME);
     }
