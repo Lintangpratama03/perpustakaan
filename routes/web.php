@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\BukuController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\RFIDController;
 use App\Http\Controllers\UserUpgradeController;
@@ -28,18 +29,6 @@ use App\Http\Controllers\UserUpgradeController;
 Route::get('/', function () {
     return redirect('/dashboard');
 })->middleware('auth');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard')->middleware('auth');
-
-Route::get('/tables', function () {
-    return view('tables');
-})->name('tables')->middleware('auth');
-
-Route::get('/wallet', function () {
-    return view('wallet');
-})->name('wallet')->middleware('auth');
 
 Route::get('/profile', function () {
     return view('account-pages.profile');
@@ -91,6 +80,11 @@ Route::put('/kelola-user/user-profile/update', [ProfileController::class, 'updat
 Route::get('/kelola-user/users-management', [UserController::class, 'index'])->name('users-management')->middleware('auth');
 
 
+Route::prefix('dashboard')->middleware('auth')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/get-user', [DashboardController::class, 'getuser'])->name('users.dashboard');
+});
+
 // Menu Kelola User
 Route::prefix('kelola-user')->middleware('auth')->group(function () {
     Route::get('/users-management', [UserController::class, 'index'])->name('users-management');
@@ -125,7 +119,6 @@ Route::prefix('kelola-rfid')->middleware('auth')->group(function () {
     Route::post('/update/{id}', [RFIDController::class, 'update'])->name('rfid.update');
     Route::post('/delete/{id}', [RFIDController::class, 'hapus'])->name('rfid.destroy');
 });
-Route::post('/api/data', 'RFIDController@store');
 
 // Menu Kelola Buku
 Route::prefix('kelola-buku')->middleware('auth')->group(function () {

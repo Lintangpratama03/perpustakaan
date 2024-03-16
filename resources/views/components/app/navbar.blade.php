@@ -1,4 +1,5 @@
-<nav class="navbar navbar-main navbar-expand-lg mx-5 px-0 shadow-none rounded" id="navbarBlur" navbar-scroll="true">
+<nav class="navbar navbar-expand-lg navbar-light border-radius-md bg-white z-index-3 py-3 " id="navbarBlur"
+    navbar-scroll="true">
     <div class="container-fluid py-1 px-2">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb bg-transparent mb-1 pb-0 pt-1 px-0 me-sm-6 me-5">
