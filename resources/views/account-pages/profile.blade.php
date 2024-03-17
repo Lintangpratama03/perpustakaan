@@ -1,6 +1,7 @@
-<x-app-layout>
+<x-guest-layout>
 
     <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
+        <x-navbar-guest />
         <div class="pt-7 pb-6 bg-cover"
             style="background-image: url('../assets/img/header-orange-purple.jpg'); background-position: bottom;">
         </div>
@@ -118,7 +119,8 @@
                         </div>
                         <div class="card-body p-3">
                             <p class="text-sm mb-4">
-                                Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally
+                                Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two
+                                equally
                                 difficult paths, choose the one more painful in the short term (pain avoidance is
                                 creating an illusion of equality).
                             </p>
@@ -183,7 +185,8 @@
                                     </div>
                                     <div class="d-flex align-items-start flex-column justify-content-center">
                                         <h6 class="mb-0 text-sm font-weight-semibold">Sarah Lamalo</h6>
-                                        <p class="mb-0 text-sm text-secondary">Hi! I need more information about ...
+                                        <p class="mb-0 text-sm text-secondary">Hi! I need more information about
+                                            ...
                                         </p>
                                     </div>
                                     <span class="p-1 bg-success rounded-circle ms-auto me-3">
@@ -278,7 +281,8 @@
                                                                 Lamalo</p>
                                                             <p class="text-xs text-secondary mb-0">20 Jul 2022</p>
                                                         </div>
-                                                        <p class="text-dark text-sm font-weight-bold ms-auto">Growth
+                                                        <p class="text-dark text-sm font-weight-bold ms-auto">
+                                                            Growth
                                                         </p>
                                                     </div>
                                                 </div>
@@ -311,11 +315,13 @@
                                                     <div
                                                         class="blur shadow d-flex align-items-center w-100 border-radius-md border border-white mt-8 p-3">
                                                         <div class="w-50">
-                                                            <p class="text-dark text-sm font-weight-bold mb-1">Charles
+                                                            <p class="text-dark text-sm font-weight-bold mb-1">
+                                                                Charles
                                                                 Deluvio</p>
                                                             <p class="text-xs text-secondary mb-0">17 Jul 2022</p>
                                                         </div>
-                                                        <p class="text-dark text-sm font-weight-bold ms-auto">Education
+                                                        <p class="text-dark text-sm font-weight-bold ms-auto">
+                                                            Education
                                                         </p>
                                                     </div>
                                                 </div>
@@ -350,7 +356,8 @@
                                                     </svg>
                                                 </div>
                                                 <h5 class="text-dark text-lg"> Create new post </h5>
-                                                <p class="text-sm text-secondary mb-0">Drive into the editor and add
+                                                <p class="text-sm text-secondary mb-0">Drive into the editor and
+                                                    add
                                                     your content.</p>
                                             </a>
                                         </div>
@@ -465,8 +472,8 @@
                     href="https://www.creative-tim.com/learning-lab/bootstrap/installation-guide/corporate-ui-dashboard">View
                     documentation</a>
                 <div class="w-100 text-center">
-                    <a class="github-button" href="https://github.com/creativetimofficial/corporate-ui-dashboard" target="_blank"
-                        data-icon="octicon-star" data-size="large" data-show-count="true"
+                    <a class="github-button" href="https://github.com/creativetimofficial/corporate-ui-dashboard"
+                        target="_blank" data-icon="octicon-star" data-size="large" data-show-count="true"
                         aria-label="Star creativetimofficial/corporate-ui-dashboard on GitHub">Star</a>
                     <h6 class="mt-3">Thank you for sharing!</h6>
                     <a href="https://twitter.com/intent/tweet?text=Check%20Corporate%20UI%20Dashboard%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fcorporate-ui-dashboard"
@@ -482,4 +489,4 @@
         </div>
     </div>
 
-</x-app-layout>
+</x-guest-layout>

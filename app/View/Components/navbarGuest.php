@@ -21,6 +21,6 @@ class NavbarGuest extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.navbar-guest');
+        return view('components.sidenav-top');
     }
 }

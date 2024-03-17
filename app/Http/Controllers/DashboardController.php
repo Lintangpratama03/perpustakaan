@@ -18,6 +18,10 @@ class DashboardController extends Controller
         $swiperData = $this->getSwiperData($userrfid);
         return view('dashboard', compact('userrfid', 'swiperData'));
     }
+    public function index_anggota()
+    {
+        return view('account-pages/profile');
+    }
 
     public function getSwiperData($userrfid)
     {
