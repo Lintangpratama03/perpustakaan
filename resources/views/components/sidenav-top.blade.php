@@ -6,23 +6,23 @@
             </div>
         </nav>
         <ul class="navbar-nav d-none d-lg-flex">
-            <li class="nav-item px-3 py-3 border-radius-sm  d-flex align-items-center">
-                <a href="" class="nav-link text-white p-0">
+            <li class="nav-item px-3 py-3 border-radius-sm bg-slate-800 d-flex align-items-center">
+                <a href="{{ route('dashboard-anggota') }}" id="dashboard-link" class="nav-link text-white p-0">
                     Dashboard
                 </a>
             </li>
             <li class="nav-item px-3 py-3 border-radius-sm  d-flex align-items-center">
-                <a href="" class="nav-link text-white p-0">
+                <a href="{{ route('buku-anggota') }}" id="buku-link" class="nav-link text-white p-0">
                     Buku
                 </a>
             </li>
-            <li class="nav-item px-3 py-3 border-radius-sm bg-slate-800 d-flex align-items-center">
-                <a href="" class="nav-link text-white p-0">
+            <li class="nav-item px-3 py-3 border-radius-sm  d-flex align-items-center">
+                <a href="" id="peminjaman-link" class="nav-link text-white p-0">
                     Peminjaman
                 </a>
             </li>
             <li class="nav-item px-3 py-3 border-radius-sm  d-flex align-items-center">
-                <a href="" class="nav-link text-white p-0">
+                <a href="" id="pengembalian-link" class="nav-link text-white p-0">
                     Pengembalian
                 </a>
             </li>
