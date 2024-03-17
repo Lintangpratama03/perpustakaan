@@ -4,6 +4,15 @@
         <div class="pt-7 pb-6 bg-cover"
             style="background-image: url('../assets/img/bukuu.png'); background-position: bottom;"></div>
         <div class="container my-3 py-3">
+            <div class="d-flex justify-content-end mb-3">
+                <button class="btn btn-primary position-relative">
+                    <i class="fas fa-shopping-cart"></i>
+                    Keranjang
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                        id="cart-count" style="background-color: rgba(255, 0, 0, 0.8);">0</span>
+
+                </button>
+            </div>
             <section style="background-color: #eee;">
                 <div class="container py-5">
                     <div class="row mb-4">
@@ -76,9 +85,12 @@
                                                         <a href="#" class="btn btn-primary"><i
                                                                 class="fas fa-eye"></i>
                                                             Lihat</a>
-                                                        <a href="#" class="btn btn-success"><i
-                                                                class="fas fa-shopping-cart"></i>
-                                                            Keranjang</a>
+                                                        <button class="btn btn-success add-to-cart"
+                                                            data-book-id="{{ $book->id }}"
+                                                            {{ in_array($book->id, $cartItems) ? 'disabled' : '' }}>
+                                                            <i class="fas fa-shopping-cart"></i>
+                                                            {{ in_array($book->id, $cartItems) ? 'Dalam Keranjang' : 'Keranjang' }}
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -97,9 +109,17 @@
     const nameInput = document.getElementById('name');
     const pengarangInput = document.getElementById('pengarang');
     const penerbitInput = document.getElementById('penerbit');
+    const cartCountElement = document.getElementById('cart-count');
+    let cartItems = [];
+
     nameInput.addEventListener('input', filterData);
     pengarangInput.addEventListener('change', filterData);
     penerbitInput.addEventListener('change', filterData);
+
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', addToCart);
+    });
 
     function filterData() {
         const nameValue = nameInput.value.toLowerCase();
@@ -114,5 +134,35 @@
                 pengarangValue)) && (penerbitValue == '' || penerbit.includes(penerbitValue));
             card.style.display = shouldShow ? 'block' : 'none';
         });
+    }
+
+    function addToCart(event) {
+        const bookId = event.target.dataset.bookId;
+        if (!cartItems.includes(bookId)) {
+            cartItems.push(bookId);
+            updateCartCount();
+            showSuccessNotification(`Buku berhasil ditambahkan ke keranjang`);
+            event.target.disabled = true;
+            event.target.textContent = 'Dalam Keranjang';
+        }
+    }
+
+    function updateCartCount() {
+        cartCountElement.textContent = cartItems.length;
+    }
+
+    function showSuccessNotification(message) {
+        const notification = document.createElement('div');
+        notification.classList.add('alert', 'alert-success', 'alert-dismissible', 'fade', 'show');
+        notification.setAttribute('role', 'alert');
+        notification.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
     }
 </script>

@@ -34,7 +34,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, $rememberMe)) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard-anggota');
+            return redirect()->intended('/anggota/dashboard-anggota');
         }
 
         return back()->withErrors([

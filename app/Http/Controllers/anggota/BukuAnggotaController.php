@@ -22,6 +22,7 @@ class BukuAnggotaController extends Controller
         $pengarangs = Pengarang::pluck('name', 'name');
         $penerbits = Penerbit::pluck('name', 'name');
         // dd($pengarangs);
-        return view('account-pages.buku', compact('buku', 'pengarangs', 'penerbits'));
+        $cartItems = [];
+        return view('account-pages.buku', compact('buku', 'pengarangs', 'penerbits', 'cartItems'));
     }
 }
