@@ -62,8 +62,8 @@ Route::middleware('guest')->group(function () {
 
 
 Route::group(['middleware' => ['auth', 'posisi:2']], function () {
-    Route::post('/logout', [LoginController::class, 'destroy'])
-        ->name('logout');
+    Route::post('/logoutt', [LoginController::class, 'destroy'])
+        ->name('logoutt');
     Route::prefix('dashboard-anggota')->group(function () {
         Route::get('/', [DashboardController::class, 'index_anggota'])->name('dashboard-anggota');
     });
