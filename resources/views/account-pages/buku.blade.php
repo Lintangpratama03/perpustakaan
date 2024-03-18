@@ -5,13 +5,10 @@
             style="background-image: url('../assets/img/bukuu.png'); background-position: bottom;"></div>
         <div class="container my-3 py-3">
             <div class="d-flex justify-content-end mb-3">
-                <button class="btn btn-primary position-relative">
-                    <i class="fas fa-shopping-cart"></i>
-                    Keranjang
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                        id="cart-count" style="background-color: rgba(255, 0, 0, 0.8);">0</span>
-
-                </button>
+                <a class="btn btn-outline-dark" href="{{ route('shopping.cart') }}">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span
+                        class="badge text-bg-danger">{{ count((array) session('cart')) }}</span>
+                </a>
             </div>
             <section style="background-color: #eee;">
                 <div class="container py-5">
@@ -85,12 +82,9 @@
                                                         <a href="#" class="btn btn-primary"><i
                                                                 class="fas fa-eye"></i>
                                                             Lihat</a>
-                                                        <button class="btn btn-success add-to-cart"
-                                                            data-book-id="{{ $book->id }}"
-                                                            {{ in_array($book->id, $cartItems) ? 'disabled' : '' }}>
-                                                            <i class="fas fa-shopping-cart"></i>
-                                                            {{ in_array($book->id, $cartItems) ? 'Dalam Keranjang' : 'Keranjang' }}
-                                                        </button>
+                                                        <a href="{{ route('addbook.to.cart', $book->id) }}"
+                                                            class="btn btn-outline-danger"><i class="fas fa-plus"></i>
+                                                            Keranjang</a>
                                                     </div>
                                                 </div>
                                             </div>
