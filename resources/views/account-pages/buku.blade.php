@@ -1,4 +1,15 @@
 <x-guest-layout>
+
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
+        </script>
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    </head>
     <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
         <x-navbar-guest />
         <div class="pt-7 pb-6 bg-cover"
@@ -6,7 +17,7 @@
         <div class="container my-3 py-3">
             <div class="d-flex justify-content-end mb-3">
                 <a class="btn btn-outline-dark" href="{{ route('shopping.cart') }}">
-                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Keranjang <span
                         class="badge text-bg-danger">{{ count((array) session('cart')) }}</span>
                 </a>
             </div>
@@ -52,19 +63,66 @@
                                                     </div>
                                                 </div>
                                                 <img src="{{ asset('assets/img/buku/' . $book->image) }}"
-                                                    class="card-img-top" alt="{{ $book->name }}" />
+                                                    class="card-img-top" alt="{{ $book->name }}"
+                                                    style="height: 200px; object-fit: cover;" />
+                                                <div id="image-overlay" class="image-overlay">
+                                                    <span class="close-btn">&times;</span>
+                                                    <img id="full-image" src="" alt="">
+                                                </div>
+                                                <style>
+                                                    .image-overlay {
+                                                        display: none;
+                                                        position: fixed;
+                                                        z-index: 9999;
+                                                        left: 0;
+                                                        top: 0;
+                                                        width: 100%;
+                                                        height: 100%;
+                                                        background-color: rgba(0, 0, 0, 0.9);
+                                                        overflow: auto;
+                                                        text-align: center;
+                                                    }
+
+                                                    .image-overlay img {
+                                                        max-width: 90%;
+                                                        max-height: 90%;
+                                                        margin: auto;
+                                                        display: block;
+                                                        position: absolute;
+                                                        top: 50%;
+                                                        left: 50%;
+                                                        transform: translate(-50%, -50%);
+                                                    }
+
+                                                    .close-btn {
+                                                        position: absolute;
+                                                        top: 15px;
+                                                        right: 35px;
+                                                        color: #f1f1f1;
+                                                        font-size: 40px;
+                                                        font-weight: bold;
+                                                        transition: 0.3s ease;
+                                                    }
+
+                                                    .close-btn:hover,
+                                                    .close-btn:focus {
+                                                        color: #bbb;
+                                                        text-decoration: none;
+                                                        cursor: pointer;
+                                                    }
+                                                </style>
                                                 <div class="card-body">
                                                     <div class="d-flex justify-content-between">
                                                         <p class="small">Penerbit</p>
                                                         <p class="small">
-                                                            <a href="#!" class="text-muted"
+                                                            <a class="text-muted"
                                                                 id="penerbit">{{ $book->penerbit_name }}</a>
                                                         </p>
                                                     </div>
                                                     <div class="d-flex justify-content-between">
                                                         <p class="small">Pengarang</p>
                                                         <p class="small">
-                                                            <a href="#!" class="text-muted"
+                                                            <a class="text-muted"
                                                                 id="pengarang">{{ $book->pengarang_name }}</a>
                                                         </p>
                                                     </div>
@@ -167,4 +225,26 @@
             notification.remove();
         }, 3000);
     }
+
+    const imageOverlay = document.getElementById('image-overlay');
+    const fullImage = document.getElementById('full-image');
+    const closeBtn = document.querySelector('.close-btn');
+
+    const cardImages = document.querySelectorAll('.card-img-top');
+    cardImages.forEach(image => {
+        image.addEventListener('click', () => {
+            fullImage.src = image.src;
+            imageOverlay.style.display = 'block';
+        });
+    });
+
+    closeBtn.addEventListener('click', () => {
+        imageOverlay.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === imageOverlay) {
+            imageOverlay.style.display = 'none';
+        }
+    });
 </script>
