@@ -9,4 +9,9 @@ class Peminjaman extends Model
 {
     use HasFactory;
     protected $table = "peminjaman";
+    protected $fillable = [
+        'tanggal_pinjam',
+        'tenggat_kembali',
+        'status',
+    ];
 }

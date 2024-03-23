@@ -72,11 +72,12 @@ Route::group(['middleware' => ['auth', 'posisi:2'], 'prefix' => 'anggota'], func
         Route::get('/', [BukuAnggotaController::class, 'index'])->name('buku-anggota');
         Route::get('/book/{id}', [BukuAnggotaController::class, 'addBooktoCart'])->name('addbook.to.cart');
     });
-
-    Route::get('/shopping-cart', [BukuAnggotaController::class, 'bookCart'])->name('shopping.cart');
-    Route::patch('/update-shopping-cart', [BukuAnggotaController::class, 'updateCart'])->name('update.sopping.cart');
-    Route::delete('/delete-cart-product', [BukuAnggotaController::class, 'deleteProduct'])->name('delete.cart.product');
-
+    Route::prefix('shopping-cart')->group(function () {
+        Route::get('/', [BukuAnggotaController::class, 'bookCart'])->name('shopping.cart');
+        Route::post('/checkout', [BukuAnggotaController::class, 'checkout'])->name('checkout');
+        Route::patch('/update-shopping-cart', [BukuAnggotaController::class, 'updateCart'])->name('update.sopping.cart');
+        Route::post('/delete-cart-product/{id}', [BukuAnggotaController::class, 'deleteProduct'])->name('delete.cart.product');
+    });
     Route::get('/kelola-user/user-profile', [ProfileController::class, 'index'])->name('users.profile');
     Route::put('/kelola-user/user-profile/update', [ProfileController::class, 'update'])->name('users.update_profile');
 });

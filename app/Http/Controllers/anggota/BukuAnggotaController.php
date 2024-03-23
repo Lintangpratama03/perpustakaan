@@ -4,6 +4,8 @@ namespace App\Http\Controllers\anggota;
 
 use App\Http\Controllers\Controller;
 use App\Models\Buku;
+use App\Models\Keranjang;
+use App\Models\Peminjaman;
 use App\Models\Penerbit;
 use App\Models\Pengarang;
 use Illuminate\Http\Request;
@@ -39,12 +41,14 @@ class BukuAnggotaController extends Controller
             $cart[$id]['jumlah']++;
         } else {
             $cart[$id] = [
+                "id" => $book->id,
                 "name" => $book->name,
                 "jumlah" => 1,
                 "tahun_terbit" => $book->tahun_terbit,
                 "image" => $book->image
             ];
         }
+        // dd($cart);
         session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Buku Berhasil tambah ke Cart!');
     }
@@ -69,5 +73,28 @@ class BukuAnggotaController extends Controller
             }
             session()->flash('success', 'Book successfully deleted.');
         }
+    }
+
+    public function checkout(Request $request)
+    {
+        $tanggalPinjam = now();
+        $tenggatKembali = now()->addDays(7);
+
+        $peminjaman = new Peminjaman;
+        $peminjaman->tanggal_pinjam = $tanggalPinjam;
+        $peminjaman->tenggat_kembali = $tenggatKembali;
+        $peminjaman->status = 1;
+        $peminjaman->save();
+
+        $ids = $request->input('ids');
+        foreach ($ids as $id_buku) {
+            $keranjang = new Keranjang;
+            $keranjang->id_peminjaman = $peminjaman->id;
+            $keranjang->id_buku = $id_buku;
+            $keranjang->save();
+        }
+        session()->forget('cart');
+
+        return redirect()->to('/anggota/buku')->with('success', 'Checkout berhasil. Semua buku berhasil dipinjam.');
     }
 }
