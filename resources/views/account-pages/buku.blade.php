@@ -25,24 +25,22 @@
                 <div class="container py-5">
                     <div class="row mb-4">
                         <div class="col-md-3">
+                            <label for="penerbit">FILTER</label>
                             <div class="form-group">
-                                <label for="name">Nama Buku</label>
                                 <input type="text" placeholder="Masukkan Nama Buku" class="form-control"
                                     id="name" name="name">
                             </div>
                             <div class="form-group">
-                                <label for="pengarang">Pengarang</label>
                                 <select class="form-control" id="pengarang" name="pengarang">
-                                    <option value="">Select Pengarang</option>
+                                    <option value="">-- Pilih Pengarang -- </option>
                                     @foreach ($pengarangs as $id => $name)
                                         <option value="{{ $id }}">{{ $name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="penerbit">Penerbit</label>
                                 <select class="form-control" id="penerbit" name="penerbit">
-                                    <option value="">Select Penerbit</option>
+                                    <option value="">-- Pilih Penerbit --</option>
                                     @foreach ($penerbits as $id => $name)
                                         <option value="{{ $id }}">{{ $name }}</option>
                                     @endforeach
