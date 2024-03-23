@@ -25,7 +25,7 @@
                 <div class="container py-5">
                     <div class="row mb-4">
                         <div class="col-md-3">
-                            <label for="penerbit">FILTER</label>
+                            <label for="">FILTER</label>
                             <div class="form-group">
                                 <input type="text" placeholder="Masukkan Nama Buku" class="form-control"
                                     id="name" name="name">
@@ -162,87 +162,97 @@
             @yield('content')
         </div>
     </div>
-</x-guest-layout>
-<script>
-    const nameInput = document.getElementById('name');
-    const pengarangInput = document.getElementById('pengarang');
-    const penerbitInput = document.getElementById('penerbit');
-    const cartCountElement = document.getElementById('cart-count');
-    let cartItems = [];
+    <script src='https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const nameInput = document.getElementById('name');
+        const pengarangInput = document.getElementById('pengarang');
+        const penerbitInput = document.getElementById('penerbit');
+        const cartCountElement = document.getElementById('cart-count');
+        let cartItems = [];
 
-    nameInput.addEventListener('input', filterData);
-    pengarangInput.addEventListener('change', filterData);
-    penerbitInput.addEventListener('change', filterData);
+        nameInput.addEventListener('input', filterData);
+        pengarangInput.addEventListener('change', filterData);
+        penerbitInput.addEventListener('change', filterData);
 
-    const addToCartButtons = document.querySelectorAll('.add-to-cart');
-    addToCartButtons.forEach(button => {
-        button.addEventListener('click', addToCart);
-    });
-
-    function filterData() {
-        const nameValue = nameInput.value.toLowerCase();
-        const pengarangValue = pengarangInput.value;
-        const penerbitValue = penerbitInput.value;
-        const cards = document.querySelectorAll('.card');
-        cards.forEach(card => {
-            const name = card.querySelector('.lead').textContent.toLowerCase();
-            const pengarang = card.querySelector('#pengarang').textContent;
-            const penerbit = card.querySelector('#penerbit').textContent;
-            const shouldShow = name.includes(nameValue) && (pengarangValue == '' || pengarang.includes(
-                pengarangValue)) && (penerbitValue == '' || penerbit.includes(penerbitValue));
-            card.style.display = shouldShow ? 'block' : 'none';
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', addToCart);
         });
-    }
 
-    function addToCart(event) {
-        const bookId = event.target.dataset.bookId;
-        if (!cartItems.includes(bookId)) {
-            cartItems.push(bookId);
-            updateCartCount();
-            showSuccessNotification(`Buku berhasil ditambahkan ke keranjang`);
-            event.target.disabled = true;
-            event.target.textContent = 'Dalam Keranjang';
+        function filterData() {
+            const nameValue = nameInput.value.toLowerCase();
+            const pengarangValue = pengarangInput.value;
+            const penerbitValue = penerbitInput.value;
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const name = card.querySelector('.lead').textContent.toLowerCase();
+                const pengarang = card.querySelector('#pengarang').textContent;
+                const penerbit = card.querySelector('#penerbit').textContent;
+                const shouldShow = name.includes(nameValue) && (pengarangValue == '' || pengarang.includes(
+                    pengarangValue)) && (penerbitValue == '' || penerbit.includes(penerbitValue));
+                card.style.display = shouldShow ? 'block' : 'none';
+            });
         }
-    }
 
-    function updateCartCount() {
-        cartCountElement.textContent = cartItems.length;
-    }
+        function addToCart(event) {
+            event.preventDefault();
+            const bookId = event.target.dataset.bookId;
+            if (!cartItems.includes(bookId)) {
+                Swal.fire({
+                    title: 'Konfirmasi',
+                    text: 'Apakah Anda yakin ingin menambahkan buku ini ke keranjang?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Tambahkan',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        cartItems.push(bookId);
+                        updateCartCount();
+                        window.location.href = `{{ route('addbook.to.cart', $book->id) }}`;
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: 'Buku telah ditambahkan ke keranjang',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+            }
+        }
 
-    function showSuccessNotification(message) {
-        const notification = document.createElement('div');
-        notification.classList.add('alert', 'alert-success', 'alert-dismissible', 'fade', 'show');
-        notification.setAttribute('role', 'alert');
-        notification.innerHTML = `
-            ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        `;
-        document.body.appendChild(notification);
+        function updateCartCount() {
+            cartCountElement.textContent = cartItems.length;
+        }
 
-        setTimeout(() => {
-            notification.remove();
-        }, 3000);
-    }
+        function showSuccessNotification(message) {
 
-    const imageOverlay = document.getElementById('image-overlay');
-    const fullImage = document.getElementById('full-image');
-    const closeBtn = document.querySelector('.close-btn');
+        }
 
-    const cardImages = document.querySelectorAll('.card-img-top');
-    cardImages.forEach(image => {
-        image.addEventListener('click', () => {
-            fullImage.src = image.src;
-            imageOverlay.style.display = 'block';
+        const imageOverlay = document.getElementById('image-overlay');
+        const fullImage = document.getElementById('full-image');
+        const closeBtn = document.querySelector('.close-btn');
+
+        const cardImages = document.querySelectorAll('.card-img-top');
+        cardImages.forEach(image => {
+            image.addEventListener('click', () => {
+                fullImage.src = image.src;
+                imageOverlay.style.display = 'block';
+            });
         });
-    });
 
-    closeBtn.addEventListener('click', () => {
-        imageOverlay.style.display = 'none';
-    });
-
-    window.addEventListener('click', (event) => {
-        if (event.target === imageOverlay) {
+        closeBtn.addEventListener('click', () => {
             imageOverlay.style.display = 'none';
-        }
-    });
-</script>
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === imageOverlay) {
+                imageOverlay.style.display = 'none';
+            }
+        });
+    </script>
+</x-guest-layout>
