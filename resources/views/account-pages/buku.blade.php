@@ -1,4 +1,5 @@
 <x-guest-layout>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -42,6 +43,14 @@
                                 <select class="form-control" id="penerbit" name="penerbit">
                                     <option value="">-- Pilih Penerbit --</option>
                                     @foreach ($penerbits as $id => $name)
+                                        <option value="{{ $id }}">{{ $name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" id="penerbit" name="penerbit">
+                                    <option value="">-- Pilih Kategori --</option>
+                                    @foreach ($rak as $id => $name)
                                         <option value="{{ $id }}">{{ $name }}</option>
                                     @endforeach
                                 </select>
@@ -138,8 +147,8 @@
                                                         <a href="#" class="btn btn-primary"><i
                                                                 class="fas fa-eye"></i>
                                                             Lihat</a>
-                                                        <a href="{{ route('addbook.to.cart', $book->id) }}"
-                                                            class="btn btn-outline-danger"><i class="fas fa-plus"></i>
+                                                        <a class="btn btn-outline-danger add-cart"><i
+                                                                class="fas fa-plus" data-id="{{ $book->id }}"></i>
                                                             Keranjang</a>
                                                     </div>
                                                 </div>
@@ -197,33 +206,49 @@
             });
         }
 
-        function addToCart(event) {
-            event.preventDefault();
-            const bookId = event.target.dataset.bookId;
-            if (!cartItems.includes(bookId)) {
-                Swal.fire({
-                    title: 'Konfirmasi',
-                    text: 'Apakah Anda yakin ingin menambahkan buku ini ke keranjang?',
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonText: 'Ya, Tambahkan',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        cartItems.push(bookId);
-                        updateCartCount();
-                        window.location.href = `{{ route('addbook.to.cart', $book->id) }}`;
-                        Swal.fire({
-                            title: 'Berhasil!',
-                            text: 'Buku telah ditambahkan ke keranjang',
-                            icon: 'success',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    }
-                });
-            }
-        }
+        $(document).on('click', '.add-cart', function(e) {
+            e.preventDefault();
+            let id = $(this).find('i').data('id');
+            console.log(id);
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Apakah Anda yakin ingin menambahkan buku ini ke keranjang?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Tambahkan',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let token = $('meta[name="csrf-token"]').attr(
+                        'content');
+                    $.ajax({
+                        url: '/anggota/buku/add-book/' + id,
+                        method: 'GET',
+                        data: {
+                            _token: token
+                        },
+                        success: function(response) {
+                            Swal.fire({
+                                title: 'Berhasil Masuk Keranjang!',
+                                text: response.message,
+                                icon: 'success',
+                                timer: 1000,
+                                timerProgressBar: true,
+                                allowOutsideClick: false,
+                                showConfirmButton: false
+                            }).then(() => {
+                                $("#deleteModal").modal('hide');
+                                window.location.reload();
+                            });
+                        }
+                    });
+                    cartItems.push(id);
+                    updateCartCount();
+                }
+            });
+        });
+
+
 
         function updateCartCount() {
             cartCountElement.textContent = cartItems.length;

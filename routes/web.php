@@ -70,7 +70,7 @@ Route::group(['middleware' => ['auth', 'posisi:2'], 'prefix' => 'anggota'], func
     });
     Route::prefix('buku')->group(function () {
         Route::get('/', [BukuAnggotaController::class, 'index'])->name('buku-anggota');
-        Route::get('/book/{id}', [BukuAnggotaController::class, 'addBooktoCart'])->name('addbook.to.cart');
+        Route::get('/add-book/{id}', [BukuAnggotaController::class, 'addBooktoCart'])->name('addbook.to.cart');
     });
     Route::prefix('shopping-cart')->group(function () {
         Route::get('/', [BukuAnggotaController::class, 'bookCart'])->name('shopping.cart');

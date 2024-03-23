@@ -110,46 +110,94 @@
         });
     });
 
+    // $("#checkout").click(function(e) {
+    //     e.preventDefault();
+
+    //     var confirmCheckout = confirm("Apakah anda yakin ingin Pinjam?");
+
+    //     if (confirmCheckout) {
+    //         var ids = [];
+    //         var quantities = [];
+
+    //         $('#cart tbody tr').each(function() {
+    //             ids.push($(this).find('td[data-th="id_buku"]').text());
+    //             quantities.push($(this).find('td[data-th="jumlah"]')
+    //                 .text());
+    //         });
+
+    //         $.ajax({
+    //             url: '{{ route('checkout') }}',
+    //             method: "POST",
+    //             data: {
+    //                 _token: '{{ csrf_token() }}',
+    //                 ids: ids,
+    //                 quantities: quantities
+    //             },
+    //             success: function(response) {
+    //                 Swal.fire({
+    //                     title: 'Berhasil!',
+    //                     text: response.message,
+    //                     icon: 'success',
+    //                     timer: 1500,
+    //                     timerProgressBar: true,
+    //                     allowOutsideClick: false,
+    //                     showConfirmButton: false
+    //                 }).then(() => {
+    //                     window.location.href = '{{ url('/anggota/buku') }}';
+    //                 });
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 console.error(xhr.responseText);
+    //             }
+    //         });
+    //     }
+    // });
     $("#checkout").click(function(e) {
         e.preventDefault();
 
-        var confirmCheckout = confirm("Apakah anda yakin ingin Pinjam?");
+        Swal.fire({
+            title: 'Apakah Anda Yakin Ingin Melakukan Peminjaman?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Lakukan Peminjaman',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var ids = [];
+                var quantities = [];
 
-        if (confirmCheckout) {
-            var ids = [];
-            var quantities = []; // Array untuk menyimpan jumlah buku
+                $('#cart tbody tr').each(function() {
+                    ids.push($(this).find('td[data-th="id_buku"]').text());
+                    quantities.push($(this).find('td[data-th="jumlah"]')
+                        .text());
+                });
 
-            $('#cart tbody tr').each(function() {
-                ids.push($(this).find('td[data-th="id_buku"]').text());
-                quantities.push($(this).find('td[data-th="jumlah"]')
-            .text()); // Menambahkan jumlah buku ke dalam array
-            });
-
-            $.ajax({
-                url: '{{ route('checkout') }}',
-                method: "POST",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    ids: ids,
-                    quantities: quantities // Mengirim array quantities ke controller
-                },
-                success: function(response) {
-                    Swal.fire({
-                        title: 'Berhasil!',
-                        text: response.message,
-                        icon: 'success',
-                        timer: 1500,
-                        timerProgressBar: true,
-                        allowOutsideClick: false,
-                        showConfirmButton: false
-                    }).then(() => {
-                        window.location.href = '{{ url('/anggota/buku') }}';
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
-        }
+                $.ajax({
+                    url: '{{ route('checkout') }}',
+                    method: "POST",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        ids: ids,
+                        quantities: quantities
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: response.message,
+                            icon: 'success',
+                            timer: 1500,
+                            timerProgressBar: true,
+                            allowOutsideClick: false,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.href = '{{ url('/anggota/buku') }}';
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+        });
     });
 </script>

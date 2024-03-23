@@ -8,6 +8,7 @@ use App\Models\Keranjang;
 use App\Models\Peminjaman;
 use App\Models\Penerbit;
 use App\Models\Pengarang;
+use App\Models\Rak;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -24,9 +25,10 @@ class BukuAnggotaController extends Controller
             ->get();
         $pengarangs = Pengarang::pluck('name', 'name');
         $penerbits = Penerbit::pluck('name', 'name');
+        $rak = Rak::pluck('name', 'name');
         // dd($pengarangs);
         $cartItems = [];
-        return view('account-pages.buku', compact('buku', 'pengarangs', 'penerbits', 'cartItems'));
+        return view('account-pages.buku', compact('buku', 'pengarangs', 'penerbits', 'cartItems', 'rak'));
     }
 
     public function bookCart()
@@ -94,6 +96,7 @@ class BukuAnggotaController extends Controller
                 $keranjang = new Keranjang;
                 $keranjang->id_peminjaman = $peminjaman->id;
                 $keranjang->id_buku = $id_buku;
+                $keranjang->jumlah = $quantities[$key];
                 $keranjang->save();
 
                 $buku = Buku::find($id_buku);
