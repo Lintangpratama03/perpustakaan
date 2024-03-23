@@ -8,6 +8,7 @@ use App\Models\Keranjang;
 use App\Models\Peminjaman;
 use App\Models\Penerbit;
 use App\Models\Pengarang;
+use Exception;
 use Illuminate\Http\Request;
 
 class BukuAnggotaController extends Controller
@@ -75,26 +76,38 @@ class BukuAnggotaController extends Controller
         }
     }
 
+
     public function checkout(Request $request)
     {
         $tanggalPinjam = now();
         $tenggatKembali = now()->addDays(7);
+        try {
+            $peminjaman = new Peminjaman;
+            $peminjaman->tanggal_pinjam = $tanggalPinjam;
+            $peminjaman->tenggat_kembali = $tenggatKembali;
+            $peminjaman->status = 1;
+            $peminjaman->save();
 
-        $peminjaman = new Peminjaman;
-        $peminjaman->tanggal_pinjam = $tanggalPinjam;
-        $peminjaman->tenggat_kembali = $tenggatKembali;
-        $peminjaman->status = 1;
-        $peminjaman->save();
+            $ids = $request->input('ids');
+            $quantities = $request->input('quantities');
+            foreach ($ids as $key => $id_buku) {
+                $keranjang = new Keranjang;
+                $keranjang->id_peminjaman = $peminjaman->id;
+                $keranjang->id_buku = $id_buku;
+                $keranjang->save();
 
-        $ids = $request->input('ids');
-        foreach ($ids as $id_buku) {
-            $keranjang = new Keranjang;
-            $keranjang->id_peminjaman = $peminjaman->id;
-            $keranjang->id_buku = $id_buku;
-            $keranjang->save();
+                $buku = Buku::find($id_buku);
+                if ($buku) {
+                    $buku->jumlah -= $quantities[$key];
+                    $buku->save();
+                }
+            }
+
+            session()->forget('cart');
+
+            return response()->json(['message' => 'Checkout berhasil'], 200);
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Gagal menyimpan data. Silakan coba lagi.'], 500);
         }
-        session()->forget('cart');
-
-        return redirect()->to('/anggota/buku')->with('success', 'Checkout berhasil. Semua buku berhasil dipinjam.');
     }
 }

@@ -38,7 +38,7 @@
                                                     </div>
                                                 </td>
                                                 <td data-th="tahun_terbit">{{ $details['tahun_terbit'] }}</td>
-                                                <td data-th="jumlah">{{ $details['jumlah'] }}</td>
+                                                <td data-th="jumlah" id="jml">{{ $details['jumlah'] }}</td>
                                                 <td class="actions">
                                                     <a class="btn btn-outline-danger btn-sm delete-product"
                                                         data-id="{{ $id }}"><i class="fa fa-trash-o"></i></a>
@@ -109,15 +109,20 @@
             }
         });
     });
+
     $("#checkout").click(function(e) {
         e.preventDefault();
 
-        var confirmCheckout = confirm("Apakah anda yakin ingin checkout?");
+        var confirmCheckout = confirm("Apakah anda yakin ingin Pinjam?");
 
         if (confirmCheckout) {
             var ids = [];
+            var quantities = []; // Array untuk menyimpan jumlah buku
+
             $('#cart tbody tr').each(function() {
                 ids.push($(this).find('td[data-th="id_buku"]').text());
+                quantities.push($(this).find('td[data-th="jumlah"]')
+            .text()); // Menambahkan jumlah buku ke dalam array
             });
 
             $.ajax({
@@ -125,7 +130,8 @@
                 method: "POST",
                 data: {
                     _token: '{{ csrf_token() }}',
-                    ids: ids
+                    ids: ids,
+                    quantities: quantities // Mengirim array quantities ke controller
                 },
                 success: function(response) {
                     Swal.fire({

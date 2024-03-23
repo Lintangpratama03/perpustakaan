@@ -13,7 +13,7 @@ class Buku extends Model
         'name',
         'alamat',
         'telp',
-        'tahun',
+        'tahun_terbit',
         'jumlah',
         'image',
         'isbn',
