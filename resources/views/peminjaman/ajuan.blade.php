@@ -44,6 +44,9 @@
                                             Tanggal Pinjam</th>
                                         <th
                                             class="text-left text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
+                                            Tenggat Kembali</th>
+                                        <th
+                                            class="text-left text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
                                             ID RFID</th>
                                         <th
                                             class="text-center text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
@@ -64,6 +67,7 @@
                                                 <td class="text-left">{{ $pjm->id }}</td>
                                                 <td class="text-left">{{ $pjm->name_user }}</td>
                                                 <td class="text-left">{{ $pjm->tanggal_pinjam }}</td>
+                                                <td class="text-left">{{ $pjm->tenggat_kembali }}</td>
                                                 <td class="text-left">{{ $pjm->id_card }}</td>
                                                 <td class="text-center">
                                                     @if ($pjm->status == 1)
@@ -71,23 +75,27 @@
                                                             class="badge badge-sm border border-danger text-danger bg-danger">{{ 'Belum Dicek' }}</span>
                                                     @elseif ($pjm->status == 2)
                                                         <span
-                                                            class="badge badge-sm border border-warning text-warning bg-warning">{{ 'Pending' }}</span>
+                                                            class="badge badge-sm border border-warning text-warning bg-warning">{{ 'Proses' }}</span>
                                                     @else
                                                         {{ 'N/A' }}
                                                     @endif
                                                 </td>
                                                 <td class="text-center">
-                                                    <a href="#" class="mx-3 edit-btn" data-bs-toggle="modal"
-                                                        data-bs-target="#editMemberModal" data-id="{{ $pjm->id }}">
-                                                        <i class="fas fa-eye text-secondary"></i>
-                                                    </a>
-                                                    <a href="#" class="mx-3 deleteIcon"
-                                                        data-id="{{ $pjm->id }}"
-                                                        data-name="{{ $pjm->name_user }}">
-                                                        <i
-                                                            class="cursor-pointer
-                                                        fas fa-trash text-secondary"></i>
-                                                    </a>
+                                                    @if ($pjm->status == 1)
+                                                        <a href="#" class="mx-3 edit-btn" data-bs-toggle="modal"
+                                                            data-bs-target="#editMemberModal"
+                                                            data-id="{{ $pjm->id }}">
+                                                            <i class="fas fa-eye text-secondary"></i>
+                                                        </a>
+                                                    @elseif ($pjm->status == 2)
+                                                        <a href="#" class="mx-3 scan-btn" data-bs-toggle="modal"
+                                                            data-bs-target="#scanMemberModal"
+                                                            data-id="{{ $pjm->id }}">
+                                                            <i class="fa fa-id-badge text-secondary"></i>
+                                                        </a>
+                                                    @else
+                                                        {{ 'N/A' }}
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -106,21 +114,59 @@
                             <div class="modal-body p-0">
                                 <div class="card card-plain">
                                     <div class="card-header pb-0 text-left">
-                                        <h3 class="font-weight-bolder text-dark">Form Data Buku Yang Dipinjam</h3>
+                                        <h3 class="font-weight-bolder text-dark">Data Buku Yang Dipinjam</h3>
                                     </div>
                                     <div class="card-body">
                                         <form method="post" id="editMemberForm">
                                             @csrf
                                             <div class="row">
-                                                <div class="col-md-6" id="table-data">
+                                                <div class="col-md-12">
+                                                    <table class="table">
+                                                        <input type="hidden" id="id_peminjaman" name="id_peminjaman"
+                                                            value="" />
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No</th>
+                                                                <th>Name</th>
+                                                                <th>Image</th>
+                                                                <th>Jumlah</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="table-data">
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </div>
                                             <div class="text-center mt-4">
                                                 <button type="button" class="btn btn-secondary mr-3"
                                                     data-bs-dismiss="modal">Kembali</button>
-                                                <button type="submit" id="edit_anggota_btn"
-                                                    class="btn btn-primary">Proses Ajuan</button>
+                                                <button type="button" id="tolak_status" class="btn btn-danger">Tolak
+                                                    Ajuan</button>
+                                                <button type="submit" id="edit_status" class="btn btn-primary">Proses
+                                                    Ajuan</button>
                                             </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="modal fade" id="scanMemberModal" tabindex="-1" role="dialog" aria-labelledby="modal-form"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body p-0">
+                                <div class="card card-plain">
+                                    <div class="card-header pb-0 text-left">
+                                        <h3 class="font-weight-bolder text-dark">Scan RFID</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form method="post" id="editMemberForm">
+                                            @csrf
+                                            <label for="">SILAHKAN SCAN RFID ANDA</label>
                                         </form>
                                     </div>
                                 </div>
@@ -141,12 +187,13 @@
     $(function() {
         $("#editMemberForm").submit(function(e) {
             e.preventDefault();
-            let id = $('#id').val();
+            let id = $('#id_peminjaman').val();
+            // console.log(id);
             const form = document.getElementById("editMemberForm");
             const fd = new FormData(form);
-            $("#edit_anggota_btn").text('Updating...');
+            $("#edit_status").text('Updating...');
             $.ajax({
-                url: '/kelola-user-users/users-management/update/' + id,
+                url: '/kelola-pinjam-ajuan/update/' + id,
                 method: 'POST',
                 data: fd,
                 cache: false,
@@ -158,13 +205,13 @@
                     if (response.status == 200) {
                         Swal.fire(
                             'Updated!',
-                            'Anggota Updated Successfully!',
+                            'Peminjaman Updated Successfully!',
                             'success'
                         );
                         $("#editMemberModal").modal('hide');
                         window.location.reload();
                     }
-                    $("#edit_anggota_btn").text('Edit anggota');
+                    $("#edit_status").text('Edit peminjaman');
                     $("#editMemberModal").modal('hide');
                 },
                 error: function(xhr) {
@@ -175,7 +222,48 @@
                             $('.error-' + key).text(value[0]);
                         });
                     }
-                    $("#edit_anggota_btn").text('Edit Anggota');
+                    $("#edit_status").text('Edit peminjaman');
+                }
+            });
+        });
+        $("#tolak_status").click(function(e) {
+            e.preventDefault();
+            let id = $('#id_peminjaman').val();
+            const form = document.getElementById("editMemberForm");
+            const fd = new FormData(form);
+            $("#tolak_status").text('Updating...');
+            $.ajax({
+                url: '/kelola-pinjam-ajuan/tolak/' + id,
+                method: 'POST',
+                data: fd,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status == 200) {
+                        Swal.fire(
+                            'Updated!',
+                            'Peminjaman Updated Successfully!',
+                            'success'
+                        );
+                        $("#editMemberModal").modal('hide');
+                        window.location.reload();
+                    }
+                    $("#tolak_status").text(
+                        'Tolak Ajuan'); // Mengubah teks tombol kembali setelah selesai
+                    $("#editMemberModal").modal('hide');
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422) {
+                        let errors = xhr.responseJSON.errors;
+                        $('.text-danger').text('');
+                        $.each(errors, function(key, value) {
+                            $('.error-' + key).text(value[0]);
+                        });
+                    }
+                    $("#tolak_status").text(
+                        'Tolak Ajuan'); // Mengubah teks tombol kembali setelah selesai
                 }
             });
         });
@@ -184,7 +272,8 @@
             let id = $(this).data('id');
             $('#editMemberModal').modal('show');
             $('#editMemberForm').trigger('reset');
-
+            $('#table-data').empty();
+            $('#id_peminjaman').val(id);
             $.ajax({
                 url: '/kelola-pinjam-ajuan/edit/' + id,
                 method: 'GET',
@@ -192,64 +281,27 @@
                     let tableData = '';
                     for (let i = 0; i < data.length; i++) {
                         tableData += `
-                            <div class="row mb-3">
-                                <div class="row mb-3">
-                                    <div class="col-md-12">
-                                        <strong>No:</strong> ${i + 1}
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <strong>Nama:</strong> ${data[i].name}
-                                </div>
-                                <div class="col-md-4">
-                                    <img src="${data[i].image}" style="max-width: 100px; max-height: 100px;">
-                                </div>
-                            </div>
-                        `;
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td>${data[i].name}</td>
+                        <td><img src="${data[i].image}" style="max-width: 50px; max-height: 50px;" class="img-thumbnail" data-full-image="${data[i].image}"></td>
+                        <td>${data[i].jumlah_pinjam}</td>
+                    </tr>
+                `;
                     }
                     $('#table-data').html(tableData);
                 }
             });
         });
 
-        $(document).on('click', '.deleteIcon', function(e) {
-            e.preventDefault();
-            let id = $(this).data('id');
-            let name = $(this).data('name');
+        // Fungsi untuk memperbesar gambar saat diklik
+        $(document).on('click', '.img-thumbnail', function() {
+            let fullImage = $(this).data('full-image');
             Swal.fire({
-                title: 'Apakah Kamu Yakin?',
-                text: "Nama user yang ingin kamu hapus : " + name,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Iya, Saya Yakin!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    let token = $('meta[name="csrf-token"]').attr(
-                        'content');
-                    $.ajax({
-                        url: '/kelola-user-users/users-management/delete/' + id,
-                        method: 'POST',
-                        data: {
-                            _token: token
-                        },
-                        success: function(response) {
-                            Swal.fire({
-                                title: 'Deleted!',
-                                text: response.message,
-                                icon: 'success',
-                                timer: 1500,
-                                timerProgressBar: true,
-                                allowOutsideClick: false,
-                                showConfirmButton: false
-                            }).then(() => {
-                                $("#deleteModal").modal('hide');
-                                window.location.reload();
-                            });
-                        }
-                    });
-                }
+                imageUrl: fullImage,
+                imageHeight: 400,
+                imageAlt: 'Image Preview',
+                showConfirmButton: false
             });
         });
     });

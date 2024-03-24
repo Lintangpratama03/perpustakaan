@@ -96,7 +96,7 @@ class BukuAnggotaController extends Controller
                 $keranjang = new Keranjang;
                 $keranjang->id_peminjaman = $peminjaman->id;
                 $keranjang->id_buku = $id_buku;
-                $keranjang->jumlah = $quantities[$key];
+                $keranjang->jumlah_pinjam = $quantities[$key];
                 $keranjang->save();
 
                 $buku = Buku::find($id_buku);

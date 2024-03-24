@@ -176,5 +176,7 @@ Route::group(['middleware' => ['auth', 'posisi:1']], function () {
     Route::prefix('kelola-pinjam-ajuan')->group(function () {
         Route::get('/', [PeminjamanController::class, 'index'])->name('ajuan');
         Route::get('/edit/{id}', [PeminjamanController::class, 'edit'])->name('ajuan.edit');
+        Route::post('/update/{id}', [PeminjamanController::class, 'update'])->name('ajuan.update');
+        Route::post('/tolak/{id}', [PeminjamanController::class, 'tolak'])->name('ajuan.tolak');
     });
 });
