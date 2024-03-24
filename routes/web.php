@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\anggota\BukuAnggotaController;
+use App\Http\Controllers\anggota\PeminjamanAnggotaController;
 use App\Http\Controllers\AnggotaHapusController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -65,19 +66,25 @@ Route::middleware('guest')->group(function () {
 Route::group(['middleware' => ['auth', 'posisi:2'], 'prefix' => 'anggota'], function () {
     Route::post('/logoutt', [LoginController::class, 'destroy'])
         ->name('logoutt');
+
     Route::prefix('dashboard-anggota')->group(function () {
         Route::get('/', [DashboardController::class, 'index_anggota'])->name('dashboard-anggota');
     });
+
     Route::prefix('buku')->group(function () {
         Route::get('/', [BukuAnggotaController::class, 'index'])->name('buku-anggota');
         Route::get('/add-book/{id}', [BukuAnggotaController::class, 'addBooktoCart'])->name('addbook.to.cart');
     });
+
     Route::prefix('shopping-cart')->group(function () {
         Route::get('/', [BukuAnggotaController::class, 'bookCart'])->name('shopping.cart');
         Route::post('/checkout', [BukuAnggotaController::class, 'checkout'])->name('checkout');
         Route::patch('/update-shopping-cart', [BukuAnggotaController::class, 'updateCart'])->name('update.sopping.cart');
         Route::post('/delete-cart-product/{id}', [BukuAnggotaController::class, 'deleteProduct'])->name('delete.cart.product');
     });
+
+    Route::get('/peminjaman', [PeminjamanAnggotaController::class, 'index_ajuan'])->name('ajuan-peminjaman-anggota');
+
     Route::get('/kelola-user/user-profile', [ProfileController::class, 'index'])->name('users.profile');
     Route::put('/kelola-user/user-profile/update', [ProfileController::class, 'update'])->name('users.update_profile');
 });

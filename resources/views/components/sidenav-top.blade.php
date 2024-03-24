@@ -11,17 +11,28 @@
                     Dashboard
                 </a>
             </li>
-            <li class="nav-item px-3 py-3 border-radius-sm  d-flex align-items-center">
-                <a href="{{ route('buku-anggota') }}" id="buku-link" class="nav-link text-white p-0">
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center dropdown">
+                <a href="#" class="nav-link text-white p-0 dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
                     Buku
                 </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{ route('buku-anggota') }}">Katalog Buku</a></li>
+                    <li><a class="dropdown-item" href="{{ route('shopping.cart') }}">Keranjang Buku</a></li>
+                </ul>
             </li>
-            <li class="nav-item px-3 py-3 border-radius-sm  d-flex align-items-center">
-                <a href="" id="peminjaman-link" class="nav-link text-white p-0">
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center dropdown">
+                <a href="#" class="nav-link text-white p-0 dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
                     Peminjaman
                 </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{ route('ajuan-peminjaman-anggota') }}">Ajuan Peminjaman</a>
+                    </li>
+                    <li><a class="dropdown-item" href="#">History Peminjaman</a></li>
+                </ul>
             </li>
-            <li class="nav-item px-3 py-3 border-radius-sm  d-flex align-items-center">
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
                 <a href="" id="pengembalian-link" class="nav-link text-white p-0">
                     Pengembalian
                 </a>
