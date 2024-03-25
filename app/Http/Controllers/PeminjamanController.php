@@ -28,13 +28,14 @@ class PeminjamanController extends Controller
 
     public function edit($id)
     {
+        // dd($id);
         $buku = Keranjang::select('Keranjang.*', 'buku.name', 'buku.image')
             ->where('id_peminjaman', $id)
             ->leftJoin('buku', 'keranjang.id_buku', '=', 'buku.id')
             ->get();
 
         $data = [];
-        // dd($buku);
+        //dd($buku);
         foreach ($buku as $item) {
             $image = $item->image ? asset('assets/img/buku/' . $item->image) : asset('assets/img/default-image.png');
             $data[] = [
@@ -48,7 +49,6 @@ class PeminjamanController extends Controller
         // dd($data);
         return response()->json($data);
     }
-
 
     public function update($id)
     {

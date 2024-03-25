@@ -75,7 +75,7 @@
                                                             class="badge badge-sm border border-danger text-danger bg-danger">{{ 'Belum Dicek' }}</span>
                                                     @elseif ($pjm->status == 2)
                                                         <span
-                                                            class="badge badge-sm border border-warning text-warning bg-warning">{{ 'Proses' }}</span>
+                                                            class="badge badge-sm border border-warning text-warning bg-warning">{{ 'Proses Scan' }}</span>
                                                     @else
                                                         {{ 'N/A' }}
                                                     @endif

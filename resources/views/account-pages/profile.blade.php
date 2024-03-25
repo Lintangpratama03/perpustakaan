@@ -3,257 +3,57 @@
     <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
         <x-navbar-guest />
         <div class="pt-7 pb-6 bg-cover"
-            style="background-image: url('../assets/img/header-orange-purple.jpg'); background-position: bottom;">
+            style="background-image: url('../assets/img/dashboard.png'); background-position: bottom;">
         </div>
         <div class="container">
             <div class="card card-body py-2 bg-transparent shadow-none">
                 <div class="row">
                     <div class="col-auto">
-                        <div
-                            class="avatar avatar-2xl rounded-circle position-relative mt-n7 border border-gray-100 border-4">
-                            <img src="../assets/img/team-2.jpg" alt="profile_image" class="w-100">
-                        </div>
-                    </div>
-                    <div class="col-auto my-auto">
-                        <div class="h-100">
-                            <h3 class="mb-0 font-weight-bold">
-                                Noah Mclaren
-                            </h3>
-                            <p class="mb-0">
-                                noah_mclaren@mail.com
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3 text-sm-end">
-                        <a href="javascript:;" class="btn btn-sm btn-white">Cancel</a>
-                        <a href="javascript:;" class="btn btn-sm btn-dark">Save</a>
+
                     </div>
                 </div>
             </div>
         </div>
         <div class="container my-3 py-3">
             <div class="row">
-                <div class="col-12 col-xl-4 mb-4">
-                    <div class="card border shadow-xs h-100">
-                        <div class="card-header pb-0 p-3">
-                            <h6 class="mb-0 font-weight-semibold text-lg">Notifications settings</h6>
-                            <p class="text-sm mb-1">Here you can set preferences.</p>
-                        </div>
-                        <div class="card-body p-3">
-                            <h6 class="text-dark font-weight-semibold mb-1">Account</h6>
-                            <ul class="list-group">
-                                <li class="list-group-item border-0 px-0">
-                                    <div class="form-check form-switch ps-0">
-                                        <input class="form-check-input ms-auto" type="checkbox"
-                                            id="flexSwitchCheckDefault" checked>
-                                        <label class="form-check-label text-body ms-3 text-truncate w-80 mb-0"
-                                            for="flexSwitchCheckDefault">Email me when someone follows me</label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item border-0 px-0">
-                                    <div class="form-check form-switch ps-0">
-                                        <input class="form-check-input ms-auto" type="checkbox"
-                                            id="flexSwitchCheckDefault1">
-                                        <label class="form-check-label text-body ms-3 text-truncate w-80 mb-0"
-                                            for="flexSwitchCheckDefault1">Email me when someone answers on my
-                                            post</label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item border-0 px-0">
-                                    <div class="form-check form-switch ps-0">
-                                        <input class="form-check-input ms-auto" type="checkbox"
-                                            id="flexSwitchCheckDefault2" checked>
-                                        <label class="form-check-label text-body ms-3 text-truncate w-80 mb-0"
-                                            for="flexSwitchCheckDefault2">Email me when someone mentions me</label>
-                                    </div>
-                                </li>
-                            </ul>
-                            <h6 class="text-dark font-weight-semibold mt-2 mb-1">Application</h6>
-                            <ul class="list-group">
-                                <li class="list-group-item border-0 px-0">
-                                    <div class="form-check form-switch ps-0">
-                                        <input class="form-check-input ms-auto" type="checkbox"
-                                            id="flexSwitchCheckDefault3">
-                                        <label class="form-check-label text-body ms-3 text-truncate w-80 mb-0"
-                                            for="flexSwitchCheckDefault3">New launches and projects</label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item border-0 px-0">
-                                    <div class="form-check form-switch ps-0">
-                                        <input class="form-check-input ms-auto" type="checkbox"
-                                            id="flexSwitchCheckDefault4" checked>
-                                        <label class="form-check-label text-body ms-3 text-truncate w-80 mb-0"
-                                            for="flexSwitchCheckDefault4">Monthly product updates</label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item border-0 px-0 pb-0">
-                                    <div class="form-check form-switch ps-0">
-                                        <input class="form-check-input ms-auto" type="checkbox"
-                                            id="flexSwitchCheckDefault5">
-                                        <label class="form-check-label text-body ms-3 text-truncate w-80 mb-0"
-                                            for="flexSwitchCheckDefault5">Subscribe to newsletter</label>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-xl-4 mb-4">
-                    <div class="card border shadow-xs h-100">
-                        <div class="card-header pb-0 p-3">
-                            <div class="row">
-                                <div class="col-md-8 col-9">
-                                    <h6 class="mb-0 font-weight-semibold text-lg">Profile information</h6>
-                                    <p class="text-sm mb-1">Edit the information about you.</p>
+                <div class="col-12 mb-4">
+                    <div class="row">
+                        <div class="col-md-10 mx-auto">
+                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                    <button type="button" data-bs-target="#carouselExampleIndicators"
+                                        data-bs-slide-to="0" class="active" aria-current="true"
+                                        aria-label="Slide 1"></button>
+                                    <button type="button" data-bs-target="#carouselExampleIndicators"
+                                        data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                    <button type="button" data-bs-target="#carouselExampleIndicators"
+                                        data-bs-slide-to="2" aria-label="Slide 3"></button>
                                 </div>
-                                <div class="col-md-4 col-3 text-end">
-                                    <button type="button" class="btn btn-white btn-icon px-2 py-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                                            viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
-                                        </svg>
-                                    </button>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="https://images.unsplash.com/photo-1537511446984-935f663eb1f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=80"
+                                            class="d-block w-100" alt="...">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=80"
+                                            class="d-block w-100" alt="...">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="https://images.unsplash.com/photo-1552793494-111afe03d0ca?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=80"
+                                            class="d-block w-100" alt="...">
+                                    </div>
                                 </div>
+                                <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                    data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
                             </div>
-                        </div>
-                        <div class="card-body p-3">
-                            <p class="text-sm mb-4">
-                                Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two
-                                equally
-                                difficult paths, choose the one more painful in the short term (pain avoidance is
-                                creating an illusion of equality).
-                            </p>
-                            <ul class="list-group">
-                                <li
-                                    class="list-group-item border-0 ps-0 text-dark font-weight-semibold pt-0 pb-1 text-sm">
-                                    <span class="text-secondary">First Name:</span> &nbsp; Noah
-                                </li>
-                                <li class="list-group-item border-0 ps-0 text-dark font-weight-semibold pb-1 text-sm">
-                                    <span class="text-secondary">Last Name:</span> &nbsp; Mclaren
-                                </li>
-                                <li class="list-group-item border-0 ps-0 text-dark font-weight-semibold pb-1 text-sm">
-                                    <span class="text-secondary">Mobile:</span> &nbsp; +(44) 123 1234 123
-                                </li>
-                                <li class="list-group-item border-0 ps-0 text-dark font-weight-semibold pb-1 text-sm">
-                                    <span class="text-secondary">Function:</span> &nbsp; Manager - Organization
-                                </li>
-                                <li class="list-group-item border-0 ps-0 text-dark font-weight-semibold pb-1 text-sm">
-                                    <span class="text-secondary">Location:</span> &nbsp; USA
-                                </li>
-                                <li class="list-group-item border-0 ps-0 text-dark font-weight-semibold pb-1 text-sm">
-                                    <span class="text-secondary">Social:</span> &nbsp;
-                                    <a class="btn btn-link text-dark mb-0 ps-1 pe-1 py-0" href="javascript:;">
-                                        <i class="fab fa-linkedin fa-lg"></i>
-                                    </a>
-                                    <a class="btn btn-link text-dark mb-0 ps-1 pe-1 py-0" href="javascript:;">
-                                        <i class="fab fa-github fa-lg"></i>
-                                    </a>
-                                    <a class="btn btn-link text-dark mb-0 ps-1 pe-1 py-0" href="javascript:;">
-                                        <i class="fab fa-slack fa-lg"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-xl-4 mb-4">
-                    <div class="card border shadow-xs h-100">
-                        <div class="card-header pb-0 p-3">
-                            <div class="row mb-sm-0 mb-2">
-                                <div class="col-md-8 col-9">
-                                    <h6 class="mb-0 font-weight-semibold text-lg">Internal chat</h6>
-                                    <p class="text-sm mb-0">/marketing channel</p>
-                                </div>
-                                <div class="col-md-4 col-3 text-end">
-                                    <button type="button" class="btn btn-white btn-icon px-2 py-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                                            viewBox="0 0 24 24" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M10.5 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm0 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm0 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body p-3 pt-0">
-                            <ul class="list-group">
-                                <li class="list-group-item border-0 d-flex align-items-center px-0 mb-1">
-                                    <div class="avatar avatar-sm rounded-circle me-2">
-                                        <img src="../assets/img/team-1.jpg" alt="kal" class="w-100">
-                                    </div>
-                                    <div class="d-flex align-items-start flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm font-weight-semibold">Sarah Lamalo</h6>
-                                        <p class="mb-0 text-sm text-secondary">Hi! I need more information about
-                                            ...
-                                        </p>
-                                    </div>
-                                    <span class="p-1 bg-success rounded-circle ms-auto me-3">
-                                        <span class="visually-hidden">Online</span>
-                                    </span>
-                                </li>
-                                <li class="list-group-item border-0 d-flex align-items-center px-0 mb-1">
-                                    <div class="avatar avatar-sm rounded-circle me-2">
-                                        <img src="../assets/img/marie.jpg" alt="kal" class="w-100">
-                                    </div>
-                                    <div class="d-flex align-items-start flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm font-weight-semibold">Vicky Hladynets</h6>
-                                        <p class="mb-0 text-sm text-secondary">Hello, Noah!</p>
-                                    </div>
-                                    <span class="p-1 bg-success rounded-circle ms-auto me-3">
-                                        <span class="visually-hidden">Online</span>
-                                    </span>
-                                </li>
-                                <li class="list-group-item border-0 d-flex align-items-center px-0 mb-1">
-                                    <div class="avatar avatar-sm rounded-circle me-2">
-                                        <img src="../assets/img/team-5.jpg" alt="kal" class="w-100">
-                                    </div>
-                                    <div class="d-flex align-items-start flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm font-weight-semibold">Charles Deluvio</h6>
-                                        <p class="mb-0 text-sm text-secondary">Great, thank you!</p>
-                                    </div>
-                                    <span class="p-1 bg-success rounded-circle ms-auto me-3">
-                                        <span class="visually-hidden">Online</span>
-                                    </span>
-                                </li>
-                                <li class="list-group-item border-0 d-flex align-items-center px-0 mb-1">
-                                    <div class="avatar avatar-sm rounded-circle me-2">
-                                        <img src="../assets/img/team-4.jpg" alt="kal" class="w-100">
-                                    </div>
-                                    <div class="d-flex align-items-start flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm font-weight-semibold">Leio Mclaren</h6>
-                                        <p class="mb-0 text-sm text-secondary">Don't worry! 🙏🏻</p>
-                                    </div>
-                                    <span class="p-1 bg-success rounded-circle ms-auto me-3">
-                                        <span class="visually-hidden">Online</span>
-                                    </span>
-                                </li>
-                                <li class="list-group-item border-0 d-flex align-items-center px-0 mb-1">
-                                    <div class="avatar avatar-sm rounded-circle me-2">
-                                        <img src="../assets/img/team-3.jpg" alt="kal" class="w-100">
-                                    </div>
-                                    <div class="d-flex align-items-start flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm font-weight-semibold">Mateus Campos</h6>
-                                        <p class="mb-0 text-sm text-secondary">Call me, please.</p>
-                                    </div>
-                                    <span class="p-1 bg-success rounded-circle ms-auto me-3">
-                                        <span class="visually-hidden">Online</span>
-                                    </span>
-                                </li>
-                                <li class="list-group-item border-0 d-flex align-items-center px-0 mb-1">
-                                    <div class="avatar avatar-sm rounded-circle me-2">
-                                        <img src="../assets/img/team-2.jpg" alt="kal" class="w-100">
-                                    </div>
-                                    <div class="d-flex align-items-start flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm font-weight-semibold">Miriam Lore</h6>
-                                        <p class="mb-0 text-sm text-secondary">Well done!</p>
-                                    </div>
-                                    <span class="p-1 bg-success rounded-circle ms-auto me-3">
-                                        <span class="visually-hidden">Online</span>
-                                    </span>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>
