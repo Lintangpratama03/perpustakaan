@@ -52,10 +52,19 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        <a href="#" class="mx-3 edit-btn" data-bs-toggle="modal"
-                                            data-bs-target="#editMemberModal" data-id="{{ $pjm->id }}">
-                                            <i class="fas fa-eye text-secondary"></i>
-                                        </a>
+                                        @if ($pjm->status == 1)
+                                            <a href="#" class="mx-3 edit-btn" data-bs-toggle="modal"
+                                                data-bs-target="#editMemberModal" data-id="{{ $pjm->id }}">
+                                                <i class="fas fa-eye text-secondary"></i>
+                                            </a>
+                                        @elseif ($pjm->status == 2)
+                                            <a href="#" class="mx-3 scan-btn" data-bs-toggle="modal"
+                                                data-bs-target="#scanMemberModal" data-id="{{ $pjm->id }}">
+                                                <i class="fa fa-id-badge text-secondary"></i>
+                                            </a>
+                                        @else
+                                            {{ 'N/A' }}
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -100,6 +109,28 @@
                                                 <button type="button" id="tolak_status" class="btn btn-danger">Hapus
                                                     Ajuan</button>
                                             </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="modal fade" id="scanMemberModal" tabindex="-1" role="dialog" aria-labelledby="modal-form"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body p-0">
+                                <div class="card card-plain">
+                                    <div class="card-header pb-0 text-left">
+                                        <h3 class="font-weight-bolder text-dark">Scan RFID</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form method="post" id="editMemberForm">
+                                            @csrf
+                                            <label for="">SILAHKAN SCAN RFID ANDA</label>
                                         </form>
                                     </div>
                                 </div>
