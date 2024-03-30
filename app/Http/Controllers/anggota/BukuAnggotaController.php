@@ -14,21 +14,38 @@ use Illuminate\Http\Request;
 
 class BukuAnggotaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $name = $request->input('name');
+        $pengarangId = $request->input('pengarang');
+        $penerbitId = $request->input('penerbit');
+        $rakId = $request->input('rak');
+
         $buku = Buku::where('buku.is_deleted', 0)
             ->where('buku.jumlah', '>', 0)
             ->leftJoin('rak', 'buku.rak_kode_rak', '=', 'rak.id')
             ->leftJoin('penerbit', 'buku.penerbit_id', '=', 'penerbit.id')
             ->leftJoin('pengarang', 'buku.pengarang_id', '=', 'pengarang.id')
             ->select('buku.*', 'rak.name as rak_name', 'rak.kode as rak_kode', 'pengarang.name as pengarang_name', 'penerbit.name as penerbit_name')
+            ->when($name, function ($query, $name) {
+                return $query->where('buku.name', 'like', '%' . $name . '%');
+            })
+            ->when($pengarangId, function ($query, $pengarangId) {
+                return $query->where('buku.pengarang_id', $pengarangId);
+            })
+            ->when($penerbitId, function ($query, $penerbitId) {
+                return $query->where('buku.penerbit_id', $penerbitId);
+            })
+            ->when($rakId, function ($query, $rakId) {
+                return $query->where('buku.rak_kode_rak', $rakId);
+            })
             ->get();
-        $pengarangs = Pengarang::pluck('name', 'name');
-        $penerbits = Penerbit::pluck('name', 'name');
-        $rak = Rak::pluck('name', 'name');
-        // dd($pengarangs);
-        $cartItems = [];
-        return view('account-pages.buku', compact('buku', 'pengarangs', 'penerbits', 'cartItems', 'rak'));
+
+        $pengarangs = Pengarang::pluck('name', 'id');
+        $penerbits = Penerbit::pluck('name', 'id');
+        $rak = Rak::pluck('name', 'id');
+
+        return view('account-pages.buku', compact('buku', 'pengarangs', 'penerbits', 'rak'));
     }
 
     public function bookCart()

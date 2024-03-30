@@ -27,34 +27,43 @@
                     <div class="row mb-4">
                         <div class="col-md-3">
                             <label for="">FILTER</label>
-                            <div class="form-group">
-                                <input type="text" placeholder="Masukkan Nama Buku" class="form-control"
-                                    id="name" name="name">
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control" id="pengarang" name="pengarang">
-                                    <option value="">-- Pilih Pengarang -- </option>
-                                    @foreach ($pengarangs as $id => $name)
-                                        <option value="{{ $id }}">{{ $name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control" id="penerbit" name="penerbit">
-                                    <option value="">-- Pilih Penerbit --</option>
-                                    @foreach ($penerbits as $id => $name)
-                                        <option value="{{ $id }}">{{ $name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control" id="penerbit" name="penerbit">
-                                    <option value="">-- Pilih Kategori --</option>
-                                    @foreach ($rak as $id => $name)
-                                        <option value="{{ $id }}">{{ $name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            <form action="{{ route('buku-anggota') }}" method="GET">
+                                <div class="form-group">
+                                    <input type="text" placeholder="Masukkan Nama Buku" class="form-control"
+                                        name="name" value="{{ request()->input('name') }}">
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" name="pengarang">
+                                        <option value="">-- Pilih Pengarang --</option>
+                                        @foreach ($pengarangs as $id => $name)
+                                            <option value="{{ $id }}"
+                                                {{ request()->input('pengarang') == $id ? 'selected' : '' }}>
+                                                {{ $name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" name="penerbit">
+                                        <option value="">-- Pilih Penerbit --</option>
+                                        @foreach ($penerbits as $id => $name)
+                                            <option value="{{ $id }}"
+                                                {{ request()->input('penerbit') == $id ? 'selected' : '' }}>
+                                                {{ $name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" name="rak">
+                                        <option value="">-- Pilih Kategori --</option>
+                                        @foreach ($rak as $id => $name)
+                                            <option value="{{ $id }}"
+                                                {{ request()->input('rak') == $id ? 'selected' : '' }}>
+                                                {{ $name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Filter</button>
+                            </form>
                         </div>
                         <div class="col-md-9">
                             @foreach ($buku->chunk(3) as $chunk)
@@ -176,35 +185,13 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        const nameInput = document.getElementById('name');
-        const pengarangInput = document.getElementById('pengarang');
-        const penerbitInput = document.getElementById('penerbit');
         const cartCountElement = document.getElementById('cart-count');
         let cartItems = [];
-
-        nameInput.addEventListener('input', filterData);
-        pengarangInput.addEventListener('change', filterData);
-        penerbitInput.addEventListener('change', filterData);
 
         const addToCartButtons = document.querySelectorAll('.add-to-cart');
         addToCartButtons.forEach(button => {
             button.addEventListener('click', addToCart);
         });
-
-        function filterData() {
-            const nameValue = nameInput.value.toLowerCase();
-            const pengarangValue = pengarangInput.value;
-            const penerbitValue = penerbitInput.value;
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                const name = card.querySelector('.lead').textContent.toLowerCase();
-                const pengarang = card.querySelector('#pengarang').textContent;
-                const penerbit = card.querySelector('#penerbit').textContent;
-                const shouldShow = name.includes(nameValue) && (pengarangValue == '' || pengarang.includes(
-                    pengarangValue)) && (penerbitValue == '' || penerbit.includes(penerbitValue));
-                card.style.display = shouldShow ? 'block' : 'none';
-            });
-        }
 
         $(document).on('click', '.add-cart', function(e) {
             e.preventDefault();
