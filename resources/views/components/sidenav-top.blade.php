@@ -33,7 +33,8 @@
                 <ul class="dropdown-menu dropdown-menu-animated">
                     <li><a class="dropdown-item" href="{{ route('ajuan-peminjaman-anggota') }}">Ajuan Peminjaman</a>
                     </li>
-                    <li><a class="dropdown-item" href="#">History Peminjaman</a></li>
+                    <li><a class="dropdown-item" href="{{ route('sukses-peminjaman-anggota') }}">History Peminjaman</a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">

@@ -89,6 +89,12 @@ Route::group(['middleware' => ['auth', 'posisi:2'], 'prefix' => 'anggota'], func
         Route::post('/tolak/{id}', [PeminjamanAnggotaController::class, 'tolak'])->name('ajuan-peminjaman-anggota.tolak');
     });
 
+    Route::prefix('peminjaman-sukses')->group(function () {
+        Route::get('/', [PeminjamanAnggotaController::class, 'index_sukses'])->name('sukses-peminjaman-anggota');
+        // Route::get('/edit/{id}', [PeminjamanAnggotaController::class, 'edit'])->name('sukses-peminjaman-anggota.edit');
+        // Route::post('/tolak/{id}', [PeminjamanAnggotaController::class, 'tolak'])->name('sukses-peminjaman-anggota.tolak');
+    });
+
 
     Route::get('/kelola-user/user-profile', [ProfileController::class, 'index'])->name('users.profile');
     Route::put('/kelola-user/user-profile/update', [ProfileController::class, 'update'])->name('users.update_profile');
