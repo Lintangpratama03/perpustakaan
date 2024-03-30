@@ -16,9 +16,19 @@ class PeminjamanAnggotaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index_sukses()
     {
-        //
+        $user = User::find(Auth::id());
+        // dd($user);
+        $id_card = $user->id_card;
+        $pinjam = Peminjaman::select('peminjaman.*', 'users.name as name_user')
+            ->where('peminjaman.is_deleted', 0)
+            ->where('peminjaman.status', 3)
+            ->where('peminjaman.id_card', $id_card)
+            ->leftJoin('users', 'peminjaman.id_card', '=', 'users.id_card')
+            ->get();
+        // dd($pinjam);
+        return view('account-pages.peminjaman.sukses', compact('pinjam'));
     }
     public function index_ajuan()
     {
