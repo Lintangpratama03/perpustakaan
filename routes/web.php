@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\RFIDController;
 use App\Http\Controllers\UserUpgradeController;
 
@@ -195,5 +196,12 @@ Route::group(['middleware' => ['auth', 'posisi:1']], function () {
         Route::get('/edit/{id}', [PeminjamanController::class, 'edit'])->name('ajuan.edit');
         Route::post('/update/{id}', [PeminjamanController::class, 'update'])->name('ajuan.update');
         Route::post('/tolak/{id}', [PeminjamanController::class, 'tolak'])->name('ajuan.tolak');
+    });
+
+    Route::prefix('kelola-kembali')->group(function () {
+        Route::get('/', [PengembalianController::class, 'index'])->name('kembali');
+        Route::get('/edit/{id}', [PengembalianController::class, 'edit'])->name('kembali.edit');
+        Route::post('/update/{id}', [PengembalianController::class, 'update'])->name('kembali.update');
+        Route::post('/tolak/{id}', [PengembalianController::class, 'tolak'])->name('kembali.tolak');
     });
 });
