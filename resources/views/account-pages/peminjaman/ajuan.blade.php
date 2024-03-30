@@ -1,4 +1,17 @@
 <x-guest-layout>
+    <!-- CSS DataTables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- DataTables -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
     <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
         <x-navbar-guest />
         <div class="pt-7 pb-6 bg-cover"
@@ -230,6 +243,13 @@
             imageHeight: 400,
             imageAlt: 'Image Preview',
             showConfirmButton: false
+        });
+    });
+
+    $(document).ready(function() {
+        $('.table').DataTable({
+            "searching": true,
+            "paging": true
         });
     });
 </script>
