@@ -6,8 +6,11 @@
     <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
         <x-navbar-guest />
         <div class="pt-7 pb-6 bg-cover"
-            style="background-image: url('../assets/img/history.png'); background-position: bottom;"></div>
+            style="background-image: url('../assets/img/pinjam.png'); background-position: bottom;"></div>
         <div class="container my-3 py-3">
+            <span>
+                <h5>*Denda 5000 setiap telat perhari</h5>
+            </span>
             <div class="table-responsive">
                 <table class="table text-secondary text-center">
                     <thead>
@@ -17,16 +20,19 @@
                                 No Transaksi</th>
                             <th
                                 class="text-left text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
-                                Nama Peminjam</th>
+                                Tanggal Pinjam</th>
                             <th
                                 class="text-left text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
-                                Tanggal Pinjam</th>
+                                Tenggat Kembali</th>
                             <th
                                 class="text-left text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
                                 ID RFID</th>
                             <th
                                 class="text-center text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
                                 Status</th>
+                            <th
+                                class="text-center text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
+                                Total Denda</th>
                             <th
                                 class="text-center text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
                                 Aksi</th>
@@ -41,31 +47,23 @@
                             @foreach ($pinjam as $pjm)
                                 <tr>
                                     <td class="text-left">{{ $pjm->id }}</td>
-                                    <td class="text-left">{{ $pjm->name_user }}</td>
                                     <td class="text-left">{{ $pjm->tanggal_pinjam }}</td>
+                                    <td class="text-left">{{ $pjm->tenggat_kembali }}</td>
                                     <td class="text-left">{{ $pjm->id_card }}</td>
                                     <td class="text-center">
                                         @if ($pjm->status == 3)
                                             <span
-                                                class="badge badge-sm border border-success text-success bg-success">{{ 'Sukses' }}</span>
+                                                class="badge badge-sm border border-danger text-danger bg-danger">{{ 'Belum Kembali' }}</span>
                                         @else
                                             {{ 'N/A' }}
                                         @endif
                                     </td>
+                                    <td class="text-left">{{ $pjm->tenggat_kembali }}</td>
                                     <td class="text-center">
-                                        @if ($pjm->status == 1)
-                                            <a href="#" class="mx-3 edit-btn" data-bs-toggle="modal"
-                                                data-bs-target="#editMemberModal" data-id="{{ $pjm->id }}">
-                                                <i class="fas fa-eye text-secondary"></i>
-                                            </a>
-                                        @elseif ($pjm->status == 2)
-                                            <a href="#" class="mx-3 scan-btn" data-bs-toggle="modal"
-                                                data-bs-target="#scanMemberModal" data-id="{{ $pjm->id }}">
-                                                <i class="fa fa-id-badge text-secondary"></i>
-                                            </a>
-                                        @else
-                                            {{ 'N/A' }}
-                                        @endif
+                                        <a href="#" class="mx-3 edit-btn" data-bs-toggle="modal"
+                                            data-bs-target="#editMemberModal" data-id="{{ $pjm->id }}">
+                                            <i class="fas fa-eye text-secondary"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -107,8 +105,6 @@
                                             <div class="text-center mt-4">
                                                 <button type="button" class="btn btn-secondary mr-3"
                                                     data-bs-dismiss="modal">Kembali</button>
-                                                <button type="button" id="tolak_status" class="btn btn-danger">Hapus
-                                                    Ajuan</button>
                                             </div>
                                         </form>
                                     </div>
@@ -156,7 +152,7 @@
 <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-{{-- <script>
+<script>
     $(document).on('click', '.edit-btn', function() {
         let id = $(this).data('id');
         $('#editMemberModal').modal('show');
@@ -164,7 +160,7 @@
         $('#table-data').empty();
         $('#id_peminjaman').val(id);
         $.ajax({
-            url: '/anggota/peminjaman/edit/' + id,
+            url: '/anggota/pengembalian/edit/' + id,
             method: 'GET',
             success: function(data) {
                 let tableData = '';
@@ -182,48 +178,7 @@
             }
         });
     });
-    $("#tolak_status").click(function(e) {
-        e.preventDefault();
-        let id = $('#id_peminjaman').val();
-        const form = document.getElementById("editMemberForm");
-        const fd = new FormData(form);
-        $("#tolak_status").text('Deleting...');
-        $.ajax({
-            url: '/anggota/peminjaman/tolak/' + id,
-            method: 'POST',
-            data: fd,
-            cache: false,
-            contentType: false,
-            processData: false,
-            dataType: 'json',
-            success: function(response) {
-                if (response.status == 200) {
-                    Swal.fire(
-                        'Deleted!',
-                        'Peminjaman Deleted Successfully!',
-                        'success'
-                    );
-                    $("#editMemberModal").modal('hide');
-                    window.location.reload();
-                }
-                $("#tolak_status").text(
-                    'Tolak Ajuan');
-                $("#editMemberModal").modal('hide');
-            },
-            error: function(xhr) {
-                if (xhr.status === 422) {
-                    let errors = xhr.responseJSON.errors;
-                    $('.text-danger').text('');
-                    $.each(errors, function(key, value) {
-                        $('.error-' + key).text(value[0]);
-                    });
-                }
-                $("#tolak_status").text(
-                    'Tolak Ajuan'); // Mengubah teks tombol kembali setelah selesai
-            }
-        });
-    });
-    // Fungsi untuk memperbesar gambar saat diklik
+
     $(document).on('click', '.img-thumbnail', function() {
         let fullImage = $(this).data('full-image');
         Swal.fire({
@@ -240,4 +195,4 @@
             "paging": true
         });
     });
-</script> --}}
+</script>

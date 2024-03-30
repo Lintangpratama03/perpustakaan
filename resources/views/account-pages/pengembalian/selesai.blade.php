@@ -45,9 +45,12 @@
                                     <td class="text-left">{{ $pjm->tanggal_pinjam }}</td>
                                     <td class="text-left">{{ $pjm->id_card }}</td>
                                     <td class="text-center">
-                                        @if ($pjm->status == 3)
+                                        @if ($pjm->status == 1)
                                             <span
-                                                class="badge badge-sm border border-success text-success bg-success">{{ 'Sukses' }}</span>
+                                                class="badge badge-sm border border-danger text-danger bg-danger">{{ 'Belum Dicek' }}</span>
+                                        @elseif ($pjm->status == 2)
+                                            <span
+                                                class="badge badge-sm border border-warning text-warning bg-warning">{{ 'Proses Scan' }}</span>
                                         @else
                                             {{ 'N/A' }}
                                         @endif

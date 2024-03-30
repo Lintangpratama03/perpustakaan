@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\anggota\BukuAnggotaController;
 use App\Http\Controllers\anggota\PeminjamanAnggotaController;
+use App\Http\Controllers\anggota\PengembalianAnggotaController;
 use App\Http\Controllers\AnggotaHapusController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -93,6 +94,11 @@ Route::group(['middleware' => ['auth', 'posisi:2'], 'prefix' => 'anggota'], func
         Route::get('/', [PeminjamanAnggotaController::class, 'index_sukses'])->name('sukses-peminjaman-anggota');
         // Route::get('/edit/{id}', [PeminjamanAnggotaController::class, 'edit'])->name('sukses-peminjaman-anggota.edit');
         // Route::post('/tolak/{id}', [PeminjamanAnggotaController::class, 'tolak'])->name('sukses-peminjaman-anggota.tolak');
+    });
+
+    Route::prefix('pengembalian')->group(function () {
+        Route::get('/', [PengembalianAnggotaController::class, 'index'])->name('pengembalian-buku');
+        Route::get('/edit/{id}', [PengembalianAnggotaController::class, 'edit'])->name('pengembalian-buku.edit');
     });
 
 

@@ -42,8 +42,15 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
-                <a href="" id="pengembalian-link" class="nav-link text-white p-0">Pengembalian</a>
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center dropdown">
+                <a href="#" class="nav-link text-white p-0 dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">Pengembalian</a>
+                <ul class="dropdown-menu dropdown-menu-animated">
+                    <li><a class="dropdown-item" href="{{ route('pengembalian-buku') }}">Belum Kembali</a>
+                    </li>
+                    <li><a class="dropdown-item" href="{{ route('sukses-peminjaman-anggota') }}">Sukses Kembali</a>
+                    </li>
+                </ul>
             </li>
         </ul>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
