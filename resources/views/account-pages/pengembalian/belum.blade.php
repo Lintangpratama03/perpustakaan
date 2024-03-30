@@ -16,16 +16,16 @@
                     <thead>
                         <tr>
                             <th
-                                class="text-left text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
+                                class="text-center text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
                                 No Transaksi</th>
                             <th
-                                class="text-left text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
+                                class="text-center text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
                                 Tanggal Pinjam</th>
                             <th
-                                class="text-left text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
+                                class="text-center text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
                                 Tenggat Kembali</th>
                             <th
-                                class="text-left text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
+                                class="text-center text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
                                 ID RFID</th>
                             <th
                                 class="text-center text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
@@ -46,10 +46,10 @@
                         @else
                             @foreach ($pinjam as $pjm)
                                 <tr>
-                                    <td class="text-left">{{ $pjm->id }}</td>
-                                    <td class="text-left">{{ $pjm->tanggal_pinjam }}</td>
-                                    <td class="text-left">{{ $pjm->tenggat_kembali }}</td>
-                                    <td class="text-left">{{ $pjm->id_card }}</td>
+                                    <td class="text-center">{{ $pjm->id }}</td>
+                                    <td class="text-center">{{ $pjm->tanggal_pinjam }}</td>
+                                    <td class="text-center">{{ $pjm->tenggat_kembali }}</td>
+                                    <td class="text-center">{{ $pjm->id_card }}</td>
                                     <td class="text-center">
                                         @if ($pjm->status == 3)
                                             <span
@@ -58,7 +58,7 @@
                                             {{ 'N/A' }}
                                         @endif
                                     </td>
-                                    <td class="text-left">{{ $pjm->tenggat_kembali }}</td>
+                                    <td class="text-center">Rp {{ $pjm->denda }}</td>
                                     <td class="text-center">
                                         <a href="#" class="mx-3 edit-btn" data-bs-toggle="modal"
                                             data-bs-target="#editMemberModal" data-id="{{ $pjm->id }}">

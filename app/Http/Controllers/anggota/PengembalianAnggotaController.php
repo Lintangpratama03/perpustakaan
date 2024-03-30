@@ -7,6 +7,7 @@ use App\Models\Buku;
 use App\Models\Keranjang;
 use App\Models\Peminjaman;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,6 +28,18 @@ class PengembalianAnggotaController extends Controller
             ->leftJoin('users', 'peminjaman.id_card', '=', 'users.id_card')
             ->get();
         // dd($pinjam);
+        foreach ($pinjam as $item) {
+            $tenggat_kembali = Carbon::parse($item->tenggat_kembali);
+            $hari_ini = Carbon::now();
+            $hari_terlambat = $hari_ini->diffInDays($tenggat_kembali, true);
+
+            if ($hari_terlambat > 0) {
+                $denda = $hari_terlambat * 5000;
+                $item->denda = number_format($denda, 0, ',', '.');
+            } else {
+                $item->denda = 'Rp 0';
+            }
+        }
         return view('account-pages.pengembalian.belum', compact('pinjam'));
     }
 
