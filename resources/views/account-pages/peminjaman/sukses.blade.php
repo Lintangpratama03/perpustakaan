@@ -6,7 +6,7 @@
     <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
         <x-navbar-guest />
         <div class="pt-7 pb-6 bg-cover"
-            style="background-image: url('../assets/img/pinjam.png'); background-position: bottom;"></div>
+            style="background-image: url('../assets/img/history.png'); background-position: bottom;"></div>
         <div class="container my-3 py-3">
             <div class="table-responsive">
                 <table class="table text-secondary text-center">
@@ -159,7 +159,7 @@
 <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
+{{-- <script>
     $(document).on('click', '.edit-btn', function() {
         let id = $(this).data('id');
         $('#editMemberModal').modal('show');
@@ -243,4 +243,4 @@
             "paging": true
         });
     });
-</script>
+</script> --}}

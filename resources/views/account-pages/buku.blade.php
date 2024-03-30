@@ -52,6 +52,8 @@
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Filter</button>
+                                <button type="button" class="btn btn-secondary clear-filters-btn">Clear
+                                    Filters</button>
                             </form>
                         </div>
                         <div class="col-md-9">
@@ -254,6 +256,19 @@
             if (event.target === imageOverlay) {
                 imageOverlay.style.display = 'none';
             }
+        });
+
+        $(document).ready(function() {
+            $('.clear-filters-btn').click(function() {
+                // Mengosongkan nilai-nilai filter
+                $('input[name="name"]').val('');
+                $('select[name="pengarang"]').val('');
+                $('select[name="penerbit"]').val('');
+                $('select[name="rak"]').val('');
+
+                // Mengirim ulang permintaan form
+                $('form').submit();
+            });
         });
     </script>
 </x-guest-layout>

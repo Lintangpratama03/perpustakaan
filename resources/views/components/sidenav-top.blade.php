@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
 </head>
+<style>
+    .logout-btn:hover {
+        color: black !important;
+    }
+</style>
 <nav class="navbar bg-slate-900 navbar-expand-lg flex-wrap top-0 px-0 py-0">
     <div class="container py-2">
         <nav aria-label="breadcrumb">
@@ -15,7 +20,7 @@
             </div>
         </nav>
         <ul class="navbar-nav d-none d-lg-flex">
-            <li class="nav-item px-3 py-3 border-radius-sm bg-slate-800 d-flex align-items-center">
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
                 <a href="{{ route('dashboard-anggota') }}" id="dashboard-link"
                     class="nav-link text-white p-0">Dashboard</a>
             </li>
@@ -56,7 +61,8 @@
                     <form method="POST" action="{{ route('logoutt') }}">
                         @csrf
                         <a href="login" onclick="event.preventDefault();this.closest('form').submit();">
-                            <button class="btn btn-sm btn-white mb-0 me-1" type="submit">Log out</button>
+                            <button class="btn btn-sm btn-white mb-0 me-1 text-white logout-btn" type="submit">Log
+                                out</button>
                         </a>
                     </form>
                 </li>

@@ -41,18 +41,25 @@
                                 </div>
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <img src="https://images.unsplash.com/photo-1537511446984-935f663eb1f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=80"
-                                            class="d-block w-100" alt="...">
+                                        <img src="{{ asset('assets/img/sekolah.jpg') }}"
+                                            class="d-block w-100 object-fit-cover carousel-img" alt="...">
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=80"
-                                            class="d-block w-100" alt="...">
+                                        <img src="{{ asset('assets/img/perpus.jpg') }}"
+                                            class="d-block w-100 object-fit-cover carousel-img" alt="...">
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="https://images.unsplash.com/photo-1552793494-111afe03d0ca?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=80"
-                                            class="d-block w-100" alt="...">
+                                        <img src="{{ asset('assets/img/perpus_2.jpg') }}"
+                                            class="d-block w-100 object-fit-cover carousel-img" alt="...">
                                     </div>
                                 </div>
+
+                                <style>
+                                    .carousel-img {
+                                        height: 600px;
+                                        object-fit: cover;
+                                    }
+                                </style>
                                 <button class="carousel-control-prev" type="button"
                                     data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
