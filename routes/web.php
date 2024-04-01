@@ -119,6 +119,8 @@ Route::group(['middleware' => ['auth', 'posisi:1']], function () {
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/get-user', [DashboardController::class, 'getuser'])->name('users.dashboard');
+        Route::get('/get-kunjungan', [DashboardController::class, 'getKunjunganData'])->name('kunjungan.dashboard');
+        Route::get('/get-pinjam', [DashboardController::class, 'getPinjamData'])->name('pinjam.dashboard');
     });
 
     // Menu Kelola User

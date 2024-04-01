@@ -75,7 +75,7 @@
                         </div>
                         <div class="card-body py-3">
                             <div class="chart mb-2">
-                                <canvas id="chart-bars" class="chart-canvas" height="240"></canvas>
+                                <canvas id="chart-pinjam" class="chart-canvas" height="240"></canvas>
                             </div>
                             <button class="btn btn-white mb-0 ms-auto">View report</button>
                         </div>
@@ -348,8 +348,8 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="w-100">
-                                        <p class="text-sm text-secondary mb-1">Revenue</p>
-                                        <h4 class="mb-2 font-weight-bold">$99,118.5</h4>
+                                        <p class="text-sm text-secondary mb-1">Anggota Biasa</p>
+                                        <h4 class="mb-2 font-weight-bold">{{ $anggota }}</h4>
                                         <div class="d-flex align-items-center">
                                             <span class="text-sm text-success font-weight-bolder">
                                                 <i class="fa fa-chevron-up text-xs me-1"></i>10.5%
@@ -379,8 +379,8 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="w-100">
-                                        <p class="text-sm text-secondary mb-1">Transactions</p>
-                                        <h4 class="mb-2 font-weight-bold">376</h4>
+                                        <p class="text-sm text-secondary mb-1">Anggota RFID</p>
+                                        <h4 class="mb-2 font-weight-bold">{{ $anggota_rfid }}</h4>
                                         <div class="d-flex align-items-center">
                                             <span class="text-sm text-success font-weight-bolder">
                                                 <i class="fa fa-chevron-up text-xs me-1"></i>55%
@@ -408,8 +408,8 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="w-100">
-                                        <p class="text-sm text-secondary mb-1">Avg. Transaction</p>
-                                        <h4 class="mb-2 font-weight-bold">$450.53</h4>
+                                        <p class="text-sm text-secondary mb-1">Pengajuan RFID</p>
+                                        <h4 class="mb-2 font-weight-bold">{{ $anggota_minta }}</h4>
                                         <div class="d-flex align-items-center">
                                             <span class="text-sm text-success font-weight-bolder">
                                                 <i class="fa fa-chevron-up text-xs me-1"></i>22%
@@ -437,8 +437,8 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="w-100">
-                                        <p class="text-sm text-secondary mb-1">Coupon Sales</p>
-                                        <h4 class="mb-2 font-weight-bold">$23,364.55</h4>
+                                        <p class="text-sm text-secondary mb-1">Anggota Terhapus</p>
+                                        <h4 class="mb-2 font-weight-bold">{{ $hapus }}</h4>
                                         <div class="d-flex align-items-center">
                                             <span class="text-sm text-success font-weight-bolder">
                                                 <i class="fa fa-chevron-up text-xs me-1"></i>18%
@@ -458,8 +458,8 @@
                         <div class="card-header pb-0">
                             <div class="d-sm-flex align-items-center mb-3">
                                 <div>
-                                    <h6 class="font-weight-semibold text-lg mb-0">Overview balance</h6>
-                                    <p class="text-sm mb-sm-0 mb-2">Here you have details about the balance.</p>
+                                    <h6 class="font-weight-semibold text-lg mb-0">Data Pengunjung</h6>
+                                    <p class="text-sm mb-sm-0 mb-2">Grafik pengunjung tahun 2024.</p>
                                 </div>
                                 <div class="ms-auto d-flex">
                                     <button type="button" class="btn btn-sm btn-white mb-0 me-2">
@@ -468,22 +468,14 @@
                                 </div>
                             </div>
                             <div class="d-sm-flex align-items-center">
-                                <h3 class="mb-0 font-weight-semibold">$87,982.80</h3>
-                                <span
-                                    class="badge badge-sm border border-success text-success bg-success border-radius-sm ms-sm-3 px-2">
-                                    <svg width="9" height="9" viewBox="0 0 10 9" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M0.46967 4.46967C0.176777 4.76256 0.176777 5.23744 0.46967 5.53033C0.762563 5.82322 1.23744 5.82322 1.53033 5.53033L0.46967 4.46967ZM5.53033 1.53033C5.82322 1.23744 5.82322 0.762563 5.53033 0.46967C5.23744 0.176777 4.76256 0.176777 4.46967 0.46967L5.53033 1.53033ZM5.53033 0.46967C5.23744 0.176777 4.76256 0.176777 4.46967 0.46967C4.17678 0.762563 4.17678 1.23744 4.46967 1.53033L5.53033 0.46967ZM8.46967 5.53033C8.76256 5.82322 9.23744 5.82322 9.53033 5.53033C9.82322 5.23744 9.82322 4.76256 9.53033 4.46967L8.46967 5.53033ZM1.53033 5.53033L5.53033 1.53033L4.46967 0.46967L0.46967 4.46967L1.53033 5.53033ZM4.46967 1.53033L8.46967 5.53033L9.53033 4.46967L5.53033 0.46967L4.46967 1.53033Z"
-                                            fill="#67C23A"></path>
-                                    </svg>
-                                    10.5%
-                                </span>
+                                <h4 class="mb-0 font-weight-semibold">Total Pengunjung : {{ $pengunjung }} Siswa
+                                </h4>
                             </div>
+                            <br><br><br>
                         </div>
                         <div class="card-body p-3">
                             <div class="chart mt-n6">
-                                <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
+                                <canvas id="chart-line-kunjungan" class="chart-canvas" height="100"></canvas>
                             </div>
                         </div>
                     </div>
@@ -494,3 +486,224 @@
     </main>
 
 </x-app-layout>
+<script>
+    function getKunjunganData() {
+        fetch("{{ route('kunjungan.dashboard') }}")
+            .then(response => response.json())
+            .then(data => {
+                drawChart(data.labels, data.data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function getPinjamData() {
+        fetch("{{ route('pinjam.dashboard') }}")
+            .then(response => response.json())
+            .then(data => {
+                drawChartPinjam(data.labels, data.data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function drawChartPinjam(labels, data) {
+        var ctx = document.getElementById("chart-pinjam").getContext("2d");
+
+        new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Total Peminjaman",
+                    tension: 0,
+                    borderWidth: 2,
+                    pointRadius: 3,
+                    borderColor: "#2ca8ff",
+                    pointBorderColor: '#2ca8ff',
+                    pointBackgroundColor: '#2ca8ff',
+                    fill: true,
+                    data: data,
+                    maxBarThickness: 6
+                }],
+            },
+            options: {
+                responsive: true,
+                // maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        align: 'end',
+                        labels: {
+                            boxWidth: 6,
+                            boxHeight: 6,
+                            padding: 20,
+                            pointStyle: 'circle',
+                            borderRadius: 50,
+                            usePointStyle: true,
+                            font: {
+                                weight: 400,
+                            },
+                        },
+                    },
+                    tooltip: {
+                        backgroundColor: '#fff',
+                        titleColor: '#1e293b',
+                        bodyColor: '#1e293b',
+                        borderColor: '#e9ecef',
+                        borderWidth: 1,
+                        pointRadius: 2,
+                        usePointStyle: true,
+                        boxWidth: 8,
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            stepSize: 2
+                        },
+                        display: true,
+                        padding: 10,
+                        color: '#b2b9bf',
+                        font: {
+                            size: 12,
+                            family: "Noto Sans",
+                            style: 'normal',
+                            lineHeight: 2
+                        },
+                        color: "#64748B"
+                    },
+                    x: {
+                        grid: {
+                            drawBorder: false,
+                            display: false,
+                            drawOnChartArea: false,
+                            drawTicks: false,
+                            borderDash: [4, 4]
+                        },
+                        ticks: {
+                            display: true,
+                            color: '#b2b9bf',
+                            padding: 20,
+                            font: {
+                                size: 12,
+                                family: "Noto Sans",
+                                style: 'normal',
+                                lineHeight: 2
+                            },
+                            color: "#64748B"
+                        }
+                    },
+                }
+            }
+        });
+    }
+
+    function drawChart(labels, data) {
+        var ctx = document.getElementById("chart-line-kunjungan").getContext("2d");
+
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Jumlah Pengunjung",
+                    tension: 0,
+                    borderWidth: 2,
+                    pointRadius: 3,
+                    borderColor: "#2ca8ff",
+                    pointBorderColor: '#2ca8ff',
+                    pointBackgroundColor: '#2ca8ff',
+                    fill: true,
+                    data: data,
+                    maxBarThickness: 6
+                }],
+            },
+            options: {
+                responsive: true,
+                // maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        align: 'end',
+                        labels: {
+                            boxWidth: 6,
+                            boxHeight: 6,
+                            padding: 20,
+                            pointStyle: 'circle',
+                            borderRadius: 50,
+                            usePointStyle: true,
+                            font: {
+                                weight: 400,
+                            },
+                        },
+                    },
+                    tooltip: {
+                        backgroundColor: '#fff',
+                        titleColor: '#1e293b',
+                        bodyColor: '#1e293b',
+                        borderColor: '#e9ecef',
+                        borderWidth: 1,
+                        pointRadius: 2,
+                        usePointStyle: true,
+                        boxWidth: 8,
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            stepSize: 2
+                        },
+                        display: true,
+                        padding: 10,
+                        color: '#b2b9bf',
+                        font: {
+                            size: 12,
+                            family: "Noto Sans",
+                            style: 'normal',
+                            lineHeight: 2
+                        },
+                        color: "#64748B"
+                    },
+                    x: {
+                        grid: {
+                            drawBorder: false,
+                            display: false,
+                            drawOnChartArea: false,
+                            drawTicks: false,
+                            borderDash: [4, 4]
+                        },
+                        ticks: {
+                            display: true,
+                            color: '#b2b9bf',
+                            padding: 20,
+                            font: {
+                                size: 12,
+                                family: "Noto Sans",
+                                style: 'normal',
+                                lineHeight: 2
+                            },
+                            color: "#64748B"
+                        }
+                    },
+                }
+            }
+        });
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        getKunjunganData();
+        getPinjamData();
+    });
+</script>
