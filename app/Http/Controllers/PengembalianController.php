@@ -17,7 +17,10 @@ class PengembalianController extends Controller
     {
         $pinjam = Peminjaman::select('peminjaman.*', 'users.name as name_user')
             ->where('peminjaman.is_deleted', 0)
-            ->where('status', 3)
+            ->where(function ($query) {
+                $query->where('status', 0)
+                    ->orWhere('status', 3);
+            })
             ->leftJoin('users', 'peminjaman.id_card', '=', 'users.id_card')
             ->get();
         foreach ($pinjam as $item) {

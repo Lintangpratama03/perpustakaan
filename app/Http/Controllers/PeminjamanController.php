@@ -19,7 +19,10 @@ class PeminjamanController extends Controller
     {
         $pinjam = Peminjaman::select('peminjaman.*', 'users.name as name_user')
             ->where('peminjaman.is_deleted', 0)
-            ->where('status', '!=', 3)
+            ->where(function ($query) {
+                $query->where('status', 1)
+                    ->orWhere('status', 2);
+            })
             ->leftJoin('users', 'peminjaman.id_card', '=', 'users.id_card')
             ->get();
         // dd($pinjam);
