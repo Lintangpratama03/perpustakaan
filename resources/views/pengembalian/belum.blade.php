@@ -69,10 +69,10 @@
                                                 <td class="text-center">{{ $pjm->tenggat_kembali }}</td>
                                                 <td class="text-center">{{ $pjm->id_card }}</td>
                                                 <td class="text-center">
-                                                    @if ($pjm->status == 1)
+                                                    @if ($pjm->status == 3)
                                                         <span
-                                                            class="badge badge-sm border border-danger text-danger bg-danger">{{ 'Belum Dicek' }}</span>
-                                                    @elseif ($pjm->status == 2)
+                                                            class="badge badge-sm border border-danger text-danger bg-danger">{{ 'Belum Kembali' }}</span>
+                                                    @elseif ($pjm->status == 4)
                                                         <span
                                                             class="badge badge-sm border border-warning text-warning bg-warning">{{ 'Proses Scan' }}</span>
                                                     @else
@@ -121,6 +121,21 @@
                                             @csrf
                                             <div class="row">
                                                 <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>ID RFID</label>
+                                                                <div class="input-group mb-3">
+                                                                    <input type="text" class="form-control"
+                                                                        name="rfid" aria-label="rfid"
+                                                                        aria-describedby="rfid-addon" readonly>
+                                                                </div>
+                                                                <span class="text-danger error-rfid"
+                                                                    style="font-size: 0.8rem;"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <label>DATA PINJAM</label>
                                                     <table class="table">
                                                         <input type="hidden" id="id_peminjaman" name="id_peminjaman"
                                                             value="" />
@@ -135,12 +150,39 @@
                                                         <tbody id="table-data">
                                                         </tbody>
                                                     </table>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Telat Hari</label>
+                                                                <div class="input-group mb-3">
+                                                                    <input type="text" class="form-control"
+                                                                        name="telat" aria-label="telat"
+                                                                        aria-describedby="telat-addon" readonly>
+                                                                </div>
+                                                                <span class="text-danger error-telat"
+                                                                    style="font-size: 0.8rem;"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Total Denda</label>
+                                                                <div class="input-group mb-3">
+                                                                    <input type="text" class="form-control"
+                                                                        name="denda" aria-label="denda"
+                                                                        aria-describedby="denda-addon" readonly>
+                                                                </div>
+                                                                <span class="text-danger error-denda"
+                                                                    style="font-size: 0.8rem;"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="text-center mt-4">
                                                 <button type="button" class="btn btn-secondary mr-3"
                                                     data-bs-dismiss="modal">Kembali</button>
-                                                <button type="submit" id="edit_status" class="btn btn-primary">Proses
+                                                <button type="submit" id="edit_status"
+                                                    class="btn btn-primary">Proses
                                                     Ajuan</button>
                                             </div>
                                         </form>
@@ -152,8 +194,8 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <div class="modal fade" id="scanMemberModal" tabindex="-1" role="dialog" aria-labelledby="modal-form"
-                    aria-hidden="true">
+                <div class="modal fade" id="scanMemberModal" tabindex="-1" role="dialog"
+                    aria-labelledby="modal-form" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-body p-0">
@@ -191,7 +233,7 @@
             const fd = new FormData(form);
             $("#edit_status").text('Updating...');
             $.ajax({
-                url: '/kelola-pinjam-ajuan/update/' + id,
+                url: '/kelola-kembali/update/' + id,
                 method: 'POST',
                 data: fd,
                 cache: false,
@@ -232,7 +274,7 @@
             $('#table-data').empty();
             $('#id_peminjaman').val(id);
             $.ajax({
-                url: '/kelola-pinjam-ajuan/edit/' + id,
+                url: '/kelola-kembali/edit/' + id,
                 method: 'GET',
                 success: function(data) {
                     let tableData = '';
@@ -247,6 +289,9 @@
                 `;
                     }
                     $('#table-data').html(tableData);
+                    $('#editMemberForm').find('input[name="denda"]').val(data[0].denda);
+                    $('#editMemberForm').find('input[name="telat"]').val(data[0].telat);
+                    $('#editMemberForm').find('input[name="rfid"]').val(data[0].rfid);
                 }
             });
         });
