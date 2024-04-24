@@ -5,7 +5,7 @@
 
     <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
         <x-navbar-guest />
-        <div class="pt-7 pb-6 bg-cover"
+        <div class="pt-7 pb-4 bg-cover"
             style="background-image: url('../assets/img/history.png'); background-position: bottom;"></div>
         <div class="container my-3 py-3">
             <div class="table-responsive">
