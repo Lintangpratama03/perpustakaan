@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\RFIDController;
+use App\Http\Controllers\DataController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route::post('/rfid/store', [RFIDController::class, 'store'])->name('rfid.store');
+Route::post('endpoint', [DataController::class, 'store'])->name('endpoint');
