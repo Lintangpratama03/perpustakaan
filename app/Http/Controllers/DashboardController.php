@@ -57,7 +57,17 @@ class DashboardController extends Controller
     }
     public function index_anggota()
     {
-        return view('account-pages/dashboard');
+        $userrfid = User::where('is_deleted', 0)->where('id_posisi', 2)
+            ->get();
+        // dd($userrfid);
+        $swiperData = $this->getSwiperData($userrfid);
+        $pengunjung = Kunjungan::count();
+        $anggota = User::where('is_deleted', 0)->where('id_posisi', 3)->count();
+        $anggota_rfid = User::where('is_deleted', 0)->where('id_posisi', 2)->count();
+        $anggota_minta = User::where('is_deleted', 0)->where('id_posisi', 3)->where('permintaan', 1)->count();
+        $hapus = User::where('is_deleted', 1)->count();
+        // dd($pengunjung);
+        return view('account-pages/dashboard', compact('userrfid', 'swiperData', 'hapus', 'pengunjung', 'anggota', 'anggota_rfid', 'anggota_minta'));
     }
 
     public function getSwiperData($userrfid)

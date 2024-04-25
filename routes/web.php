@@ -64,6 +64,7 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::post('/kunjungan', [DashboardController::class, 'storeKunjungan'])->name('kunjungan.store');
+Route::get('/get-kunjungan-umum', [DashboardController::class, 'getKunjunganData'])->name('kunjungan.dashboard.umum');
 
 Route::group(['middleware' => ['auth', 'posisi:2'], 'prefix' => 'anggota'], function () {
     Route::post('/logoutt', [LoginController::class, 'destroy'])
