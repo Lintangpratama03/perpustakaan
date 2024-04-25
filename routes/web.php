@@ -198,6 +198,9 @@ Route::group(['middleware' => ['auth', 'posisi:1']], function () {
         Route::get('/edit/{id}', [PeminjamanController::class, 'edit'])->name('ajuan.edit');
         Route::post('/update/{id}', [PeminjamanController::class, 'update'])->name('ajuan.update');
         Route::post('/tolak/{id}', [PeminjamanController::class, 'tolak'])->name('ajuan.tolak');
+        // scanpinjam
+        Route::get('/edit_scan/{id}', [PeminjamanController::class, 'edit_scan'])->name('ajuan.scan.edit');
+        Route::post('/scan/{id}/{id_card}', [PeminjamanController::class, 'scan'])->name('ajuan.scan');
     });
 
     Route::prefix('kelola-kembali')->group(function () {

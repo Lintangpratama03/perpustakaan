@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buku;
+use App\Models\Data;
 use App\Models\Keranjang;
 use App\Models\Peminjaman;
 use App\Models\User;
@@ -76,6 +77,7 @@ class PeminjamanController extends Controller
             'message' => 'Berhasil Ganti Status'
         ]);
     }
+
     public function tolak($id)
     {
         $pinjam = Peminjaman::find($id);
@@ -103,36 +105,70 @@ class PeminjamanController extends Controller
         ]);
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function edit_scan($id)
     {
-        //
+        $buku = Keranjang::select('keranjang.*', 'buku.name', 'buku.image')
+            ->where('id_peminjaman', $id)
+            ->leftJoin('buku', 'keranjang.id_buku', '=', 'buku.id')
+            ->get();
+
+        $scan = Data::select('data.value', 'users.name')
+            ->leftJoin('users', 'data.value', '=', 'users.id_card')
+            ->orderBy('data.created_at', 'desc')
+            ->first();
+
+        $data = [];
+
+        foreach ($buku as $item) {
+            $image = $item->image ? asset('assets/img/buku/' . $item->image) : asset('assets/img/default-image.png');
+            $data[] = [
+                'id' => $item->id,
+                'id_peminjaman' => $item->id_peminjaman,
+                'name' => $item->name,
+                'jumlah_pinjam' => $item->jumlah_pinjam,
+                'image' => $image
+            ];
+        }
+
+        if ($scan) {
+            $data[] = [
+                'scan' => $scan->value,
+                'name' => $scan->name
+            ];
+        }
+
+        return response()->json($data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Peminjaman $peminjaman)
+    public function scan($id, $id_card)
     {
-        //
-    }
+        // Menggunakan first() untuk mendapatkan hasil pertama atau null jika tidak ditemukan
+        $pinjam = Peminjaman::where('id', $id)
+            ->where('id_card', $id_card)
+            ->where('status', 2)
+            ->first();
+        $tanggal = now();
+        $tenggatKembali = now()->addDays(7);
+        // Periksa apakah peminjaman ditemukan
+        if (!$pinjam) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Peminjaman tidak ditemukan.'
+            ], 404);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Peminjaman $peminjaman)
-    {
-        //
+        // Ubah status peminjaman menjadi 3
+        $pinjam->status = 3;
+        $pinjam->tanggal_pinjam = $tanggal;
+        $pinjam->tenggat_kembali = $tenggatKembali;
+        $pinjam->status = 3;
+
+        $pinjam->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Berhasil mengubah status peminjaman.'
+        ]);
     }
 }

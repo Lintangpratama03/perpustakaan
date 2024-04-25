@@ -41,6 +41,9 @@
                                             Nama Peminjam</th>
                                         <th
                                             class="text-left text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
+                                            Tanggal Ajuan</th>
+                                        <th
+                                            class="text-left text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
                                             Tanggal Pinjam</th>
                                         <th
                                             class="text-left text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
@@ -66,6 +69,7 @@
                                             <tr>
                                                 <td class="text-left">{{ $pjm->id }}</td>
                                                 <td class="text-left">{{ $pjm->name_user }}</td>
+                                                <td class="text-left">{{ $pjm->tanggal_ajuan }}</td>
                                                 <td class="text-left">{{ $pjm->tanggal_pinjam }}</td>
                                                 <td class="text-left">{{ $pjm->tenggat_kembali }}</td>
                                                 <td class="text-left">{{ $pjm->id_card }}</td>
@@ -164,9 +168,33 @@
                                         <h3 class="font-weight-bolder text-dark">Scan RFID</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form method="post" id="editMemberForm">
+                                        <form method="post" id="editScanForm">
                                             @csrf
-                                            <label for="">SILAHKAN SCAN RFID ANDA</label>
+                                            <label for="">DATA SCAN RFID</label>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="input-group mb-3">
+                                                        <input type="hidden" name="id_peminjaman"
+                                                            id="id_peminjaman">
+                                                        <input type="text" class="form-control" placeholder="RFID"
+                                                            name="id_card" id="id_card" aria-label="rfid"
+                                                            aria-describedby="name-addon" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control" placeholder="name"
+                                                            name="name" aria-label="name"
+                                                            aria-describedby="name-addon" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center mt-4">
+                                                <button type="button" class="btn btn-secondary mr-3"
+                                                    data-bs-dismiss="modal">Kembali</button>
+                                                <button type="submit" id="edit_pinjam"
+                                                    class="btn btn-primary">Konfirmasi Pinjam</button>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -226,6 +254,48 @@
                 }
             });
         });
+        $("#editScanForm").submit(function(e) {
+            e.preventDefault();
+            let id = $('#id_peminjaman').val();
+            let id_card = $('#id_card').val();
+            // console.log(id);
+            const form = document.getElementById("editScanForm");
+            const fd = new FormData(form);
+            $("#edit_status").text('Updating...');
+            $.ajax({
+                url: '/kelola-pinjam-ajuan/scan/' + id + '/' + id_card,
+                method: 'POST',
+                data: fd,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    // console.log(response);
+                    if (response.status == 200) {
+                        Swal.fire(
+                            'Updated!',
+                            'Peminjaman Updated Successfully!',
+                            'success'
+                        );
+                        $("#scanMemberModal").modal('hide');
+                        window.location.reload();
+                    }
+                    $("#edit_status").text('Edit peminjaman');
+                    $("#scanMemberModal").modal('hide');
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422) {
+                        let errors = xhr.responseJSON.errors;
+                        $('.text-danger').text('');
+                        $.each(errors, function(key, value) {
+                            $('.error-' + key).text(value[0]);
+                        });
+                    }
+                    $("#edit_status").text('Edit peminjaman');
+                }
+            });
+        });
         $("#tolak_status").click(function(e) {
             e.preventDefault();
             let id = $('#id_peminjaman').val();
@@ -270,6 +340,7 @@
 
         $(document).on('click', '.edit-btn', function() {
             let id = $(this).data('id');
+            // console.log(id);
             $('#editMemberModal').modal('show');
             $('#editMemberForm').trigger('reset');
             $('#table-data').empty();
@@ -290,6 +361,22 @@
                 `;
                     }
                     $('#table-data').html(tableData);
+                }
+            });
+        });
+        $(document).on('click', '.scan-btn', function() {
+            let id = $(this).data('id');
+            $('#scanMemberModal').modal('show');
+            $('#editScanForm').trigger('reset');
+            $a = $('#id_peminjaman').val(id);
+            // console.log($a);
+            $.ajax({
+                url: '/kelola-pinjam-ajuan/edit_scan/' + id,
+                method: 'GET',
+                success: function(data) {
+                    // console.log(data);
+                    $('#editScanForm').find('input[name="id_card"]').val(data[1].scan);
+                    $('#editScanForm').find('input[name="name"]').val(data[1].name);
                 }
             });
         });

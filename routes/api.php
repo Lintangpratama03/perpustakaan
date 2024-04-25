@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DataController;
+use App\Http\Controllers\PeminjamanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('endpoint', [DataController::class, 'store'])->name('endpoint');
+Route::post('/scan', [PeminjamanController::class, 'scan'])->name('endpoint');

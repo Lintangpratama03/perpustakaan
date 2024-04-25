@@ -14,13 +14,13 @@
                         <tr>
                             <th
                                 class="text-left text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
-                                No Transaksi</th>
+                                No Pinjam</th>
                             <th
                                 class="text-left text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
                                 Nama Peminjam</th>
                             <th
                                 class="text-left text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
-                                Tanggal Pinjam</th>
+                                Tanggal Pengajuan</th>
                             <th
                                 class="text-left text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
                                 ID RFID</th>
@@ -42,7 +42,7 @@
                                 <tr>
                                     <td class="text-left">{{ $pjm->id }}</td>
                                     <td class="text-left">{{ $pjm->name_user }}</td>
-                                    <td class="text-left">{{ $pjm->tanggal_pinjam }}</td>
+                                    <td class="text-left">{{ $pjm->tanggal_ajuan }}</td>
                                     <td class="text-left">{{ $pjm->id_card }}</td>
                                     <td class="text-center">
                                         @if ($pjm->status == 1)

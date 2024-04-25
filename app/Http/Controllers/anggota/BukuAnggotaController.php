@@ -11,6 +11,8 @@ use App\Models\Pengarang;
 use App\Models\Rak;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class BukuAnggotaController extends Controller
 {
@@ -98,12 +100,16 @@ class BukuAnggotaController extends Controller
 
     public function checkout(Request $request)
     {
-        $tanggalPinjam = now();
-        $tenggatKembali = now()->addDays(7);
+        $user = User::find(Auth::id());
+        // dd($user);
+        $id_card = $user->id_card;
+        $tanggalAjuan = now();
+        // $tenggatKembali = now()->addDays(7);
         try {
             $peminjaman = new Peminjaman;
-            $peminjaman->tanggal_pinjam = $tanggalPinjam;
-            $peminjaman->tenggat_kembali = $tenggatKembali;
+            $peminjaman->tanggal_ajuan = $tanggalAjuan;
+            // $peminjaman->tenggat_kembali = $tenggatKembali;
+            $peminjaman->id_card = $id_card;
             $peminjaman->status = 1;
             $peminjaman->save();
 
