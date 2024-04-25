@@ -83,40 +83,41 @@ class PengembalianController extends Controller
 
     public function update(Request $request)
     {
-        // dd($request->all());
+        $request->validate([
+            'id_peminjaman' => 'required|integer',
+        ]);
         $id_pinjam = $request->get('id_peminjaman');
+
         $pinjam = Peminjaman::find($id_pinjam);
-        //dd($pinjam);
         if (!$pinjam) {
             return response()->json([
                 'status' => 404,
-                'message' => 'User not found.'
+                'message' => 'Data peminjaman tidak ditemukan.'
             ], 404);
         }
-        $user = User::find(Auth::id());
-        // dd($user);
-        $id = $user->id;
+
+        $user_id = Auth::id();
+
         $pinjam->status = 4;
-        $pinjam->petugas_id = $id;
+        $pinjam->petugas_id = $user_id;
         $pinjam->save();
-        //petugas
-        // $hari_ini = Carbon::now();
-        // $kembali = [
-        //     'tanggal_pengembalian' => $hari_ini,
-        //     'denda' => $request->denda,
-        //     'peminjaman_id' => $request->id_peminjaman,
-        //     'rfid' => $request->rfid,
-        //     'petugas_id' => $id,
-        //     'status' => 1
-        // ];
-        //dd($kembali);
-        // Pengembalian::create($kembali);
+
+        $buku_keranjang = Keranjang::where('id_peminjaman', $id_pinjam)->get();
+
+        foreach ($buku_keranjang as $item) {
+            $buku = Buku::find($item->id_buku);
+            if ($buku) {
+                $buku->jumlah += $item->jumlah_pinjam;
+                $buku->save();
+            }
+        }
 
         return response()->json([
             'status' => 200,
-            'message' => 'Berhasil Ganti Status'
+            'message' => 'Status peminjaman berhasil diperbarui dan stok buku diperbarui.'
         ]);
     }
+
 
     public function edit_scan($id)
     {
@@ -181,21 +182,19 @@ class PengembalianController extends Controller
             ], 404);
         }
 
-        $hari_terlambat = 0; // Inisialisasi variabel hari_terlambat di luar loop
+        $hari_terlambat = 0;
 
         // Jika peminjaman ditemukan, hitung hari terlambat
         $tenggat_kembali = Carbon::parse($pinjam->tenggat_kembali);
         $hari_ini = Carbon::now();
         $hari_terlambat = $tenggat_kembali->diffInDays($hari_ini, false);
 
-        // Ubah status peminjaman menjadi 5 dan simpan perubahan
         $pinjam->status = 5;
         $pinjam->tanggal_kembali = $hari_ini;
         $pinjam->save();
         if ($hari_terlambat < 0) {
-            $hari_terlambat = 0;
+            $hari_terlambat = "0";
         }
-        // Buat data untuk pengembalian
         $kembali = [
             'tanggal_pengembalian' => $hari_ini,
             'denda' => $denda,
@@ -205,6 +204,7 @@ class PengembalianController extends Controller
             'petugas_id' => $id,
             'status' => 1
         ];
+        // dd($kembali);
         Pengembalian::create($kembali);
 
         return response()->json([

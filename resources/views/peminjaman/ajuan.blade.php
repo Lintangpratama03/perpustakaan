@@ -1,4 +1,8 @@
 <x-app-layout>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <x-app.navbar />
         <div class="px-5 py-4 container-fluid">
@@ -30,7 +34,7 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table class="table text-secondary text-center">
+                            <table class="table text-secondary text-center" id="table-oke">
                                 <thead>
                                     <tr>
                                         <th
@@ -62,7 +66,14 @@
                                 <tbody>
                                     @if ($pinjam->isEmpty())
                                         <tr>
-                                            <td colspan="7">TIDAK ADA DATA</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>TIDAK ADA DATA</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
                                     @else
                                         @foreach ($pinjam as $pjm)
@@ -397,6 +408,12 @@
                 imageHeight: 400,
                 imageAlt: 'Image Preview',
                 showConfirmButton: false
+            });
+        });
+        $(document).ready(function() {
+            $('#table-oke').DataTable({
+                "searching": true,
+                "paging": true
             });
         });
     });
