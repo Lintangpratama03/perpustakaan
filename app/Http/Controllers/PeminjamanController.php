@@ -171,4 +171,40 @@ class PeminjamanController extends Controller
             'message' => 'Berhasil mengubah status peminjaman.'
         ]);
     }
+
+    // sukses
+    public function index_sukses()
+    {
+        $pinjam = Peminjaman::select('peminjaman.*', 'users.name as name_user')
+            ->where('peminjaman.is_deleted', 0)
+            ->where('peminjaman.status', '>=', 3)
+            ->leftJoin('users', 'peminjaman.id_card', '=', 'users.id_card')
+            ->get();
+        // dd($pinjam);
+        return view('peminjaman.sukses', compact('pinjam'));
+    }
+
+    public function edit_sukses($id)
+    {
+        // dd($id);
+        $buku = Keranjang::select('Keranjang.*', 'buku.name', 'buku.image')
+            ->where('id_peminjaman', $id)
+            ->leftJoin('buku', 'keranjang.id_buku', '=', 'buku.id')
+            ->get();
+
+        $data = [];
+        //dd($buku);
+        foreach ($buku as $item) {
+            $image = $item->image ? asset('assets/img/buku/' . $item->image) : asset('assets/img/default-image.png');
+            $data[] = [
+                'id' => $item->id,
+                'id_peminjaman' => $item->id_peminjaman,
+                'name' => $item->name,
+                'jumlah_pinjam' => $item->jumlah_pinjam,
+                'image' => $image
+            ];
+        }
+        // dd($data);
+        return response()->json($data);
+    }
 }

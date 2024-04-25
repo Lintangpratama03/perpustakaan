@@ -209,8 +209,8 @@ Route::group(['middleware' => ['auth', 'posisi:1']], function () {
     });
 
     Route::prefix('kelola-pinjam-sukses')->group(function () {
-        Route::get('/', [PeminjamanController::class, 'index_sukses'])->name('ajuan_sukses');
-        Route::get('/edit_sukses/{id}', [PeminjamanController::class, 'edit_sukses'])->name('ajuan_sukses.edit');
+        Route::get('/', [PeminjamanController::class, 'index_sukses'])->name('ajuan.sukses');
+        Route::get('/edit_sukses/{id}', [PeminjamanController::class, 'edit_sukses'])->name('ajuan.sukses.edit');
     });
 
     Route::prefix('kelola-kembali')->group(function () {

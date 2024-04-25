@@ -185,9 +185,6 @@
                                             <div class="text-center mt-4">
                                                 <button type="button" class="btn btn-secondary mr-3"
                                                     data-bs-dismiss="modal">Kembali</button>
-                                                <button type="submit" id="edit_status"
-                                                    class="btn btn-primary">Proses
-                                                    Ajuan</button>
                                             </div>
                                         </form>
                                     </div>
