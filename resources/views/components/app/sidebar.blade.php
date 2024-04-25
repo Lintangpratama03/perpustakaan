@@ -1,4 +1,3 @@
-
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 bg-slate-900 fixed-start " id="sidenav-main">
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
@@ -41,12 +40,17 @@
                 <li>
                     <a href="#" class="collapsible-header d-flex align-items-center collapsed text-white">
                         <i class="fas fa-id-card fa-fw me-2 text-white"></i>
-                        <span class="font-weight-normal text-md ms-2 text-white">RFID</span>
+                        <span class="font-weight-normal text-md ms-2 text-white">Data</span>
                         <i class="fas fa-chevron-down ms-auto transition-transform text-white"></i>
                     </a>
                     <div class="collapsible-body">
                         <ul>
                             <li><a href="{{ route('rfid') }}" class="text-white">History SCAN</a></li>
+                        </ul>
+                    </div>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="{{ route('rfid') }}" class="text-white">Pengunjung</a></li>
                         </ul>
                     </div>
                 </li>

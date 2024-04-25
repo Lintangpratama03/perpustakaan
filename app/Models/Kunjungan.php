@@ -9,4 +9,8 @@ class Kunjungan extends Model
 {
     use HasFactory;
     protected $table = "kunjungan";
+    protected $fillable = [
+        'tanggal',
+        'id_user'
+    ];
 }

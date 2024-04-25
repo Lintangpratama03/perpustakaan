@@ -63,7 +63,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/admin', [LoginController::class, 'store_admin']);
 });
 
-
+Route::post('/kunjungan', [DashboardController::class, 'storeKunjungan'])->name('kunjungan.store');
 
 Route::group(['middleware' => ['auth', 'posisi:2'], 'prefix' => 'anggota'], function () {
     Route::post('/logoutt', [LoginController::class, 'destroy'])

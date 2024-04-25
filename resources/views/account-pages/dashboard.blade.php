@@ -6,20 +6,42 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
         </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     </head>
     <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
         <x-navbar-guest />
-        <div class="pt-7 pb-4 bg-cover"
+        <div class="pt-2 pb-1 bg-cover"
             style="background-image: url('../assets/img/dashboard.png'); background-position: bottom;">
         </div>
         <div class="container">
-            <div class="card card-body py-2 bg-transparent shadow-none">
-                <div class="row">
-                    <div class="col-auto">
-
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-background card-background-after-none align-items-start mt-4 mb-2">
+                        <div class="full-background"
+                            style="background-image: url('../assets/img/header-blue-purple.jpg')"></div>
+                        <div class="card-body text-start p-4 w-100">
+                            <h3 class="text-white mb-2">SELAMAT DATANG DI PERPUSTAKAAN SMPN 1 LAWANG 🔥</h3>
+                            <p class="mb-4 font-weight-semibold">
+                                Silahkan Absen Terlebih Dahulu !!!
+                            </p>
+                            <button type="button"
+                                class="btn btn-outline-white btn-blur btn-icon d-flex align-items-center mb-0">
+                                <span class="btn-inner--icon">
+                                    <svg width="14" height="14" viewBox="0 0 14 14"
+                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="d-block me-2">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M1.5 2C0.671573 2 0 2.67157 0 3.5V10.5C0 11.3284 0.671573 12 1.5 12H12.5C13.3284 12 14 11.3284 14 10.5V3.5C14 2.67157 13.3284 2 12.5 2H1.5ZM1 3.5C1 3.22386 1.22386 3 1.5 3H12.5C12.7761 3 13 3.22386 13 3.5V10.5C13 10.7761 12.7761 11 12.5 11H1.5C1.22386 11 1 10.7761 1 10.5V3.5ZM4 6C4 5.72386 4.22386 5.5 4.5 5.5H9.5C9.77614 5.5 10 5.72386 10 6C10 6.27614 9.77614 6.5 9.5 6.5H4.5C4.22386 6.5 4 6.27614 4 6ZM4.5 7C4.22386 7 4 7.22386 4 7.5C4 7.77614 4.22386 8 4.5 8H9.5C9.77614 8 10 7.77614 10 7.5C10 7.22386 9.77614 7 9.5 7H4.5ZM4.5 8.5C4.22386 8.5 4 8.72386 4 9C4 9.27614 4.22386 9.5 4.5 9.5H9.5C9.77614 9.5 10 9.27614 10 9C10 8.72386 9.77614 8.5 9.5 8.5H4.5Z" />
+                                    </svg>
+                                </span>
+                                <span class="btn-inner--text">ABSEN</span>
+                            </button>
+                            <img src="../assets/img/3d-cube.png" alt="3d-cube"
+                                class="position-absolute top-0 end-1 w-25 max-width-200 mt-n6 d-sm-block d-none" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -189,3 +211,36 @@
         </div>
     </div>
 </x-guest-layout>
+<script>
+    $(document).ready(function() {
+        $('button.btn-outline-white').click(function() {
+            $.ajax({
+                url: "{{ route('kunjungan.store') }}",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>

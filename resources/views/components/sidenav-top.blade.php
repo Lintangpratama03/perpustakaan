@@ -58,7 +58,11 @@
     <div class="navbar-bg" style="background-image: url('../assets/img/dashboard.png'); background-position: bottom;">
         <nav class="navbar navbar-expand-lg blur border-radius-sm top-0 z-index-3 shadow bg-slate-900">
             <div class="container-fluid px-1">
-                <a class="navbar-brand font-weight-bolder ms-lg-0 text-black" href="#">Perpustakaan</a>
+                <a class="navbar-brand font-weight-bolder ms-lg-0 text-black" href="#">
+                    <img src="../assets/img/logo-ct.png" alt="Perpustakaan"
+                        style="width: 50px; height: auto; margin-left: 10px;">
+                    PERPUSTAKAAN
+                </a>
                 <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                     aria-label="Toggle navigation">

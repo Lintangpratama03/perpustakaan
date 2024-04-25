@@ -6,9 +6,38 @@ use App\Models\Kunjungan;
 use App\Models\Peminjaman;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
+
+    public function storeKunjungan(Request $request)
+    {
+        $user = User::find(Auth::id());
+        // dd($user);
+        $id = $user->id;
+
+        $today = Carbon::today();
+        $existingKunjungan = Kunjungan::where('id_user', $id)->whereDate('tanggal', $today)->first();
+
+        if ($existingKunjungan) {
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'Anda sudah absen hari ini.'
+            ]);
+        }
+
+        Kunjungan::create([
+            'tanggal' => $today,
+            'id_user' => $id
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Anda berhasil absen.'
+        ]);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -28,7 +57,7 @@ class DashboardController extends Controller
     }
     public function index_anggota()
     {
-        return view('account-pages/profile');
+        return view('account-pages/dashboard');
     }
 
     public function getSwiperData($userrfid)
