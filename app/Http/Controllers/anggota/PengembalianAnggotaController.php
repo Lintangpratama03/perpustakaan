@@ -31,11 +31,11 @@ class PengembalianAnggotaController extends Controller
         foreach ($pinjam as $item) {
             $tenggat_kembali = Carbon::parse($item->tenggat_kembali);
             $hari_ini = Carbon::now();
-            $hari_terlambat = $hari_ini->diffInDays($tenggat_kembali, true);
-
+            $hari_terlambat = $tenggat_kembali->diffInDays($hari_ini, false);
+            // dd($hari_terlambat);
             if ($hari_terlambat > 0) {
                 $denda = $hari_terlambat * 5000;
-                $item->denda = number_format($denda, 0, ',', '.');
+                $item->denda = 'Rp ' . number_format($denda, 0, ',', '.');
             } else {
                 $item->denda = 'Rp 0';
             }

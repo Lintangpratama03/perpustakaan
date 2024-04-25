@@ -41,7 +41,13 @@
                     <tbody>
                         @if ($pinjam->isEmpty())
                             <tr>
-                                <td colspan="7">TIDAK ADA DATA</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>TIDAK ADA DATA</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         @else
                             @foreach ($pinjam as $pjm)

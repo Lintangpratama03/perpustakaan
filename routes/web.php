@@ -208,5 +208,8 @@ Route::group(['middleware' => ['auth', 'posisi:1']], function () {
         Route::get('/edit/{id}', [PengembalianController::class, 'edit'])->name('kembali.edit');
         Route::post('/update/{id}', [PengembalianController::class, 'update'])->name('kembali.update');
         Route::post('/tolak/{id}', [PengembalianController::class, 'tolak'])->name('kembali.tolak');
+
+        Route::get('/edit_scan/{id}', [PengembalianController::class, 'edit_scan'])->name('kembali.scan.edit');
+        Route::post('/scan/{id}/{id_card}/{denda}', [PengembalianController::class, 'scan'])->name('kembali.scan');
     });
 });

@@ -64,7 +64,13 @@
                                 <tbody>
                                     @if ($pinjam->isEmpty())
                                         <tr>
-                                            <td colspan="7">TIDAK ADA DATA</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>TIDAK ADA DATA</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
                                     @else
                                         @foreach ($pinjam as $pjm)
@@ -77,14 +83,14 @@
                                                     @if ($pjm->status == 3)
                                                         <span
                                                             class="badge badge-sm border border-danger text-danger bg-danger">{{ 'Belum Kembali' }}</span>
-                                                    @elseif ($pjm->status == 0)
+                                                    @elseif ($pjm->status == 4)
                                                         <span
                                                             class="badge badge-sm border border-warning text-warning bg-warning">{{ 'Proses Scan' }}</span>
                                                     @else
                                                         {{ 'N/A' }}
                                                     @endif
                                                 </td>
-                                                <td class="text-center">Rp {{ $pjm->denda }}</td>
+                                                <td class="text-center">{{ $pjm->denda }}</td>
                                                 <td class="text-center">
                                                     @if ($pjm->status == 3)
                                                         <a href="#" class="mx-3 edit-btn" data-bs-toggle="modal"
@@ -92,7 +98,7 @@
                                                             data-id="{{ $pjm->id }}">
                                                             <i class="fas fa-eye text-secondary"></i>
                                                         </a>
-                                                    @elseif ($pjm->status == 0)
+                                                    @elseif ($pjm->status == 4)
                                                         <a href="#" class="mx-3 scan-btn" data-bs-toggle="modal"
                                                             data-bs-target="#scanMemberModal"
                                                             data-id="{{ $pjm->id }}">
@@ -209,9 +215,44 @@
                                         <h3 class="font-weight-bolder text-dark">Scan RFID</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form method="post" id="editMemberForm">
+                                        <form method="post" id="editScanForm">
                                             @csrf
-                                            <label for="">SILAHKAN SCAN RFID ANDA</label>
+                                            <label for="">DATA SCAN RFID</label>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="input-group mb-3">
+                                                        <input type="hidden" name="id_peminjaman"
+                                                            id="id_peminjaman">
+                                                        <input type="text" class="form-control" placeholder="RFID"
+                                                            name="id_card" id="id_card" aria-label="rfid"
+                                                            aria-describedby="name-addon" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control" placeholder="name"
+                                                            name="name" aria-label="name"
+                                                            aria-describedby="name-addon" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <div class="input-group mb-3">
+                                                            <input type="hidden" class="form-control" name="denda"
+                                                                aria-label="denda" id="denda"
+                                                                aria-describedby="denda-addon" readonly>
+                                                        </div>
+                                                        <span class="text-danger error-denda"
+                                                            style="font-size: 0.8rem;"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center mt-4">
+                                                <button type="button" class="btn btn-secondary mr-3"
+                                                    data-bs-dismiss="modal">Kembali</button>
+                                                <button type="submit" id="edit_pinjam"
+                                                    class="btn btn-primary">Konfirmasi Kembali</button>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -316,6 +357,68 @@
             $('#table-oke').DataTable({
                 "searching": true,
                 "paging": true
+            });
+        });
+
+        $("#editScanForm").submit(function(e) {
+            e.preventDefault();
+            let id = $('#id_peminjaman').val();
+            let id_card = $('#id_card').val();
+            let denda = $('#denda').val();
+            // console.log(id);
+            const form = document.getElementById("editScanForm");
+            const fd = new FormData(form);
+            $("#edit_status").text('Updating...');
+            $.ajax({
+                url: '/kelola-kembali/scan/' + id + '/' + id_card + '/' + denda,
+                method: 'POST',
+                data: fd,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    // console.log(response);
+                    if (response.status == 200) {
+                        Swal.fire(
+                            'Updated!',
+                            'Peminjaman Updated Successfully!',
+                            'success'
+                        );
+                        $("#scanMemberModal").modal('hide');
+                        window.location.reload();
+                    }
+                    $("#edit_status").text('Edit peminjaman');
+                    $("#scanMemberModal").modal('hide');
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422) {
+                        let errors = xhr.responseJSON.errors;
+                        $('.text-danger').text('');
+                        $.each(errors, function(key, value) {
+                            $('.error-' + key).text(value[0]);
+                        });
+                    }
+                    $("#edit_status").text('Edit peminjaman');
+                }
+            });
+        });
+
+        $(document).on('click', '.scan-btn', function() {
+            let id = $(this).data('id');
+            $('#scanMemberModal').modal('show');
+            $('#editScanForm').trigger('reset');
+            $a = $('#id_peminjaman').val(id);
+            // console.log($a);
+            $.ajax({
+                url: '/kelola-kembali/edit_scan/' + id,
+                method: 'GET',
+                success: function(data) {
+                    console.log(data);
+                    $('#editScanForm').find('input[name="id_card"]').val(data[1].scan);
+                    $('#editScanForm').find('input[name="name"]').val(data[1].name);
+                    $('#editScanForm').find('input[name="denda"]').val(data[0].denda);
+                }
             });
         });
     });
