@@ -285,14 +285,22 @@
                     $("#scanMemberModal").modal('hide');
                 },
                 error: function(xhr) {
-                    if (xhr.status === 422) {
-                        let errors = xhr.responseJSON.errors;
-                        $('.text-danger').text('');
-                        $.each(errors, function(key, value) {
-                            $('.error-' + key).text(value[0]);
+                    if (xhr.status == 404) {
+                        Swal.fire(
+                            'GAGAL',
+                            'CEK DULU RFIDNYA',
+                            'danger'
+                        ).then(function() {
+                            // Tunggu 2 detik sebelum menutup modal dan me-refresh halaman
+                            setTimeout(function() {
+                                $("#scanMemberModal").modal('hide');
+                                window.location.reload();
+                            }, 500);
                         });
+                    } else {
+                        $("#edit_status").text('Edit peminjaman');
+                        $("#scanMemberModal").modal('hide');
                     }
-                    $("#edit_status").text('Edit peminjaman');
                 }
             });
         });

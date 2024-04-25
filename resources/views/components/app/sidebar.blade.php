@@ -92,7 +92,6 @@
                     <div class="collapsible-body">
                         <ul>
                             <li><a href="{{ route('kembali') }}" class="text-white">Ajuan Pengembalian</a></li>
-                            <li><a href="" class="text-white">Pengembalian Pending</a></li>
                             <li><a href="" class="text-white">Pengembalian Sukses</a></li>
                         </ul>
                     </div>

@@ -31,7 +31,7 @@ class DataController extends Controller
         $data = $request->all();
         $validatedData = $request->validate([
             'sensor' => 'required|string',
-            'value' => 'required|numeric',
+            'value' => 'required',
         ]);
         $newData = new Data();
         $newData->sensor = $validatedData['sensor'];
