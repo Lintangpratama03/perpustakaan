@@ -334,9 +334,14 @@
                     </tr>
                 `;
                     }
+                    $telat = data[0].telat;
+                    if ($telat > 0) {
+                        $('#editMemberForm').find('input[name="telat"]').val(data[0].telat);
+                    } else {
+                        $('#editMemberForm').find('input[name="telat"]').val('Tidak telat');
+                    }
                     $('#table-data').html(tableData);
                     $('#editMemberForm').find('input[name="denda"]').val(data[0].denda);
-                    $('#editMemberForm').find('input[name="telat"]').val(data[0].telat);
                     $('#editMemberForm').find('input[name="rfid"]').val(data[0].rfid);
                 }
             });
@@ -415,8 +420,8 @@
                 method: 'GET',
                 success: function(data) {
                     console.log(data);
-                    $('#editScanForm').find('input[name="id_card"]').val(data[1].scan);
-                    $('#editScanForm').find('input[name="name"]').val(data[1].name);
+                    $('#editScanForm').find('input[name="id_card"]').val(data[2].scan);
+                    $('#editScanForm').find('input[name="name"]').val(data[2].name);
                     $('#editScanForm').find('input[name="denda"]').val(data[0].denda);
                 }
             });

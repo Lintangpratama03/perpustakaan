@@ -136,7 +136,7 @@ class PeminjamanController extends Controller
                 'name' => $scan->name
             ];
         }
-
+        // dd($data);
         return response()->json($data);
     }
 

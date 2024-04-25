@@ -60,16 +60,28 @@
                                         @if ($pjm->status == 3)
                                             <span
                                                 class="badge badge-sm border border-danger text-danger bg-danger">{{ 'Belum Kembali' }}</span>
+                                        @elseif ($pjm->status == 4)
+                                            <span
+                                                class="badge badge-sm border border-warning text-warning bg-warning">{{ 'Proses Scan' }}</span>
                                         @else
                                             {{ 'N/A' }}
                                         @endif
                                     </td>
-                                    <td class="text-center">Rp {{ $pjm->denda }}</td>
+                                    <td class="text-center">{{ $pjm->denda }}</td>
                                     <td class="text-center">
-                                        <a href="#" class="mx-3 edit-btn" data-bs-toggle="modal"
-                                            data-bs-target="#editMemberModal" data-id="{{ $pjm->id }}">
-                                            <i class="fas fa-eye text-secondary"></i>
-                                        </a>
+                                        @if ($pjm->status == 3)
+                                            <a href="#" class="mx-3 edit-btn" data-bs-toggle="modal"
+                                                data-bs-target="#editMemberModal" data-id="{{ $pjm->id }}">
+                                                <i class="fas fa-eye text-secondary"></i>
+                                            </a>
+                                        @elseif ($pjm->status == 4)
+                                            <a href="#" class="mx-3 scan-btn" data-bs-toggle="modal"
+                                                data-bs-target="#scanMemberModal" data-id="{{ $pjm->id }}">
+                                                <i class="fa fa-id-badge text-secondary"></i>
+                                            </a>
+                                        @else
+                                            {{ 'N/A' }}
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
