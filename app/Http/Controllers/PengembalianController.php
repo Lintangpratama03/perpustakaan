@@ -180,6 +180,11 @@ class PengembalianController extends Controller
                 'message' => 'Peminjaman tidak ditemukan.'
             ], 404);
         }
+        foreach ($pinjam as $item) {
+            $tenggat_kembali = Carbon::parse($item->tenggat_kembali);
+            $hari_ini = Carbon::now();
+            $hari_terlambat = $tenggat_kembali->diffInDays($hari_ini, false);
+        }
 
         $hari_ini = Carbon::now();
         $pinjam = Peminjaman::find($id);
@@ -189,6 +194,7 @@ class PengembalianController extends Controller
         $kembali = [
             'tanggal_pengembalian' => $hari_ini,
             'denda' => $denda,
+            'telat' => $hari_terlambat,
             'peminjaman_id' => $id,
             'rfid' => $id_card,
             'petugas_id' => $id,

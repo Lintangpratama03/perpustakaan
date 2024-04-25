@@ -132,7 +132,7 @@
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
                                 <li><a class="dropdown-item" href="{{ route('pengembalian-buku') }}">Belum Kembali</a>
                                 </li>
-                                <li><a class="dropdown-item" href="{{ route('sukses-peminjaman-anggota') }}">Sukses
+                                <li><a class="dropdown-item" href="{{ route('sukses-pengembalian-buku') }}">Sukses
                                         Kembali</a></li>
                             </ul>
                         </li>

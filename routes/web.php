@@ -102,6 +102,11 @@ Route::group(['middleware' => ['auth', 'posisi:2'], 'prefix' => 'anggota'], func
         Route::get('/edit/{id}', [PengembalianAnggotaController::class, 'edit'])->name('pengembalian-buku.edit');
     });
 
+    Route::prefix('pengembalian-sukses')->group(function () {
+        Route::get('/', [PengembalianAnggotaController::class, 'index_sukses'])->name('sukses-pengembalian-buku');
+        Route::get('/edit/{id}', [PengembalianAnggotaController::class, 'edit_sukses'])->name('pengembalian-buku.edit');
+    });
+
 
     Route::get('/kelola-user/user-profile', [ProfileController::class, 'index'])->name('users.profile');
     Route::put('/kelola-user/user-profile/update', [ProfileController::class, 'update'])->name('users.update_profile');
