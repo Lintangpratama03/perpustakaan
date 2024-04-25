@@ -153,9 +153,9 @@
                                         <p class="text-sm mb-sm-0 mb-2">Grafik pengunjung tahun 2024.</p>
                                     </div>
                                     <div class="ms-auto d-flex">
-                                        <button type="button" class="btn btn-sm btn-white mb-0 me-2">
+                                        {{-- <button type="button" class="btn btn-sm btn-white mb-0 me-2">
                                             View report
-                                        </button>
+                                        </button> --}}
                                     </div>
                                 </div>
                                 <div class="d-sm-flex align-items-center">

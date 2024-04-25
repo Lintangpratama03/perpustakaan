@@ -77,7 +77,7 @@
                             <div class="chart mb-2">
                                 <canvas id="chart-pinjam" class="chart-canvas" height="240"></canvas>
                             </div>
-                            <button class="btn btn-white mb-0 ms-auto">View report</button>
+                            {{-- <button class="btn btn-white mb-0 ms-auto">View report</button> --}}
                         </div>
                     </div>
                 </div>
@@ -90,9 +90,9 @@
                                     <p class="text-sm mb-sm-0 mb-2">These are details about the last transactions</p>
                                 </div>
                                 <div class="ms-auto d-flex">
-                                    <button type="button" class="btn btn-sm btn-white mb-0 me-2">
+                                    {{-- <button type="button" class="btn btn-sm btn-white mb-0 me-2">
                                         View report
-                                    </button>
+                                    </button> --}}
                                     <button type="button"
                                         class="btn btn-sm btn-dark btn-icon d-flex align-items-center mb-0">
                                         <span class="btn-inner--icon">
@@ -462,9 +462,9 @@
                                     <p class="text-sm mb-sm-0 mb-2">Grafik pengunjung tahun 2024.</p>
                                 </div>
                                 <div class="ms-auto d-flex">
-                                    <button type="button" class="btn btn-sm btn-white mb-0 me-2">
+                                    {{-- <button type="button" class="btn btn-sm btn-white mb-0 me-2">
                                         View report
-                                    </button>
+                                    </button> --}}
                                 </div>
                             </div>
                             <div class="d-sm-flex align-items-center">
