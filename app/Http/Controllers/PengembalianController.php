@@ -166,7 +166,6 @@ class PengembalianController extends Controller
         return response()->json($data);
     }
 
-
     public function scan($id, $id_card, $denda)
     {
         $pinjam = Peminjaman::where('id', $id)
@@ -193,7 +192,9 @@ class PengembalianController extends Controller
         $pinjam->status = 5;
         $pinjam->tanggal_kembali = $hari_ini;
         $pinjam->save();
-
+        if ($hari_terlambat < 0) {
+            $hari_terlambat = 0;
+        }
         // Buat data untuk pengembalian
         $kembali = [
             'tanggal_pengembalian' => $hari_ini,
@@ -210,5 +211,48 @@ class PengembalianController extends Controller
             'status' => 200,
             'message' => 'Berhasil mengubah status peminjaman.'
         ]);
+    }
+
+
+    // sukses
+    public function index_sukses()
+    {
+        $pinjam = Pengembalian::select('Pengembalian.*', 'users.name as name_user', 'peminjaman.tanggal_pinjam')
+            ->where('Pengembalian.is_deleted', 0)
+            ->where('Pengembalian.status', 1)
+            ->leftJoin('users', 'Pengembalian.rfid', '=', 'users.id_card')
+            ->leftJoin('peminjaman', 'Pengembalian.peminjaman_id', '=', 'peminjaman.id')
+            ->get();
+        // dd($pinjam);
+        return view('pengembalian.selesai', compact('pinjam'));
+    }
+
+    public function edit_sukses($id)
+    {
+        // dd($id);
+        $buku = Keranjang::select('keranjang.*', 'buku.name', 'buku.image', 'peminjaman.tenggat_kembali', 'peminjaman.id_card', 'pengembalian.denda', 'pengembalian.telat')
+            ->where('id_peminjaman', $id)
+            ->leftJoin('buku', 'keranjang.id_buku', '=', 'buku.id')
+            ->leftJoin('peminjaman', 'keranjang.id_peminjaman', '=', 'peminjaman.id')
+            ->leftJoin('pengembalian', 'peminjaman.id', '=', 'pengembalian.peminjaman_id')
+            ->get();
+
+        $data = [];
+        // dd($buku);
+        foreach ($buku as $item) {
+            $image = $item->image ? asset('assets/img/buku/' . $item->image) : asset('assets/img/default-image.png');
+            $data[] = [
+                'id' => $item->id,
+                'id_peminjaman' => $item->id_peminjaman,
+                'name' => $item->name,
+                'denda' => $item->denda,
+                'rfid' => $item->id_card,
+                'telat' => $item->telat,
+                'jumlah_pinjam' => $item->jumlah_pinjam,
+                'image' => $image
+            ];
+        }
+        // dd($data);
+        return response()->json($data);
     }
 }

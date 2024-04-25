@@ -208,6 +208,11 @@ Route::group(['middleware' => ['auth', 'posisi:1']], function () {
         Route::post('/scan/{id}/{id_card}', [PeminjamanController::class, 'scan'])->name('ajuan.scan');
     });
 
+    Route::prefix('kelola-pinjam-sukses')->group(function () {
+        Route::get('/', [PeminjamanController::class, 'index_sukses'])->name('ajuan_sukses');
+        Route::get('/edit_sukses/{id}', [PeminjamanController::class, 'edit_sukses'])->name('ajuan_sukses.edit');
+    });
+
     Route::prefix('kelola-kembali')->group(function () {
         Route::get('/', [PengembalianController::class, 'index'])->name('kembali');
         Route::get('/edit/{id}', [PengembalianController::class, 'edit'])->name('kembali.edit');
@@ -216,5 +221,10 @@ Route::group(['middleware' => ['auth', 'posisi:1']], function () {
 
         Route::get('/edit_scan/{id}', [PengembalianController::class, 'edit_scan'])->name('kembali.scan.edit');
         Route::post('/scan/{id}/{id_card}/{denda}', [PengembalianController::class, 'scan'])->name('kembali.scan');
+    });
+
+    Route::prefix('kelola-kembali-sukses')->group(function () {
+        Route::get('/', [PengembalianController::class, 'index_sukses'])->name('kembali.sukses');
+        Route::get('/edit_sukses/{id}', [PengembalianController::class, 'edit_sukses'])->name('kembali.sukses.edit');
     });
 });
