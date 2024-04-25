@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class RFID extends Model
 {
     use HasFactory;
-    protected $table = "rfid";
+    protected $table = "data";
     protected $fillable = [
-        'id_kartu',
+        'value',
     ];
     public $timestamps = false;
 }
