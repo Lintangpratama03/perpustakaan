@@ -45,27 +45,14 @@
                                     <td class="text-left">{{ $pjm->tanggal_pinjam }}</td>
                                     <td class="text-left">{{ $pjm->id_card }}</td>
                                     <td class="text-center">
-                                        @if ($pjm->status == 3)
-                                            <span
-                                                class="badge badge-sm border border-success text-success bg-success">{{ 'Sukses' }}</span>
-                                        @else
-                                            {{ 'N/A' }}
-                                        @endif
+                                        <span
+                                            class="badge badge-sm border border-success text-success bg-success">{{ 'Sukses' }}</span>
                                     </td>
                                     <td class="text-center">
-                                        @if ($pjm->status == 1)
-                                            <a href="#" class="mx-3 edit-btn" data-bs-toggle="modal"
-                                                data-bs-target="#editMemberModal" data-id="{{ $pjm->id }}">
-                                                <i class="fas fa-eye text-secondary"></i>
-                                            </a>
-                                        @elseif ($pjm->status == 2)
-                                            <a href="#" class="mx-3 scan-btn" data-bs-toggle="modal"
-                                                data-bs-target="#scanMemberModal" data-id="{{ $pjm->id }}">
-                                                <i class="fa fa-id-badge text-secondary"></i>
-                                            </a>
-                                        @else
-                                            {{ 'N/A' }}
-                                        @endif
+                                        <a href="#" class="mx-3 edit-btn" data-bs-toggle="modal"
+                                            data-bs-target="#editMemberModal" data-id="{{ $pjm->id }}">
+                                            <i class="fas fa-eye text-secondary"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -107,8 +94,6 @@
                                             <div class="text-center mt-4">
                                                 <button type="button" class="btn btn-secondary mr-3"
                                                     data-bs-dismiss="modal">Kembali</button>
-                                                <button type="button" id="tolak_status" class="btn btn-danger">Hapus
-                                                    Ajuan</button>
                                             </div>
                                         </form>
                                     </div>
@@ -156,7 +141,7 @@
 <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-{{-- <script>
+<script>
     $(document).on('click', '.edit-btn', function() {
         let id = $(this).data('id');
         $('#editMemberModal').modal('show');
@@ -164,7 +149,7 @@
         $('#table-data').empty();
         $('#id_peminjaman').val(id);
         $.ajax({
-            url: '/anggota/peminjaman/edit/' + id,
+            url: '/anggota/peminjaman-sukses/edit_sukses/' + id,
             method: 'GET',
             success: function(data) {
                 let tableData = '';
@@ -179,47 +164,6 @@
                 `;
                 }
                 $('#table-data').html(tableData);
-            }
-        });
-    });
-    $("#tolak_status").click(function(e) {
-        e.preventDefault();
-        let id = $('#id_peminjaman').val();
-        const form = document.getElementById("editMemberForm");
-        const fd = new FormData(form);
-        $("#tolak_status").text('Deleting...');
-        $.ajax({
-            url: '/anggota/peminjaman/tolak/' + id,
-            method: 'POST',
-            data: fd,
-            cache: false,
-            contentType: false,
-            processData: false,
-            dataType: 'json',
-            success: function(response) {
-                if (response.status == 200) {
-                    Swal.fire(
-                        'Deleted!',
-                        'Peminjaman Deleted Successfully!',
-                        'success'
-                    );
-                    $("#editMemberModal").modal('hide');
-                    window.location.reload();
-                }
-                $("#tolak_status").text(
-                    'Tolak Ajuan');
-                $("#editMemberModal").modal('hide');
-            },
-            error: function(xhr) {
-                if (xhr.status === 422) {
-                    let errors = xhr.responseJSON.errors;
-                    $('.text-danger').text('');
-                    $.each(errors, function(key, value) {
-                        $('.error-' + key).text(value[0]);
-                    });
-                }
-                $("#tolak_status").text(
-                    'Tolak Ajuan'); // Mengubah teks tombol kembali setelah selesai
             }
         });
     });
@@ -240,4 +184,4 @@
             "paging": true
         });
     });
-</script> --}}
+</script>
