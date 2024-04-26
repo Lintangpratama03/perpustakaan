@@ -20,5 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::match(['get', 'post'], 'endpoint', [DataController::class, 'store'])->name('endpoint');
-// Route::post('/scan', [PeminjamanController::class, 'scan'])->name('endpoint');
+// Rute untuk metode POST
+Route::post('/endpoint', [DataController::class, 'store'])->name('endpoint.store');
+
+// Rute untuk metode GET (jika diperlukan)
+Route::get('/endpoint', [DataController::class, 'index'])->name('endpoint.index');
