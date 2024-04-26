@@ -22,6 +22,3 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Rute untuk metode POST
 Route::post('/endpoint', [DataController::class, 'store'])->name('endpoint.store');
-
-// Rute untuk metode GET (jika diperlukan)
-Route::get('/endpoint', [DataController::class, 'index'])->name('endpoint.index');
