@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Data;
+use App\Models\Peminjaman;
+use App\Models\Pengembalian;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -53,6 +57,56 @@ class UserUpgradeController extends Controller
         return response()->json([
             'status' => 200,
             'message' => 'User ' . $anggota->name . ' has been upgrade.'
+        ]);
+    }
+
+    // upgrade
+    public function edit_scan($id)
+    {
+        $anggota = User::find($id);
+        // dd($anggota);
+        $scan = Data::select('value')
+            ->orderBy('created_at', 'desc')
+            ->first();
+
+        if ($scan) {
+            $data = [
+                'scan' => $scan->value,
+                'name' => $anggota->name
+            ];
+        } else {
+            $data = [];
+        }
+
+        return response()->json($data);
+    }
+
+
+    public function scan($id, $id_card)
+    {
+        $existingUser = User::where('id_card', $id_card)->first();
+        if ($existingUser) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'ID CARD telah terdaftar.'
+            ]);
+        }
+        $user = User::where('id', $id)->first();
+        if (!$user) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'User tidak ditemukan.'
+            ]);
+        }
+
+        $user->id_posisi = 2;
+        $user->id_card = $id_card;
+        $user->permintaan = 0;
+        $user->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Berhasil upgrade anggota.'
         ]);
     }
 }

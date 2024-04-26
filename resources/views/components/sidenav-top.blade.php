@@ -95,7 +95,7 @@
                             @endif
                             @if (Auth::user()->id_posisi == 3)
                                 <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
-                                    <a href="" class="nav-link text-black p-0">Pengajuan
+                                    <a href="{{ route('pengajuan') }}" class="nav-link text-black p-0">Pengajuan
                                         RFID</a>
                                 </li>
                             @endif
@@ -147,7 +147,7 @@
                             @endif
                             @if (Auth::user()->id_posisi == 3)
                                 <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
-                                    <a href="" class="nav-link text-black p-0">Pengajuan
+                                    <a href="{{ route('pengajuan') }}" class="nav-link text-black p-0">Pengajuan
                                         RFID</a>
                                 </li>
                             @endif

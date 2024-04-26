@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\anggota\BukuAnggotaController;
 use App\Http\Controllers\anggota\PeminjamanAnggotaController;
+use App\Http\Controllers\anggota\PengajuanRfid;
 use App\Http\Controllers\anggota\PengembalianAnggotaController;
 use App\Http\Controllers\AnggotaHapusController;
 use Illuminate\Support\Facades\Route;
@@ -78,6 +79,13 @@ Route::prefix('anggota')->group(function () {
             });
             Route::post('/logoutt', [LoginController::class, 'destroy'])->name('logoutt');
         });
+        Route::middleware(['posisi:3'])->group(function () {
+            Route::prefix('pengajuan')->group(function () {
+                Route::get('/', [PengajuanRfid::class, 'index'])->name('pengajuan');
+                Route::get('/{user}/edit', [PengajuanRfid::class, 'edit'])->name('pengajuan.edit');
+                Route::post('/update/{user}', [PengajuanRfid::class, 'update'])->name('pengajuan.update');
+            });
+        });
         Route::middleware(['posisi:2'])->group(function () {
             Route::prefix('shopping-cart')->group(function () {
                 Route::get('/', [BukuAnggotaController::class, 'bookCart'])->name('shopping.cart');
@@ -150,7 +158,9 @@ Route::group(['middleware' => ['auth', 'posisi:1']], function () {
     Route::prefix('kelola-user-upgrade')->group(function () {
         Route::get('/users-management', [UserUpgradeController::class, 'index'])->name('usersUpgrade-management');
         Route::get('/users-management/{user}/edit', [UserUpgradeController::class, 'edit'])->name('usersUpgrade.edit');
-        Route::post('/users-management/delete/{user}', [UserUpgradeController::class, 'hapus'])->name('usersUpgrade.destroy');
+
+        Route::get('/edit_scan/{id}', [UserUpgradeController::class, 'edit_scan'])->name('upgrade.scan.edit');
+        Route::post('/scan/{id}/{id_card}', [UserUpgradeController::class, 'scan'])->name('upgrade.scan');
     });
 
     Route::prefix('kelola-rfid')->group(function () {
