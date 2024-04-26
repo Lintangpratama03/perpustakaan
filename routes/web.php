@@ -65,14 +65,14 @@ Route::middleware('guest')->group(function () {
     Route::post('/admin', [LoginController::class, 'store_admin']);
 });
 
-Route::post('/kunjungan', [DashboardController::class, 'storeKunjungan'])->name('kunjungan.store');
-Route::get('/get-kunjungan-umum', [DashboardController::class, 'getKunjunganData'])->name('kunjungan.dashboard.umum');
 
 Route::prefix('anggota')->group(function () {
     Route::middleware(['auth'])->group(function () {
         Route::middleware(['posisi:2,3'])->group(function () {
             Route::prefix('dashboard-anggota')->group(function () {
                 Route::get('/', [DashboardController::class, 'index_anggota'])->name('dashboard-anggota');
+                Route::post('/kunjungan', [DashboardController::class, 'storeKunjungan'])->name('kunjungan.store');
+                Route::get('/get-kunjungan-umum', [DashboardController::class, 'getKunjunganData'])->name('kunjungan.dashboard.umum');
             });
             Route::prefix('buku')->group(function () {
                 Route::get('/', [BukuAnggotaController::class, 'index'])->name('buku-anggota');
@@ -174,7 +174,7 @@ Route::group(['middleware' => ['auth', 'posisi:1']], function () {
 
     Route::prefix('kelola-pengunjung')->group(function () {
         Route::get('/', [PengunjungController::class, 'index'])->name('kunjungan');
-        Route::post('/tambah', [PengunjungController::class, 'store'])->name('kunjungan.store');
+        Route::post('/tambah', [PengunjungController::class, 'store'])->name('kunjungan.store.pengunjung');
         Route::get('/edit/{id}', [PengunjungController::class, 'edit'])->name('kunjungan.edit');
         Route::post('/update/{id}', [PengunjungController::class, 'update'])->name('kunjungan.update');
         Route::post('/delete/{id}', [PengunjungController::class, 'hapus'])->name('kunjungan.destroy');
