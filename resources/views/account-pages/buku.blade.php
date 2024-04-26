@@ -189,26 +189,37 @@
             let id = $(this).find('i').data('id');
             console.log(id);
 
-            // Cek apakah pengguna sudah login atau belum
             @auth
-            // Pengguna sudah login, tampilkan konfirmasi SweetAlert2
-            Swal.fire({
-                title: 'Konfirmasi',
-                text: 'Apakah Anda yakin ingin menambahkan buku ini ke keranjang?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Ya, Tambahkan',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    addBookToCart(id);
-                }
-            });
+            // Pengguna sudah login
+            @if (Auth::user()->id_posisi == 2)
+                // Pengguna adalah anggota (posisi 2)
+                // Tampilkan konfirmasi SweetAlert2
+                Swal.fire({
+                    title: 'Konfirmasi',
+                    text: 'Apakah Anda yakin ingin menambahkan buku ini ke keranjang?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Tambahkan',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        addBookToCart(id);
+                    }
+                });
+            @else
+                // Pengguna bukan anggota (posisi selain 2)
+                Swal.fire({
+                    title: 'Oops!',
+                    text: 'Anda tidak memiliki hak akses untuk menambahkan buku ke keranjang.',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+            @endif
         @else
-            // Pengguna belum login, tampilkan pesan "Silahkan login terlebih dahulu"
+            // Pengguna belum login
             Swal.fire({
                 title: 'Oops!',
-                text: 'Kamu Bukan Anggota RFID.',
+                text: 'Silahkan login terlebih dahulu.',
                 icon: 'warning',
                 confirmButtonText: 'OK'
             });
