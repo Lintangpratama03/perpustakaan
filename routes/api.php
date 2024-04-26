@@ -20,5 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('endpoint', [DataController::class, 'store'])->name('endpoint');
+Route::match(['get', 'post'], 'endpoint', [DataController::class, 'store'])->name('endpoint');
 // Route::post('/scan', [PeminjamanController::class, 'scan'])->name('endpoint');
