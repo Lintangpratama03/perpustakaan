@@ -6,10 +6,35 @@
             style="background-image: url('../assets/img/bukuu.png'); background-position: bottom;"></div>
         <div class="container my-3 py-3">
             <div class="d-flex justify-content-end mb-3">
-                <a class="btn btn-outline-dark" href="{{ route('shopping.cart') }}">
-                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Keranjang <span
-                        class="badge text-bg-danger">{{ count((array) session('cart')) }}</span>
+                <a class="btn btn-outline-dark" href="#" onclick="showCartWarning()">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    Keranjang
+                    <span class="badge text-bg-danger">{{ count((array) session('cart')) }}</span>
                 </a>
+
+                <script>
+                    function showCartWarning() {
+                        @auth
+                        @if (Auth::user()->id_posisi != 2)
+                            Swal.fire({
+                                title: 'Oops!',
+                                text: 'Anda tidak memiliki hak akses untuk melihat keranjang belanja.',
+                                icon: 'warning',
+                                confirmButtonText: 'OK'
+                            });
+                        @else
+                            window.location.href = "{{ route('shopping.cart') }}";
+                        @endif
+                    @else
+                        Swal.fire({
+                            title: 'Oops!',
+                            text: 'Silahkan login terlebih dahulu.',
+                            icon: 'warning',
+                            confirmButtonText: 'OK'
+                        });
+                    @endauth
+                    }
+                </script>
             </div>
             <section style="background-color: #eee;">
                 <div class="container py-5">
