@@ -17,6 +17,7 @@ use App\Http\Controllers\BukuController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PengembalianController;
+use App\Http\Controllers\PengunjungController;
 use App\Http\Controllers\RFIDController;
 use App\Http\Controllers\UserUpgradeController;
 
@@ -169,6 +170,14 @@ Route::group(['middleware' => ['auth', 'posisi:1']], function () {
         Route::get('/edit/{id}', [RFIDController::class, 'edit'])->name('rfid.edit');
         Route::post('/update/{id}', [RFIDController::class, 'update'])->name('rfid.update');
         Route::post('/delete/{id}', [RFIDController::class, 'hapus'])->name('rfid.destroy');
+    });
+
+    Route::prefix('kelola-pengunjung')->group(function () {
+        Route::get('/', [PengunjungController::class, 'index'])->name('rfid');
+        Route::post('/tambah', [PengunjungController::class, 'store'])->name('rfid.store');
+        Route::get('/edit/{id}', [PengunjungController::class, 'edit'])->name('rfid.edit');
+        Route::post('/update/{id}', [PengunjungController::class, 'update'])->name('rfid.update');
+        Route::post('/delete/{id}', [PengunjungController::class, 'hapus'])->name('rfid.destroy');
     });
 
     // Menu Kelola Buku
