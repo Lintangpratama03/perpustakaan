@@ -90,20 +90,28 @@
                             <a href="#" class="nav-link text-black p-0 dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-expanded="false">Peminjaman</a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-                                <li><a class="dropdown-item" href="{{ route('ajuan-peminjaman-anggota') }}">Ajuan
-                                        Peminjaman</a></li>
-                                <li><a class="dropdown-item" href="{{ route('sukses-peminjaman-anggota') }}">History
-                                        Peminjaman</a></li>
+                                @auth
+                                    <li><a class="dropdown-item" href="{{ route('ajuan-peminjaman-anggota') }}">Ajuan
+                                            Peminjaman</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('sukses-peminjaman-anggota') }}">History
+                                            Peminjaman</a></li>
+                                @else
+                                    <li><a class="dropdown-item">Silahkan Login</a></li>
+                                @endauth
                             </ul>
                         </li>
                         <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center dropdown">
                             <a href="#" class="nav-link text-black p-0 dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-expanded="false">Pengembalian</a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-                                <li><a class="dropdown-item" href="{{ route('pengembalian-buku') }}">Belum Kembali</a>
-                                </li>
-                                <li><a class="dropdown-item" href="{{ route('sukses-peminjaman-anggota') }}">Sukses
-                                        Kembali</a></li>
+                                @auth
+                                    <li><a class="dropdown-item" href="{{ route('pengembalian-buku') }}">Belum Kembali</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="{{ route('sukses-pengembalian-buku') }}">Sukses
+                                            Kembali</a></li>
+                                @else
+                                    <li><a class="dropdown-item">Silahkan Login</a></li>
+                                @endauth
                             </ul>
                         </li>
                     </ul>
@@ -124,20 +132,29 @@
                             <a href="#" class="nav-link text-black p-0 dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-expanded="false">Peminjaman</a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-                                <li><a class="dropdown-item" href="{{ route('ajuan-peminjaman-anggota') }}">Ajuan
-                                        Peminjaman</a></li>
-                                <li><a class="dropdown-item" href="{{ route('sukses-peminjaman-anggota') }}">History
-                                        Peminjaman</a></li>
+                                @auth
+                                    <li><a class="dropdown-item" href="{{ route('ajuan-peminjaman-anggota') }}">Ajuan
+                                            Peminjaman</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('sukses-peminjaman-anggota') }}">History
+                                            Peminjaman</a></li>
+                                @else
+                                    <li><a class="dropdown-item" href="{{ route('sign-in') }}">Silahkan Login</a></li>
+                                @endauth
                             </ul>
                         </li>
                         <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center dropdown">
                             <a href="#" class="nav-link text-black p-0 dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-expanded="false">Pengembalian</a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-                                <li><a class="dropdown-item" href="{{ route('pengembalian-buku') }}">Belum Kembali</a>
-                                </li>
-                                <li><a class="dropdown-item" href="{{ route('sukses-pengembalian-buku') }}">Sukses
-                                        Kembali</a></li>
+                                @auth
+                                    <li><a class="dropdown-item" href="{{ route('pengembalian-buku') }}">Belum
+                                            Kembali</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('sukses-pengembalian-buku') }}">Sukses
+                                            Kembali</a></li>
+                                @else
+                                    <li><a class="dropdown-item" href="{{ route('sign-in') }}">Silahkan
+                                            Login</a></li>
+                                @endauth
                             </ul>
                         </li>
                         <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -149,31 +166,37 @@
                                 </div>
                             </a>
                         </li>
-                        <li class="nav-item d-flex align-items-center font-weight-bold breadcrumb-text text-black">
-                            <form method="POST" action="{{ route('logoutt') }}">
-                                @csrf
-                                <a href="login" onclick="event.preventDefault();this.closest('form').submit();">
-                                    <button class="btn btn-sm btn-white mb-0 me-1 text-black logout-btn"
-                                        type="submit">Log out</button>
-                                </a>
-                            </form>
-                        </li>
-                        <li class="nav-item d-flex align-items-center ps-2">
-                            <a href="javascript:;" class="nav-link text-black font-weight-bold px-0">
-                        <li class="nav-item dropdown pe-2 d-flex align-items-center">
-                            <div class="avatar avatar-sm position-relative">
-                                <img src="../assets/img/team-2.jpg" alt="profile_image"
-                                    class="w-100 border-radius-md">
-                            </div>
-                        </li>
-                        </a>
-                        </li>
+                        @auth
+                            <li class="nav-item d-flex align-items-center font-weight-bold breadcrumb-text text-black">
+                                <form method="POST" action="{{ route('logoutt') }}">
+                                    @csrf
+                                    <a href="login" onclick="event.preventDefault();this.closest('form').submit();">
+                                        <button class="btn btn-sm btn-white mb-0 me-1 text-black logout-btn"
+                                            type="submit">Log out</button>
+                                    </a>
+                                </form>
+                            </li>
+                            <li class="nav-item d-flex align-items-center ps-2">
+                                <a href="javascript:;" class="nav-link text-black font-weight-bold px-0">
+                            <li class="nav-item dropdown pe-2 d-flex align-items-center">
+                                <div class="avatar avatar-sm position-relative">
+                                    <img src="../assets/img/team-2.jpg" alt="profile_image"
+                                        class="w-100 border-radius-md">
+                                </div>
+                            </li>
+                            </a>
+                            </li>
+                        @else
+                            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
+                                <a href="{{ route('sign-in') }}" id="dashboard-link"
+                                    class="nav-link text-black p-0">LOGIN</a>
+                            </li>
+                        @endauth
                     </ul>
                 </div>
             </div>
         </nav>
     </div>
-    <!-- The rest of your HTML content goes here -->
 </body>
 
 </html>

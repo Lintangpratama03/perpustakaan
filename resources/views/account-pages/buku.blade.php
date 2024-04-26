@@ -188,6 +188,10 @@
             e.preventDefault();
             let id = $(this).find('i').data('id');
             console.log(id);
+
+            // Cek apakah pengguna sudah login atau belum
+            @auth
+            // Pengguna sudah login, tampilkan konfirmasi SweetAlert2
             Swal.fire({
                 title: 'Konfirmasi',
                 text: 'Apakah Anda yakin ingin menambahkan buku ini ke keranjang?',
@@ -197,34 +201,46 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let token = $('meta[name="csrf-token"]').attr(
-                        'content');
-                    $.ajax({
-                        url: '/anggota/buku/add-book/' + id,
-                        method: 'GET',
-                        data: {
-                            _token: token
-                        },
-                        success: function(response) {
-                            Swal.fire({
-                                title: 'Berhasil Masuk Keranjang!',
-                                text: response.message,
-                                icon: 'success',
-                                timer: 1000,
-                                timerProgressBar: true,
-                                allowOutsideClick: false,
-                                showConfirmButton: false
-                            }).then(() => {
-                                $("#deleteModal").modal('hide');
-                                window.location.reload();
-                            });
-                        }
-                    });
-                    cartItems.push(id);
-                    updateCartCount();
+                    addBookToCart(id);
                 }
             });
+        @else
+            // Pengguna belum login, tampilkan pesan "Silahkan login terlebih dahulu"
+            Swal.fire({
+                title: 'Oops!',
+                text: 'Silahkan login terlebih dahulu untuk menambahkan buku ke keranjang.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+        @endauth
         });
+
+        function addBookToCart(id) {
+            let token = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                url: '/anggota/buku/add-book/' + id,
+                method: 'GET',
+                data: {
+                    _token: token
+                },
+                success: function(response) {
+                    Swal.fire({
+                        title: 'Berhasil Masuk Keranjang!',
+                        text: response.message,
+                        icon: 'success',
+                        timer: 1000,
+                        timerProgressBar: true,
+                        allowOutsideClick: false,
+                        showConfirmButton: false
+                    }).then(() => {
+                        $("#deleteModal").modal('hide');
+                        window.location.reload();
+                    });
+                }
+            });
+            cartItems.push(id);
+            updateCartCount();
+        }
 
 
 
