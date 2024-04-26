@@ -46,7 +46,7 @@
                     <div class="collapsible-body">
                         <ul>
                             <li><a href="{{ route('rfid') }}" class="text-white">History SCAN</a></li>
-                            <li><a href="{{ route('rfid') }}" class="text-white">Pengunjung</a></li>
+                            <li><a href="{{ route('kunjungan') }}" class="text-white">Pengunjung</a></li>
                         </ul>
                     </div>
                 </li>

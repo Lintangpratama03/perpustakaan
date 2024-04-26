@@ -173,11 +173,11 @@ Route::group(['middleware' => ['auth', 'posisi:1']], function () {
     });
 
     Route::prefix('kelola-pengunjung')->group(function () {
-        Route::get('/', [PengunjungController::class, 'index'])->name('rfid');
-        Route::post('/tambah', [PengunjungController::class, 'store'])->name('rfid.store');
-        Route::get('/edit/{id}', [PengunjungController::class, 'edit'])->name('rfid.edit');
-        Route::post('/update/{id}', [PengunjungController::class, 'update'])->name('rfid.update');
-        Route::post('/delete/{id}', [PengunjungController::class, 'hapus'])->name('rfid.destroy');
+        Route::get('/', [PengunjungController::class, 'index'])->name('kunjungan');
+        Route::post('/tambah', [PengunjungController::class, 'store'])->name('kunjungan.store');
+        Route::get('/edit/{id}', [PengunjungController::class, 'edit'])->name('kunjungan.edit');
+        Route::post('/update/{id}', [PengunjungController::class, 'update'])->name('kunjungan.update');
+        Route::post('/delete/{id}', [PengunjungController::class, 'hapus'])->name('kunjungan.destroy');
     });
 
     // Menu Kelola Buku
