@@ -52,8 +52,16 @@ class DashboardController extends Controller
         $anggota_rfid = User::where('is_deleted', 0)->where('id_posisi', 2)->count();
         $anggota_minta = User::where('is_deleted', 0)->where('id_posisi', 3)->where('permintaan', 1)->count();
         $hapus = User::where('is_deleted', 1)->count();
+
+        $pinjam = Peminjaman::select('peminjaman.*', 'users.name as name_user')
+            ->where('peminjaman.is_deleted', 0)
+            ->where('peminjaman.status', '>=', 3)
+            ->leftJoin('users', 'peminjaman.id_card', '=', 'users.id_card')
+            ->orderBy('peminjaman.created_at', 'desc')
+            ->take(5)
+            ->get();
         // dd($pengunjung);
-        return view('dashboard', compact('userrfid', 'swiperData', 'hapus', 'pengunjung', 'anggota', 'anggota_rfid', 'anggota_minta'));
+        return view('dashboard', compact('userrfid', 'swiperData', 'hapus', 'pengunjung', 'anggota', 'anggota_rfid', 'anggota_minta', 'pinjam'));
     }
     public function index_anggota()
     {
