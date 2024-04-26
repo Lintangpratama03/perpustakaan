@@ -208,7 +208,7 @@
             // Pengguna belum login, tampilkan pesan "Silahkan login terlebih dahulu"
             Swal.fire({
                 title: 'Oops!',
-                text: 'Silahkan login terlebih dahulu untuk menambahkan buku ke keranjang.',
+                text: 'Kamu Bukan Anggota RFID.',
                 icon: 'warning',
                 confirmButtonText: 'OK'
             });

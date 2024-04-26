@@ -33,7 +33,7 @@ use App\Http\Controllers\UserUpgradeController;
 // Guest Routes
 Route::middleware('guest')->group(function () {
     Route::get('/', function () {
-        return redirect('/anggota/dashboard-anggota');
+        return redirect('/sign-in');
     });
 
     Route::get('/sign-up', [RegisterController::class, 'create'])
@@ -67,51 +67,47 @@ Route::post('/kunjungan', [DashboardController::class, 'storeKunjungan'])->name(
 Route::get('/get-kunjungan-umum', [DashboardController::class, 'getKunjunganData'])->name('kunjungan.dashboard.umum');
 
 Route::prefix('anggota')->group(function () {
-    Route::prefix('dashboard-anggota')->group(function () {
-        Route::get('/', [DashboardController::class, 'index_anggota'])->name('dashboard-anggota');
-    });
-
-    Route::prefix('buku')->group(function () {
-        Route::get('/', [BukuAnggotaController::class, 'index'])->name('buku-anggota');
-        Route::get('/add-book/{id}', [BukuAnggotaController::class, 'addBooktoCart'])->name('addbook.to.cart');
-    });
-
-
-    Route::middleware(['auth', 'posisi:2'])->group(function () {
-        Route::post('/logoutt', [LoginController::class, 'destroy'])->name('logoutt');
-
-        Route::prefix('shopping-cart')->group(function () {
-            Route::get('/', [BukuAnggotaController::class, 'bookCart'])->name('shopping.cart');
-            Route::post('/checkout', [BukuAnggotaController::class, 'checkout'])->name('checkout');
-            Route::patch('/update-shopping-cart', [BukuAnggotaController::class, 'updateCart'])->name('update.sopping.cart');
-            Route::post('/delete-cart-product/{id}', [BukuAnggotaController::class, 'deleteProduct'])->name('delete.cart.product');
+    Route::middleware(['auth'])->group(function () {
+        Route::middleware(['posisi:2,3'])->group(function () {
+            Route::prefix('dashboard-anggota')->group(function () {
+                Route::get('/', [DashboardController::class, 'index_anggota'])->name('dashboard-anggota');
+            });
+            Route::prefix('buku')->group(function () {
+                Route::get('/', [BukuAnggotaController::class, 'index'])->name('buku-anggota');
+                Route::get('/add-book/{id}', [BukuAnggotaController::class, 'addBooktoCart'])->name('addbook.to.cart');
+            });
+            Route::post('/logoutt', [LoginController::class, 'destroy'])->name('logoutt');
         });
-
-        Route::prefix('peminjaman')->group(function () {
-            Route::get('/', [PeminjamanAnggotaController::class, 'index_ajuan'])->name('ajuan-peminjaman-anggota');
-            Route::get('/edit/{id}', [PeminjamanAnggotaController::class, 'edit'])->name('ajuan-peminjaman-anggota.edit');
-            Route::post('/tolak/{id}', [PeminjamanAnggotaController::class, 'tolak'])->name('ajuan-peminjaman-anggota.tolak');
+        Route::middleware(['posisi:2'])->group(function () {
+            Route::prefix('shopping-cart')->group(function () {
+                Route::get('/', [BukuAnggotaController::class, 'bookCart'])->name('shopping.cart');
+                Route::post('/checkout', [BukuAnggotaController::class, 'checkout'])->name('checkout');
+                Route::patch('/update-shopping-cart', [BukuAnggotaController::class, 'updateCart'])->name('update.sopping.cart');
+                Route::post('/delete-cart-product/{id}', [BukuAnggotaController::class, 'deleteProduct'])->name('delete.cart.product');
+            });
+            Route::prefix('peminjaman')->group(function () {
+                Route::get('/', [PeminjamanAnggotaController::class, 'index_ajuan'])->name('ajuan-peminjaman-anggota');
+                Route::get('/edit/{id}', [PeminjamanAnggotaController::class, 'edit'])->name('ajuan-peminjaman-anggota.edit');
+                Route::post('/tolak/{id}', [PeminjamanAnggotaController::class, 'tolak'])->name('ajuan-peminjaman-anggota.tolak');
+            });
+            Route::prefix('peminjaman-sukses')->group(function () {
+                Route::get('/', [PeminjamanAnggotaController::class, 'index_sukses'])->name('sukses-peminjaman-anggota');
+                Route::get('/edit_sukses/{id}', [PeminjamanAnggotaController::class, 'edit_sukses'])->name('sukses-peminjaman-anggota.edit');
+            });
+            Route::prefix('pengembalian')->group(function () {
+                Route::get('/', [PengembalianAnggotaController::class, 'index'])->name('pengembalian-buku');
+                Route::get('/edit/{id}', [PengembalianAnggotaController::class, 'edit'])->name('pengembalian-buku.edit');
+            });
+            Route::prefix('pengembalian-sukses')->group(function () {
+                Route::get('/', [PengembalianAnggotaController::class, 'index_sukses'])->name('sukses-pengembalian-buku');
+                Route::get('/edit/{id}', [PengembalianAnggotaController::class, 'edit_sukses'])->name('pengembalian-buku.edit');
+            });
+            Route::get('/kelola-user/user-profile', [ProfileController::class, 'index'])->name('users.profile');
+            Route::put('/kelola-user/user-profile/update', [ProfileController::class, 'update'])->name('users.update_profile');
         });
-
-        Route::prefix('peminjaman-sukses')->group(function () {
-            Route::get('/', [PeminjamanAnggotaController::class, 'index_sukses'])->name('sukses-peminjaman-anggota');
-            Route::get('/edit_sukses/{id}', [PeminjamanAnggotaController::class, 'edit_sukses'])->name('sukses-peminjaman-anggota.edit');
-        });
-
-        Route::prefix('pengembalian')->group(function () {
-            Route::get('/', [PengembalianAnggotaController::class, 'index'])->name('pengembalian-buku');
-            Route::get('/edit/{id}', [PengembalianAnggotaController::class, 'edit'])->name('pengembalian-buku.edit');
-        });
-
-        Route::prefix('pengembalian-sukses')->group(function () {
-            Route::get('/', [PengembalianAnggotaController::class, 'index_sukses'])->name('sukses-pengembalian-buku');
-            Route::get('/edit/{id}', [PengembalianAnggotaController::class, 'edit_sukses'])->name('pengembalian-buku.edit');
-        });
-
-        Route::get('/kelola-user/user-profile', [ProfileController::class, 'index'])->name('users.profile');
-        Route::put('/kelola-user/user-profile/update', [ProfileController::class, 'update'])->name('users.update_profile');
     });
 });
+
 
 // Authenticated Routes admin
 Route::group(['middleware' => ['auth', 'posisi:1']], function () {

@@ -26,15 +26,20 @@ class LoginController extends Controller
     public function store(Request $request)
     {
         $credentials = $request->only('username', 'password');
-        $credentials['id_posisi'] = 2;
-        if ($credentials['id_posisi'] !== 2) {
-            $credentials['id_posisi'] = 3;
-        }
+
         $rememberMe = $request->rememberMe ? true : false;
 
         if (Auth::attempt($credentials, $rememberMe)) {
-            $request->session()->regenerate();
-            return redirect()->intended('/anggota/dashboard-anggota');
+            $user = Auth::user();
+            if ($user->id_posisi == 2 || $user->id_posisi == 3) {
+                $request->session()->regenerate();
+                return redirect()->intended('/anggota/dashboard-anggota');
+            } else {
+                Auth::logout();
+                return back()->withErrors([
+                    'message' => 'Anda tidak memiliki akses untuk masuk ke sistem ini.',
+                ]);
+            }
         }
 
         return back()->withErrors([
