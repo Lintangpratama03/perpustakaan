@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navbar with Background</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <style>
@@ -62,15 +62,15 @@
                     PERPUSTAKAAN
                 </a>
                 <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon mt-2">
-                        <span class="navbar-toggler-bar bar1 bg-white"></span>
-                        <span class="navbar-toggler-bar bar2 bg-white"></span>
-                        <span class="navbar-toggler-bar bar3 bg-white"></span>
+                        <span class="navbar-toggler-bar bar1"></span>
+                        <span class="navbar-toggler-bar bar2"></span>
+                        <span class="navbar-toggler-bar bar3"></span>
                     </span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="collapse navbar-collapse" id="navigation">
                     <ul class="navbar-nav d-lg-none ms-auto">
                         @auth
                             @if (Auth::user()->id_posisi == 2 || Auth::user()->id_posisi == 3)
@@ -121,6 +121,16 @@
                                     </ul>
                                 </li>
                             @endif
+                            <li
+                                class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center font-weight-bold breadcrumb-text text-black">
+                                <form method="POST" action="{{ route('logoutt') }}">
+                                    @csrf
+                                    <a href="login" onclick="event.preventDefault();this.closest('form').submit();">
+                                        <button class="btn btn-sm btn-white mb-0 me-1 text-black logout-btn"
+                                            type="submit">Log out</button>
+                                    </a>
+                                </form>
+                            </li>
                         @endauth
                     </ul>
                     <ul class="navbar-nav d-none d-lg-flex ms-auto">
@@ -159,7 +169,8 @@
                                         <li><a class="dropdown-item" href="{{ route('ajuan-peminjaman-anggota') }}">Ajuan
                                                 Peminjaman</a></li>
                                         <li><a class="dropdown-item"
-                                                href="{{ route('sukses-peminjaman-anggota') }}">History Peminjaman</a></li>
+                                                href="{{ route('sukses-peminjaman-anggota') }}">History Peminjaman</a>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center dropdown">
@@ -173,16 +184,16 @@
                                     </ul>
                                 </li>
                             @endif
+                            <li class="nav-item d-flex align-items-center font-weight-bold breadcrumb-text text-black">
+                                <form method="POST" action="{{ route('logoutt') }}">
+                                    @csrf
+                                    <a href="login" onclick="event.preventDefault();this.closest('form').submit();">
+                                        <button class="btn btn-sm btn-white mb-0 me-1 text-black logout-btn"
+                                            type="submit">Log out</button>
+                                    </a>
+                                </form>
+                            </li>
                         @endauth
-                        <li class="nav-item d-flex align-items-center font-weight-bold breadcrumb-text text-black">
-                            <form method="POST" action="{{ route('logoutt') }}">
-                                @csrf
-                                <a href="login" onclick="event.preventDefault();this.closest('form').submit();">
-                                    <button class="btn btn-sm btn-white mb-0 me-1 text-black logout-btn"
-                                        type="submit">Log out</button>
-                                </a>
-                            </form>
-                        </li>
                         <li class="nav-item d-flex align-items-center ps-2">
                             <a href="javascript:;" class="nav-link text-black font-weight-bold px-0">
                         <li class="nav-item dropdown pe-2 d-flex align-items-center">
@@ -198,7 +209,6 @@
             </div>
         </nav>
     </div>
-    <!-- The rest of your HTML content goes here -->
 </body>
 
 </html>
