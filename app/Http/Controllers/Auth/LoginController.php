@@ -26,13 +26,15 @@ class LoginController extends Controller
     public function store(Request $request)
     {
         $credentials = $request->only('username', 'password');
-
         $rememberMe = $request->rememberMe ? true : false;
 
         if (Auth::attempt($credentials, $rememberMe)) {
-            $User = Auth::User();
-            if ($User->id_posisi == 2 || $User->id_posisi == 3) {
-                $request->session()->regenerate();
+            $user = Auth::user();
+            $request->session()->regenerate();
+
+            if ($user->id_posisi == 1) {
+                return redirect()->intended('/dashboard');
+            } elseif ($user->id_posisi == 2 || $user->id_posisi == 3) {
                 return redirect()->intended('/anggota/dashboard-anggota');
             } else {
                 Auth::logout();
@@ -50,12 +52,20 @@ class LoginController extends Controller
     public function store_admin(Request $request)
     {
         $credentials = $request->only('username', 'password');
-        $credentials['id_posisi'] = 1;
         $rememberMe = $request->rememberMe ? true : false;
 
         if (Auth::attempt($credentials, $rememberMe)) {
+            $user = Auth::user();
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+
+            if ($user->id_posisi == 1) {
+                return redirect()->intended('/dashboard');
+            } else {
+                Auth::logout();
+                return back()->withErrors([
+                    'message' => 'Anda tidak memiliki akses untuk masuk sebagai admin.',
+                ]);
+            }
         }
 
         return back()->withErrors([
