@@ -62,12 +62,12 @@ class UserController extends Controller
         }
 
         $fileName = null;
-
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $imagePath = 'assets/img/foto-profil/' . $fileName;
-            $file->move(public_path('assets/img/foto-profil'), $fileName);
+            $publicHtmlPath = $_SERVER['DOCUMENT_ROOT'] . '/assets/img/foto-profil/';
+            $imagePath = $publicHtmlPath . $fileName;
+            $file->move($publicHtmlPath, $fileName);
         }
 
         $anggotaData = [
@@ -175,13 +175,17 @@ class UserController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets/img/foto-profil'), $fileName);
+            $publicHtmlPath = $_SERVER['DOCUMENT_ROOT'] . '/assets/img/foto-profil/';
+            $filePath = $publicHtmlPath . $fileName;
+            $file->move($publicHtmlPath, $fileName);
+
             if ($anggota->image) {
-                Storage::delete('public/assets/img/foto-profil/' . $anggota->image);
+                $oldImagePath = 'public/assets/img/foto-profil/' . $anggota->image;
+                Storage::delete($oldImagePath);
             }
+
             $anggota->image = $fileName;
         }
-
         // Simpan perubahan ke database
         $anggota->save();
 

@@ -392,8 +392,9 @@ class BukuController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $imagePath = 'assets/img/buku/' . $fileName;
-            $file->move(public_path('assets/img/buku'), $fileName);
+            $publicHtmlPath = $_SERVER['DOCUMENT_ROOT'] . '/assets/img/buku/';
+            $imagePath = $publicHtmlPath . $fileName;
+            $file->move($publicHtmlPath, $fileName);
         }
 
         $buku = [
@@ -486,10 +487,16 @@ class BukuController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets/img/buku'), $fileName);
+            $publicHtmlPath = $_SERVER['DOCUMENT_ROOT'] . '/assets/img/buku/';
+            $file->move($publicHtmlPath, $fileName);
+
             if ($buku->image) {
-                unlink(public_path('assets/img/buku/' . $buku->image));
+                $oldImagePath = $publicHtmlPath . $buku->image;
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
             }
+
             $buku->image = $fileName;
         }
         // Simpan perubahan ke database

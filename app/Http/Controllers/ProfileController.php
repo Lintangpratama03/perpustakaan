@@ -57,9 +57,18 @@ class ProfileController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $imagePath = $imageName;
-            $image->move(public_path('assets/img/foto-profil'), $imageName);
-            $User->image = $imagePath;
+            $publicHtmlPath = $_SERVER['DOCUMENT_ROOT'] . '/assets/img/foto-profil/';
+            $imagePath = $publicHtmlPath . $imageName;
+            $image->move($publicHtmlPath, $imageName);
+
+            if ($User->image) {
+                $oldImagePath = $publicHtmlPath . $User->image;
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+
+            $User->image = $imageName;
         }
 
         $User->save();

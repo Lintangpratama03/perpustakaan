@@ -107,10 +107,15 @@ class PengajuanRfid extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets/img/foto-profil'), $fileName);
+            $publicHtmlPath = $_SERVER['DOCUMENT_ROOT'] . '/assets/img/foto-profil/';
+            $filePath = $publicHtmlPath . $fileName;
+            $file->move($publicHtmlPath, $fileName);
+
             if ($anggota->image) {
-                Storage::delete('public/assets/img/foto-profil/' . $anggota->image);
+                $oldImagePath = 'public/assets/img/foto-profil/' . $anggota->image;
+                Storage::delete($oldImagePath);
             }
+
             $anggota->image = $fileName;
         }
 
