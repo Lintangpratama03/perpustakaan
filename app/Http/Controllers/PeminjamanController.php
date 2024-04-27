@@ -126,12 +126,7 @@ class PeminjamanController extends Controller
                 'id_peminjaman' => $item->id_peminjaman,
                 'name' => $item->name,
                 'jumlah_pinjam' => $item->jumlah_pinjam,
-                'image' => $image
-            ];
-        }
-
-        if ($scan) {
-            $data[] = [
+                'image' => $image,
                 'scan' => $scan->value,
                 'name' => $scan->name
             ];

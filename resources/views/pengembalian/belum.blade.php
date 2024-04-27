@@ -420,8 +420,8 @@
                 method: 'GET',
                 success: function(data) {
                     console.log(data);
-                    $('#editScanForm').find('input[name="id_card"]').val(data[1].scan);
-                    $('#editScanForm').find('input[name="name"]').val(data[1].name);
+                    $('#editScanForm').find('input[name="id_card"]').val(data[0].scan);
+                    $('#editScanForm').find('input[name="name"]').val(data[0].name);
                     $('#editScanForm').find('input[name="denda"]').val(data[0].denda);
                 }
             });

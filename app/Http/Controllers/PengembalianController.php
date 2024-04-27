@@ -153,12 +153,7 @@ class PengembalianController extends Controller
                 'name' => $item->name,
                 'denda' => $item->denda,
                 'jumlah_pinjam' => $item->jumlah_pinjam,
-                'image' => $image
-            ];
-        }
-
-        if ($scan) {
-            $data[] = [
+                'image' => $image,
                 'scan' => $scan->value,
                 'name' => $scan->name
             ];

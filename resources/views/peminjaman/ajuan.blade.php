@@ -394,8 +394,8 @@
                 method: 'GET',
                 success: function(data) {
                     // console.log(data);
-                    $('#editScanForm').find('input[name="id_card"]').val(data[2].scan);
-                    $('#editScanForm').find('input[name="name"]').val(data[2].name);
+                    $('#editScanForm').find('input[name="id_card"]').val(data[0].scan);
+                    $('#editScanForm').find('input[name="name"]').val(data[0].name);
                 }
             });
         });
