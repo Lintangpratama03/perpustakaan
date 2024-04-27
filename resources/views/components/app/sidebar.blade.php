@@ -1,13 +1,14 @@
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 bg-slate-900 fixed-start " id="sidenav-main">
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 bg-slate-900 fixed-start" id="sidenav-main">
     <div class="sidenav-header">
-        <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
-            aria-hidden="true" id="iconSidenav"></i>
+        <i class="fas fa-bars p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-xl-none"
+            aria-hidden="true" id="iconSidenav" data-bs-toggle="collapse" data-bs-target="#sidenav-collapse-main"
+            aria-controls="sidenav-collapse-main" aria-expanded="false" aria-label="Toggle sidenav"></i>
         <a class="navbar-brand d-flex align-items-center m-0" href="{{ route('dashboard') }}" target="_blank"
             style="width: 100%;">
             <img src="../assets/img/logo-dashboard.png" class="w-100" alt="spotify">
         </a>
     </div>
-    <div class="collapse navbar-collapse px-4" id="sidenav-collapse-main" style="height: 100%;">
+    <div class="collapse navbar-collapse px-4" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <ul class="collapsible">
                 <li>
