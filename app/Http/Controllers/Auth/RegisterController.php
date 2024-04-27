@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\Role;
-use App\Models\User;
+use App\Models\user;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +47,7 @@ class RegisterController extends Controller
             'terms.accepted' => 'You must accept the terms and conditions'
         ]);
 
-        User::create([
+        user::create([
             'name' => $request->name,
             'email' => $request->email,
             'username' => $request->username,

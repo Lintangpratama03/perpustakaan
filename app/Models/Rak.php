@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Rak extends Model
+class rak extends Model
 {
     use HasFactory;
     protected $table = "rak";

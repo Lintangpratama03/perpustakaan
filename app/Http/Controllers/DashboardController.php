@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kunjungan;
-use App\Models\Peminjaman;
-use App\Models\User;
+use App\Models\kunjungan;
+use App\Models\peminjaman;
+use App\Models\user;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -14,12 +14,12 @@ class DashboardController extends Controller
 
     public function storeKunjungan(Request $request)
     {
-        $user = User::find(Auth::id());
+        $user = user::find(Auth::id());
         // dd($user);
         $id = $user->id;
 
         $today = Carbon::today();
-        $existingKunjungan = Kunjungan::where('id_user', $id)->whereDate('tanggal', $today)->first();
+        $existingKunjungan = kunjungan::where('id_user', $id)->whereDate('tanggal', $today)->first();
 
         if ($existingKunjungan) {
             return response()->json([
@@ -28,7 +28,7 @@ class DashboardController extends Controller
             ]);
         }
 
-        Kunjungan::create([
+        kunjungan::create([
             'tanggal' => $today,
             'id_user' => $id
         ]);
@@ -43,17 +43,17 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $userrfid = User::where('is_deleted', 0)->where('id_posisi', 2)
+        $userrfid = user::where('is_deleted', 0)->where('id_posisi', 2)
             ->get();
         // dd($userrfid);
         $swiperData = $this->getSwiperData($userrfid);
-        $pengunjung = Kunjungan::count();
-        $anggota = User::where('is_deleted', 0)->where('id_posisi', 3)->count();
-        $anggota_rfid = User::where('is_deleted', 0)->where('id_posisi', 2)->count();
-        $anggota_minta = User::where('is_deleted', 0)->where('id_posisi', 3)->where('permintaan', 1)->count();
-        $hapus = User::where('is_deleted', 1)->count();
+        $pengunjung = kunjungan::count();
+        $anggota = user::where('is_deleted', 0)->where('id_posisi', 3)->count();
+        $anggota_rfid = user::where('is_deleted', 0)->where('id_posisi', 2)->count();
+        $anggota_minta = user::where('is_deleted', 0)->where('id_posisi', 3)->where('permintaan', 1)->count();
+        $hapus = user::where('is_deleted', 1)->count();
 
-        $pinjam = Peminjaman::select('peminjaman.*', 'users.name as name_user')
+        $pinjam = peminjaman::select('peminjaman.*', 'users.name as name_user')
             ->where('peminjaman.is_deleted', 0)
             ->where('peminjaman.status', '>=', 3)
             ->leftJoin('users', 'peminjaman.id_card', '=', 'users.id_card')
@@ -65,15 +65,15 @@ class DashboardController extends Controller
     }
     public function index_anggota()
     {
-        $userrfid = User::where('is_deleted', 0)->where('id_posisi', 2)
+        $userrfid = user::where('is_deleted', 0)->where('id_posisi', 2)
             ->get();
         // dd($userrfid);
         $swiperData = $this->getSwiperData($userrfid);
-        $pengunjung = Kunjungan::count();
-        $anggota = User::where('is_deleted', 0)->where('id_posisi', 3)->count();
-        $anggota_rfid = User::where('is_deleted', 0)->where('id_posisi', 2)->count();
-        $anggota_minta = User::where('is_deleted', 0)->where('id_posisi', 3)->where('permintaan', 1)->count();
-        $hapus = User::where('is_deleted', 1)->count();
+        $pengunjung = kunjungan::count();
+        $anggota = user::where('is_deleted', 0)->where('id_posisi', 3)->count();
+        $anggota_rfid = user::where('is_deleted', 0)->where('id_posisi', 2)->count();
+        $anggota_minta = user::where('is_deleted', 0)->where('id_posisi', 3)->where('permintaan', 1)->count();
+        $hapus = user::where('is_deleted', 1)->count();
         // dd($pengunjung);
         return view('account-pages/dashboard', compact('userrfid', 'swiperData', 'hapus', 'pengunjung', 'anggota', 'anggota_rfid', 'anggota_minta'));
     }
@@ -93,7 +93,7 @@ class DashboardController extends Controller
     }
     public function getPinjamData()
     {
-        $Peminjaman = Peminjaman::selectRaw('COUNT(*) as total, MONTH(created_at) as month')
+        $peminjaman = peminjaman::selectRaw('COUNT(*) as total, MONTH(created_at) as month')
             ->where('is_deleted', 0)
             ->groupBy('month')
             ->get();
@@ -103,7 +103,7 @@ class DashboardController extends Controller
             $data[$month] = 0;
         }
 
-        foreach ($Peminjaman as $item) {
+        foreach ($peminjaman as $item) {
             $data[$item->month] = $item->total;
         }
 
@@ -116,7 +116,7 @@ class DashboardController extends Controller
 
     public function getKunjunganData()
     {
-        $pengunjung = Kunjungan::selectRaw('COUNT(*) as total, MONTH(tanggal) as month')
+        $pengunjung = kunjungan::selectRaw('COUNT(*) as total, MONTH(tanggal) as month')
             ->groupBy('month')
             ->get();
 

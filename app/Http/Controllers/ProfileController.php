@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -11,7 +11,7 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $user = User::find(Auth::id());
+        $user = user::find(Auth::id());
         return view('laravel-examples.user-profile', compact('user'));
     }
 
@@ -44,7 +44,7 @@ class ProfileController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        $user = User::find(Auth::id());
+        $user = user::find(Auth::id());
         $user->update([
             'name' => $request->name,
             'email' => $request->email,

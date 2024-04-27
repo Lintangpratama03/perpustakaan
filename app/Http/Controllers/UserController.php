@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\user;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::where('is_deleted', 0)->where('id_posisi', 3)->paginate(10);
+        $users = user::where('is_deleted', 0)->where('id_posisi', 3)->paginate(10);
         return view('laravel-examples.users-management', compact('users'));
     }
 
@@ -83,7 +83,7 @@ class UserController extends Controller
             'image' => $fileName,
         ];
 
-        User::create($anggotaData);
+        user::create($anggotaData);
 
         return response()->json([
             'status' => 200,
@@ -92,7 +92,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $anggota = User::find($id);
+        $anggota = user::find($id);
         $image = $anggota->image ? asset('assets/img/foto-profil/' . $anggota->image) : asset('assets/img/default-image.png');
         return response()->json([
             'id' => $anggota->id,
@@ -110,7 +110,7 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $anggota = User::find($id);
+        $anggota = user::find($id);
         // dd($id);
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -193,11 +193,11 @@ class UserController extends Controller
 
     public function hapus($id)
     {
-        $anggota = User::find($id);
+        $anggota = user::find($id);
         if (!$anggota) {
             return response()->json([
                 'status' => 404,
-                'message' => 'User not found.'
+                'message' => 'user not found.'
             ], 404);
         }
 
@@ -206,7 +206,7 @@ class UserController extends Controller
 
         return response()->json([
             'status' => 200,
-            'message' => 'User ' . $anggota->name . ' has been deleted.'
+            'message' => 'user ' . $anggota->name . ' has been deleted.'
         ]);
     }
 }

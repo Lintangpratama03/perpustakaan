@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Buku;
-use App\Models\Penerbit;
-use App\Models\Pengarang;
-use App\Models\Rak;
+use App\Models\buku;
+use App\Models\penerbit;
+use App\Models\pengarang;
+use App\Models\rak;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,39 +16,39 @@ class BukuController extends Controller
      */
     public function index()
     {
-        $buku = Buku::select('buku.*', 'buku.name as name_buku', 'rak.kode as kode_rak')
+        $buku = buku::select('buku.*', 'buku.name as name_buku', 'rak.kode as kode_rak')
             ->where('buku.is_deleted', 0)
             ->leftJoin('rak', 'buku.rak_kode_rak', '=', 'rak.id')
             ->leftJoin('penerbit', 'buku.penerbit_id', '=', 'penerbit.id')
             ->leftJoin('pengarang', 'buku.pengarang_id', '=', 'pengarang.id')
             ->paginate(10);
-        $pengarang = Pengarang::all();
-        $penerbit = Penerbit::all();
-        $rak = Rak::all();
+        $pengarang = pengarang::all();
+        $penerbit = penerbit::all();
+        $rak = rak::all();
         return view('buku.kelola-buku', compact('buku', 'pengarang', 'penerbit', 'rak'));
     }
 
 
     public function index_rak()
     {
-        $rak = Rak::where('rak.is_deleted', 0)
+        $rak = rak::where('rak.is_deleted', 0)
             ->get();
         return view('buku.kelola-rak', compact('rak'));
     }
     public function index_penerbit()
     {
-        $penerbit = Penerbit::where('penerbit.is_deleted', 0)
+        $penerbit = penerbit::where('penerbit.is_deleted', 0)
             ->get();
         return view('buku.kelola-penerbit', compact('penerbit'));
     }
     public function index_pengarang()
     {
-        $pengarang = Pengarang::where('pengarang.is_deleted', 0)
+        $pengarang = pengarang::where('pengarang.is_deleted', 0)
             ->get();
         return view('buku.kelola-pengarang', compact('pengarang'));
     }
 
-    // Rak
+    // rak
     public function store_rak(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -77,7 +77,7 @@ class BukuController extends Controller
             'lokasi' => $request->lokasi,
         ];
 
-        Rak::create($rak);
+        rak::create($rak);
 
         return response()->json([
             'status' => 200,
@@ -86,7 +86,7 @@ class BukuController extends Controller
 
     public function edit_rak($id)
     {
-        $rak = Rak::find($id);
+        $rak = rak::find($id);
         return response()->json([
             'id' => $rak->id,
             'name' => $rak->name,
@@ -97,7 +97,7 @@ class BukuController extends Controller
 
     public function update_rak(Request $request, $id)
     {
-        $rak = Rak::find($id);
+        $rak = rak::find($id);
         // dd($id);
         $validator = Validator::make($request->all(), [
             'kode' => 'required|max:3|unique:rak,kode,' . $id,
@@ -134,11 +134,11 @@ class BukuController extends Controller
 
     public function hapus_rak($id)
     {
-        $rak = Rak::find($id);
+        $rak = rak::find($id);
         if (!$rak) {
             return response()->json([
                 'status' => 404,
-                'message' => 'Rak not found.'
+                'message' => 'rak not found.'
             ], 404);
         }
 
@@ -147,11 +147,11 @@ class BukuController extends Controller
 
         return response()->json([
             'status' => 200,
-            'message' => 'Rak ' . $rak->name . ' has been deleted.'
+            'message' => 'rak ' . $rak->name . ' has been deleted.'
         ]);
     }
 
-    // Pengarang
+    // pengarang
     public function store_pengarang(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -178,7 +178,7 @@ class BukuController extends Controller
             'telp' => $request->telp,
         ];
 
-        Pengarang::create($pengarang);
+        pengarang::create($pengarang);
 
         return response()->json([
             'status' => 200,
@@ -187,7 +187,7 @@ class BukuController extends Controller
 
     public function edit_pengarang($id)
     {
-        $pengarang = Pengarang::find($id);
+        $pengarang = pengarang::find($id);
         return response()->json([
             'id' => $pengarang->id,
             'name' => $pengarang->name,
@@ -198,7 +198,7 @@ class BukuController extends Controller
 
     public function update_pengarang(Request $request, $id)
     {
-        $pengarang = Pengarang::find($id);
+        $pengarang = pengarang::find($id);
         // dd($id);
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -234,7 +234,7 @@ class BukuController extends Controller
 
     public function hapus_pengarang($id)
     {
-        $pengarang = Pengarang::find($id);
+        $pengarang = pengarang::find($id);
         if (!$pengarang) {
             return response()->json([
                 'status' => 404,
@@ -298,7 +298,7 @@ class BukuController extends Controller
 
     public function update_penerbit(Request $request, $id)
     {
-        $penerbit = Penerbit::find($id);
+        $penerbit = penerbit::find($id);
         // dd($id);
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -334,7 +334,7 @@ class BukuController extends Controller
 
     public function hapus_penerbit($id)
     {
-        $penerbit = Penerbit::find($id);
+        $penerbit = penerbit::find($id);
         if (!$penerbit) {
             return response()->json([
                 'status' => 404,
@@ -377,12 +377,12 @@ class BukuController extends Controller
             'isbn.required' => 'ISBN harus diisi.',
             'isbn.string' => 'ISBN harus berupa string.',
             'isbn.max' => 'ISBN tidak boleh lebih dari 255 karakter.',
-            'pengarang.required' => 'Pengarang harus dipilih.',
-            'pengarang.exists' => 'Pengarang yang dipilih tidak valid.',
-            'penerbit.required' => 'Penerbit harus dipilih.',
-            'penerbit.exists' => 'Penerbit yang dipilih tidak valid.',
-            'rak.required' => 'Rak harus dipilih.',
-            'rak.exists' => 'Rak yang dipilih tidak valid.',
+            'pengarang.required' => 'pengarang harus dipilih.',
+            'pengarang.exists' => 'pengarang yang dipilih tidak valid.',
+            'penerbit.required' => 'penerbit harus dipilih.',
+            'penerbit.exists' => 'penerbit yang dipilih tidak valid.',
+            'rak.required' => 'rak harus dipilih.',
+            'rak.exists' => 'rak yang dipilih tidak valid.',
         ]);
 
         if ($validator->fails()) {
@@ -407,7 +407,7 @@ class BukuController extends Controller
             'rak_kode_rak' => $request->rak,
         ];
 
-        Buku::create($buku);
+        buku::create($buku);
 
         return response()->json([
             'status' => 200,
@@ -415,10 +415,10 @@ class BukuController extends Controller
     }
     public function edit_buku($id)
     {
-        $buku = Buku::find($id);
+        $buku = buku::find($id);
         // dd($buku);
         if (!$buku) {
-            return response()->json(['message' => 'Buku not found'], 404);
+            return response()->json(['message' => 'buku not found'], 404);
         }
         $image = $buku->image ? asset('assets/img/buku/' . $buku->image) : asset('assets/img/default-image.png');
         return response()->json([
@@ -438,7 +438,7 @@ class BukuController extends Controller
 
     public function update_buku(Request $request, $id)
     {
-        $buku = Buku::find($id);
+        $buku = buku::find($id);
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -460,12 +460,12 @@ class BukuController extends Controller
             'isbn.required' => 'ISBN harus diisi.',
             'isbn.string' => 'ISBN harus berupa string.',
             'isbn.max' => 'ISBN tidak boleh lebih dari 255 karakter.',
-            'pengarang.required' => 'Pengarang harus dipilih.',
-            'pengarang.exists' => 'Pengarang yang dipilih tidak valid.',
-            'penerbit.required' => 'Penerbit harus dipilih.',
-            'penerbit.exists' => 'Penerbit yang dipilih tidak valid.',
-            'rak.required' => 'Rak harus dipilih.',
-            'rak.exists' => 'Rak yang dipilih tidak valid.',
+            'pengarang.required' => 'pengarang harus dipilih.',
+            'pengarang.exists' => 'pengarang yang dipilih tidak valid.',
+            'penerbit.required' => 'penerbit harus dipilih.',
+            'penerbit.exists' => 'penerbit yang dipilih tidak valid.',
+            'rak.required' => 'rak harus dipilih.',
+            'rak.exists' => 'rak yang dipilih tidak valid.',
             'image.image' => 'File yang diunggah harus berupa gambar.',
             'image.mimes' => 'Format gambar yang diizinkan adalah jpeg, png, jpg, gif.',
             'image.max' => 'Ukuran gambar tidak boleh lebih dari 2048 KB.',
@@ -504,11 +504,11 @@ class BukuController extends Controller
 
     public function hapus_buku($id)
     {
-        $buku = Buku::find($id);
+        $buku = buku::find($id);
         if (!$buku) {
             return response()->json([
                 'status' => 404,
-                'message' => 'Buku not found.'
+                'message' => 'buku not found.'
             ], 404);
         }
 
@@ -517,7 +517,7 @@ class BukuController extends Controller
 
         return response()->json([
             'status' => 200,
-            'message' => 'Buku ' . $buku->name . ' has been deleted.'
+            'message' => 'buku ' . $buku->name . ' has been deleted.'
         ]);
     }
 }

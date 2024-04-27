@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Buku;
-use App\Models\Data;
-use App\Models\Keranjang;
-use App\Models\Peminjaman;
-use App\Models\Pengembalian;
+use App\Models\buku;
+use App\Models\data;
+use App\Models\keranjang;
+use App\Models\peminjaman;
+use App\Models\pengembalian;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class PengembalianController extends Controller
 {
     public function index()
     {
-        $pinjam = Peminjaman::select('peminjaman.*', 'users.name as name_user')
+        $pinjam = peminjaman::select('peminjaman.*', 'users.name as name_user')
             ->where('peminjaman.is_deleted', 0)
             ->where(function ($query) {
                 $query->where('status', 4)
@@ -43,7 +43,7 @@ class PengembalianController extends Controller
     public function edit($id)
     {
         // dd($id);
-        $buku = Keranjang::select('keranjang.*', 'buku.name', 'buku.image', 'peminjaman.tenggat_kembali', 'peminjaman.id_card')
+        $buku = keranjang::select('keranjang.*', 'buku.name', 'buku.image', 'peminjaman.tenggat_kembali', 'peminjaman.id_card')
             ->where('id_peminjaman', $id)
             ->leftJoin('buku', 'keranjang.id_buku', '=', 'buku.id')
             ->leftJoin('peminjaman', 'keranjang.id_peminjaman', '=', 'peminjaman.id')
@@ -88,11 +88,11 @@ class PengembalianController extends Controller
         ]);
         $id_pinjam = $request->get('id_peminjaman');
 
-        $pinjam = Peminjaman::find($id_pinjam);
+        $pinjam = peminjaman::find($id_pinjam);
         if (!$pinjam) {
             return response()->json([
                 'status' => 404,
-                'message' => 'Data peminjaman tidak ditemukan.'
+                'message' => 'data peminjaman tidak ditemukan.'
             ], 404);
         }
 
@@ -102,10 +102,10 @@ class PengembalianController extends Controller
         $pinjam->petugas_id = $user_id;
         $pinjam->save();
 
-        $buku_keranjang = Keranjang::where('id_peminjaman', $id_pinjam)->get();
+        $buku_keranjang = keranjang::where('id_peminjaman', $id_pinjam)->get();
 
         foreach ($buku_keranjang as $item) {
-            $buku = Buku::find($item->id_buku);
+            $buku = buku::find($item->id_buku);
             if ($buku) {
                 $buku->jumlah += $item->jumlah_pinjam;
                 $buku->save();
@@ -121,13 +121,13 @@ class PengembalianController extends Controller
 
     public function edit_scan($id)
     {
-        $buku = Keranjang::select('keranjang.*', 'buku.name', 'buku.image', 'peminjaman.tenggat_kembali')
+        $buku = keranjang::select('keranjang.*', 'buku.name', 'buku.image', 'peminjaman.tenggat_kembali')
             ->where('id_peminjaman', $id)
             ->leftJoin('buku', 'keranjang.id_buku', '=', 'buku.id')
             ->leftJoin('peminjaman', 'keranjang.id_peminjaman', '=', 'peminjaman.id')
             ->get();
 
-        $scan = Data::select('data.value', 'users.name')
+        $scan = data::select('data.value', 'users.name')
             ->leftJoin('users', 'data.value', '=', 'users.id_card')
             ->orderBy('data.created_at', 'desc')
             ->first();
@@ -169,7 +169,7 @@ class PengembalianController extends Controller
 
     public function scan($id, $id_card, $denda)
     {
-        $pinjam = Peminjaman::where('id', $id)
+        $pinjam = peminjaman::where('id', $id)
             ->where('id_card', $id_card)
             ->where('status', 4)
             ->first();
@@ -178,7 +178,7 @@ class PengembalianController extends Controller
         if (!$pinjam) {
             return response()->json([
                 'status' => 404,
-                'message' => 'Peminjaman tidak ditemukan.'
+                'message' => 'peminjaman tidak ditemukan.'
             ], 404);
         }
 
@@ -205,7 +205,7 @@ class PengembalianController extends Controller
             'status' => 1
         ];
         // dd($kembali);
-        Pengembalian::create($kembali);
+        pengembalian::create($kembali);
 
         return response()->json([
             'status' => 200,
@@ -217,11 +217,11 @@ class PengembalianController extends Controller
     // sukses
     public function index_sukses()
     {
-        $pinjam = Pengembalian::select('Pengembalian.*', 'users.name as name_user', 'peminjaman.tanggal_pinjam')
-            ->where('Pengembalian.is_deleted', 0)
-            ->where('Pengembalian.status', 1)
-            ->leftJoin('users', 'Pengembalian.rfid', '=', 'users.id_card')
-            ->leftJoin('peminjaman', 'Pengembalian.peminjaman_id', '=', 'peminjaman.id')
+        $pinjam = pengembalian::select('pengembalian.*', 'users.name as name_user', 'peminjaman.tanggal_pinjam')
+            ->where('pengembalian.is_deleted', 0)
+            ->where('pengembalian.status', 1)
+            ->leftJoin('users', 'pengembalian.rfid', '=', 'users.id_card')
+            ->leftJoin('peminjaman', 'pengembalian.peminjaman_id', '=', 'peminjaman.id')
             ->get();
         // dd($pinjam);
         return view('pengembalian.selesai', compact('pinjam'));
@@ -230,7 +230,7 @@ class PengembalianController extends Controller
     public function edit_sukses($id)
     {
         // dd($id);
-        $buku = Keranjang::select('keranjang.*', 'buku.name', 'buku.image', 'peminjaman.tenggat_kembali', 'peminjaman.id_card', 'pengembalian.denda', 'pengembalian.telat')
+        $buku = keranjang::select('keranjang.*', 'buku.name', 'buku.image', 'peminjaman.tenggat_kembali', 'peminjaman.id_card', 'pengembalian.denda', 'pengembalian.telat')
             ->where('id_peminjaman', $id)
             ->leftJoin('buku', 'keranjang.id_buku', '=', 'buku.id')
             ->leftJoin('peminjaman', 'keranjang.id_peminjaman', '=', 'peminjaman.id')

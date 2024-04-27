@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\anggota;
 
 use App\Http\Controllers\Controller;
-use App\Models\Buku;
-use App\Models\Keranjang;
-use App\Models\Peminjaman;
-use App\Models\Penerbit;
-use App\Models\Pengarang;
-use App\Models\Rak;
+use App\Models\buku;
+use App\Models\keranjang;
+use App\Models\peminjaman;
+use App\Models\penerbit;
+use App\Models\pengarang;
+use App\Models\rak;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+use App\Models\user;
 
 class BukuAnggotaController extends Controller
 {
@@ -43,9 +43,9 @@ class BukuAnggotaController extends Controller
             })
             ->get();
 
-        $pengarangs = Pengarang::pluck('name', 'id');
-        $penerbits = Penerbit::pluck('name', 'id');
-        $rak = Rak::pluck('name', 'id');
+        $pengarangs = pengarang::pluck('name', 'id');
+        $penerbits = penerbit::pluck('name', 'id');
+        $rak = rak::pluck('name', 'id');
 
         return view('account-pages.buku', compact('buku', 'pengarangs', 'penerbits', 'rak'));
     }
@@ -57,7 +57,7 @@ class BukuAnggotaController extends Controller
 
     public function addBooktoCart($id)
     {
-        $book = Buku::findOrFail($id);
+        $book = buku::findOrFail($id);
         $cart = session()->get('cart', []);
         if (isset($cart[$id])) {
             $cart[$id]['jumlah']++;
@@ -100,13 +100,13 @@ class BukuAnggotaController extends Controller
 
     public function checkout(Request $request)
     {
-        $user = User::find(Auth::id());
+        $user = user::find(Auth::id());
         // dd($user);
         $id_card = $user->id_card;
         $tanggalAjuan = now();
         // $tenggatKembali = now()->addDays(7);
         try {
-            $peminjaman = new Peminjaman;
+            $peminjaman = new peminjaman;
             $peminjaman->tanggal_ajuan = $tanggalAjuan;
             // $peminjaman->tenggat_kembali = $tenggatKembali;
             $peminjaman->id_card = $id_card;
@@ -116,13 +116,13 @@ class BukuAnggotaController extends Controller
             $ids = $request->input('ids');
             $quantities = $request->input('quantities');
             foreach ($ids as $key => $id_buku) {
-                $keranjang = new Keranjang;
+                $keranjang = new keranjang;
                 $keranjang->id_peminjaman = $peminjaman->id;
                 $keranjang->id_buku = $id_buku;
                 $keranjang->jumlah_pinjam = $quantities[$key];
                 $keranjang->save();
 
-                $buku = Buku::find($id_buku);
+                $buku = buku::find($id_buku);
                 if ($buku) {
                     $buku->jumlah -= $quantities[$key];
                     $buku->save();

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Data;
+use App\Models\data;
 use App\Models\Peminjaman;
 use App\Models\Pengembalian;
-use App\Models\User;
+use App\Models\user;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -18,13 +18,13 @@ class UserUpgradeController extends Controller
      */
     public function index()
     {
-        $users = User::where('is_deleted', 0)->where('id_posisi', 3)->where('permintaan', 1)->get();
+        $users = user::where('is_deleted', 0)->where('id_posisi', 3)->where('permintaan', 1)->get();
         return view('user_permintaan.users-management', compact('users'));
     }
 
     public function edit($id)
     {
-        $anggota = User::find($id);
+        $anggota = user::find($id);
         $image = $anggota->image ? asset('assets/img/foto-profil/' . $anggota->image) : asset('assets/img/default-image.png');
         return response()->json([
             'id' => $anggota->id,
@@ -42,11 +42,11 @@ class UserUpgradeController extends Controller
 
     public function hapus($id)
     {
-        $anggota = User::find($id);
+        $anggota = user::find($id);
         if (!$anggota) {
             return response()->json([
                 'status' => 404,
-                'message' => 'User not found.'
+                'message' => 'user not found.'
             ], 404);
         }
 
@@ -56,16 +56,16 @@ class UserUpgradeController extends Controller
 
         return response()->json([
             'status' => 200,
-            'message' => 'User ' . $anggota->name . ' has been upgrade.'
+            'message' => 'user ' . $anggota->name . ' has been upgrade.'
         ]);
     }
 
     // upgrade
     public function edit_scan($id)
     {
-        $anggota = User::find($id);
+        $anggota = user::find($id);
         // dd($anggota);
-        $scan = Data::select('value')
+        $scan = data::select('value')
             ->orderBy('created_at', 'desc')
             ->first();
 
@@ -84,18 +84,18 @@ class UserUpgradeController extends Controller
 
     public function scan($id, $id_card)
     {
-        $existingUser = User::where('id_card', $id_card)->first();
+        $existingUser = user::where('id_card', $id_card)->first();
         if ($existingUser) {
             return response()->json([
                 'status' => 400,
                 'message' => 'ID CARD telah terdaftar.'
             ]);
         }
-        $user = User::where('id', $id)->first();
+        $user = user::where('id', $id)->first();
         if (!$user) {
             return response()->json([
                 'status' => 404,
-                'message' => 'User tidak ditemukan.'
+                'message' => 'user tidak ditemukan.'
             ]);
         }
 

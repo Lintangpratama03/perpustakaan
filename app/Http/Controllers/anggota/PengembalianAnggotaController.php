@@ -4,10 +4,10 @@ namespace App\Http\Controllers\anggota;
 
 use App\Http\Controllers\Controller;
 use App\Models\Buku;
-use App\Models\Keranjang;
-use App\Models\Peminjaman;
-use App\Models\Pengembalian;
-use App\Models\User;
+use App\Models\keranjang;
+use App\Models\peminjaman;
+use App\Models\pengembalian;
+use App\Models\user;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,10 +19,10 @@ class PengembalianAnggotaController extends Controller
      */
     public function index()
     {
-        $user = User::find(Auth::id());
+        $user = user::find(Auth::id());
         // dd($user);
         $id_card = $user->id_card;
-        $pinjam = Peminjaman::select('peminjaman.*', 'users.name as name_user')
+        $pinjam = peminjaman::select('peminjaman.*', 'users.name as name_user')
             ->where('peminjaman.is_deleted', 0)
             ->where(function ($query) use ($id_card) {
                 $query->where('peminjaman.status', 3)
@@ -49,7 +49,7 @@ class PengembalianAnggotaController extends Controller
 
     public function edit($id)
     {
-        $buku = Keranjang::select('Keranjang.*', 'buku.name', 'buku.image')
+        $buku = keranjang::select('keranjang.*', 'buku.name', 'buku.image')
             ->where('id_peminjaman', $id)
             ->leftJoin('buku', 'keranjang.id_buku', '=', 'buku.id')
             ->get();
@@ -72,15 +72,15 @@ class PengembalianAnggotaController extends Controller
 
     public function index_sukses()
     {
-        $user = User::find(Auth::id());
+        $user = user::find(Auth::id());
         // dd($user);
         $id_card = $user->id_card;
-        $pinjam = Pengembalian::select('Pengembalian.*', 'users.name as name_user', 'peminjaman.tanggal_pinjam')
-            ->where('Pengembalian.is_deleted', 0)
-            ->where('Pengembalian.status', 1)
-            ->where('Pengembalian.rfid', $id_card)
-            ->leftJoin('users', 'Pengembalian.rfid', '=', 'users.id_card')
-            ->leftJoin('peminjaman', 'Pengembalian.peminjaman_id', '=', 'peminjaman.id')
+        $pinjam = pengembalian::select('pengembalian.*', 'users.name as name_user', 'peminjaman.tanggal_pinjam')
+            ->where('pengembalian.is_deleted', 0)
+            ->where('pengembalian.status', 1)
+            ->where('pengembalian.rfid', $id_card)
+            ->leftJoin('users', 'pengembalian.rfid', '=', 'users.id_card')
+            ->leftJoin('peminjaman', 'pengembalian.peminjaman_id', '=', 'peminjaman.id')
             ->get();
         // dd($pinjam);
         return view('account-pages.pengembalian.selesai', compact('pinjam'));
@@ -88,7 +88,7 @@ class PengembalianAnggotaController extends Controller
 
     public function edit_sukses($id)
     {
-        $buku = Keranjang::select('Keranjang.*', 'buku.name', 'buku.image')
+        $buku = keranjang::select('keranjang.*', 'buku.name', 'buku.image')
             ->where('id_peminjaman', $id)
             ->leftJoin('buku', 'keranjang.id_buku', '=', 'buku.id')
             ->get();

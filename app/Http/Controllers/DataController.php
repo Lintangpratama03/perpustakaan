@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Data;
+use App\Models\data;
 use App\Http\Resources\DataResource;
 use Illuminate\Http\Request;
 
@@ -15,7 +15,7 @@ class DataController extends Controller
             'value' => 'required',
         ]);
 
-        $newData = Data::create($validatedData);
+        $newData = data::create($validatedData);
 
         return new DataResource($newData);
     }
