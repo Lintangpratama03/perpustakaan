@@ -1,21 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\anggota;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class ProfileController extends Controller
+class ProfileAnggotaController extends Controller
 {
-    public function index()
+    public function index_anggota()
     {
         $User = User::find(Auth::id());
-        return view('laravel-examples.user-profile', compact('User'));
+        return view('account-pages.user-profile', compact('User'));
     }
 
-    public function update(Request $request)
+    public function update_anggota(Request $request)
     {
         if (config('app.is_demo') && in_array(Auth::id(), [1])) {
             return back()->with('error', "You are in a demo version. You are not allowed to change the email for default users.");

@@ -8,19 +8,7 @@
                 <div class="mt-5 mb-5 mt-lg-9 row justify-content-center">
                     <div class="col-lg-9 col-12">
                         <div class="card card-body" id="profile">
-                            <img src="../../../assets/img/header-orange-purple.jpg" alt="pattern-lines"
-                                class="top-0 rounded-2 position-absolute start-0 w-100 h-100">
-
                             <div class="row z-index-2 justify-content-center align-items-center">
-                                <div class="col-sm-auto col-4">
-                                    <div class="avatar avatar-xl position-relative">
-                                        <img src="{{ asset('assets/img/foto-profil/' . (auth()->user()->image ?? 'images/default.jpg')) }}"
-                                            alt="user-image"
-                                            class="w-100 h-100 object-fit-cover border-radius-lg shadow-sm"
-                                            id="preview">
-                                    </div>
-
-                                </div>
                                 <div class="col-sm-auto col-8 my-auto">
                                     <div class="h-100">
                                         <h5 class="mb-1 font-weight-bolder">
@@ -172,4 +160,4 @@
         <x-guest.footer />
     </main>
 
-    </x-app-layout>
+</x-guest-layout>

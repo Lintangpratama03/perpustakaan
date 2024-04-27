@@ -4,6 +4,7 @@ use App\Http\Controllers\anggota\BukuAnggotaController;
 use App\Http\Controllers\anggota\PeminjamanAnggotaController;
 use App\Http\Controllers\anggota\PengajuanRfid;
 use App\Http\Controllers\anggota\PengembalianAnggotaController;
+use App\Http\Controllers\anggota\ProfileAnggotaController;
 use App\Http\Controllers\AnggotaHapusController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -79,8 +80,10 @@ Route::prefix('anggota')->group(function () {
                 Route::get('/add-book/{id}', [BukuAnggotaController::class, 'addBooktoCart'])->name('addbook.to.cart');
             });
             Route::post('/logoutt', [LoginController::class, 'destroy'])->name('logoutt');
-            Route::get('/kelola-user/user-profile', [ProfileController::class, 'index_anggota'])->name('users.profile.anggota');
-            Route::put('/kelola-user/user-profile/update', [ProfileController::class, 'update_anggota'])->name('users.update_profile.anggota');
+            Route::prefix('kelola-user')->group(function () {
+                Route::get('/', [ProfileAnggotaController::class, 'index_anggota'])->name('users.profile.anggota');
+                Route::put('/profile/update', [ProfileAnggotaController::class, 'update_anggota'])->name('users.update_profile.anggota');
+            });
         });
         Route::middleware(['posisi:3'])->group(function () {
             Route::prefix('pengajuan')->group(function () {
