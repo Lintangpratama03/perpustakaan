@@ -68,7 +68,7 @@ Route::middleware('guest')->group(function () {
 
 
 Route::prefix('anggota')->group(function () {
-    Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth', 'check.last.activity'])->group(function () {
         Route::middleware(['posisi:2,3'])->group(function () {
             Route::prefix('dashboard-anggota')->group(function () {
                 Route::get('/', [DashboardController::class, 'index_anggota'])->name('dashboard-anggota');
@@ -122,7 +122,7 @@ Route::prefix('anggota')->group(function () {
 
 
 // Authenticated Routes admin
-Route::group(['middleware' => ['auth', 'posisi:1']], function () {
+Route::group(['middleware' => ['auth', 'posisi:1', 'check.last.activity']], function () {
     Route::post('/logout', [LoginController::class, 'destroy_admin'])
         ->name('logout');
 
