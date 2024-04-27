@@ -12,7 +12,7 @@ use App\Models\rak;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\user;
+use App\Models\User;
 
 class BukuAnggotaController extends Controller
 {
@@ -100,9 +100,9 @@ class BukuAnggotaController extends Controller
 
     public function checkout(Request $request)
     {
-        $user = user::find(Auth::id());
-        // dd($user);
-        $id_card = $user->id_card;
+        $User = User::find(Auth::id());
+        // dd($User);
+        $id_card = $User->id_card;
         $tanggalAjuan = now();
         // $tenggatKembali = now()->addDays(7);
         try {

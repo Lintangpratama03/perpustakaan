@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\buku;
 use App\Models\keranjang;
 use App\Models\peminjaman;
-use App\Models\user;
+use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,9 +18,9 @@ class PeminjamanAnggotaController extends Controller
      */
     public function index_sukses()
     {
-        $user = user::find(Auth::id());
-        // dd($user);
-        $id_card = $user->id_card;
+        $User = User::find(Auth::id());
+        // dd($User);
+        $id_card = $User->id_card;
         $pinjam = peminjaman::select('peminjaman.*', 'users.name as name_user')
             ->where('peminjaman.is_deleted', 0)
             ->where('peminjaman.status', '>=', 3)
@@ -33,9 +33,9 @@ class PeminjamanAnggotaController extends Controller
 
     public function index_ajuan()
     {
-        $user = User::find(Auth::id());
-        // dd($user);
-        $id_card = $user->id_card;
+        $User = User::find(Auth::id());
+        // dd($User);
+        $id_card = $User->id_card;
         $pinjam = peminjaman::select('peminjaman.*', 'users.name as name_user')
             ->where('peminjaman.is_deleted', 0)
             ->where('peminjaman.status', '<', 3)

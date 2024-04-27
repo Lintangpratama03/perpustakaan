@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\user;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -11,8 +11,8 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $user = user::find(Auth::id());
-        return view('laravel-examples.user-profile', compact('user'));
+        $User = User::find(Auth::id());
+        return view('laravel-examples.User-profile', compact('User'));
     }
 
     public function update(Request $request)
@@ -44,8 +44,8 @@ class ProfileController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        $user = user::find(Auth::id());
-        $user->update([
+        $User = User::find(Auth::id());
+        $User->update([
             'name' => $request->name,
             'email' => $request->email,
             'alamat' => $request->alamat,
@@ -59,10 +59,10 @@ class ProfileController extends Controller
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $imagePath = $imageName;
             $image->move(public_path('assets/img/foto-profil'), $imageName);
-            $user->image = $imagePath;
+            $User->image = $imagePath;
         }
 
-        $user->save();
+        $User->save();
 
         return back()->with('success', 'Profile updated successfully.');
     }

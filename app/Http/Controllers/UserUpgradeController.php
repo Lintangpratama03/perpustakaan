@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\data;
 use App\Models\Peminjaman;
 use App\Models\Pengembalian;
-use App\Models\user;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -18,13 +18,13 @@ class UserUpgradeController extends Controller
      */
     public function index()
     {
-        $users = user::where('is_deleted', 0)->where('id_posisi', 3)->where('permintaan', 1)->get();
+        $users = User::where('is_deleted', 0)->where('id_posisi', 3)->where('permintaan', 1)->get();
         return view('user_permintaan.users-management', compact('users'));
     }
 
     public function edit($id)
     {
-        $anggota = user::find($id);
+        $anggota = User::find($id);
         $image = $anggota->image ? asset('assets/img/foto-profil/' . $anggota->image) : asset('assets/img/default-image.png');
         return response()->json([
             'id' => $anggota->id,
@@ -42,11 +42,11 @@ class UserUpgradeController extends Controller
 
     public function hapus($id)
     {
-        $anggota = user::find($id);
+        $anggota = User::find($id);
         if (!$anggota) {
             return response()->json([
                 'status' => 404,
-                'message' => 'user not found.'
+                'message' => 'User not found.'
             ], 404);
         }
 
@@ -56,14 +56,14 @@ class UserUpgradeController extends Controller
 
         return response()->json([
             'status' => 200,
-            'message' => 'user ' . $anggota->name . ' has been upgrade.'
+            'message' => 'User ' . $anggota->name . ' has been upgrade.'
         ]);
     }
 
     // upgrade
     public function edit_scan($id)
     {
-        $anggota = user::find($id);
+        $anggota = User::find($id);
         // dd($anggota);
         $scan = data::select('value')
             ->orderBy('created_at', 'desc')
@@ -84,25 +84,25 @@ class UserUpgradeController extends Controller
 
     public function scan($id, $id_card)
     {
-        $existingUser = user::where('id_card', $id_card)->first();
+        $existingUser = User::where('id_card', $id_card)->first();
         if ($existingUser) {
             return response()->json([
                 'status' => 400,
                 'message' => 'ID CARD telah terdaftar.'
             ]);
         }
-        $user = user::where('id', $id)->first();
-        if (!$user) {
+        $User = User::where('id', $id)->first();
+        if (!$User) {
             return response()->json([
                 'status' => 404,
-                'message' => 'user tidak ditemukan.'
+                'message' => 'User tidak ditemukan.'
             ]);
         }
 
-        $user->id_posisi = 2;
-        $user->id_card = $id_card;
-        $user->permintaan = 0;
-        $user->save();
+        $User->id_posisi = 2;
+        $User->id_card = $id_card;
+        $User->permintaan = 0;
+        $User->save();
 
         return response()->json([
             'status' => 200,

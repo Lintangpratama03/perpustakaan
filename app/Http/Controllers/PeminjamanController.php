@@ -6,7 +6,7 @@ use App\Models\buku;
 use App\Models\data;
 use App\Models\keranjang;
 use App\Models\peminjaman;
-use App\Models\user;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -60,13 +60,13 @@ class PeminjamanController extends Controller
         if (!$pinjam) {
             return response()->json([
                 'status' => 404,
-                'message' => 'user not found.'
+                'message' => 'User not found.'
             ], 404);
         }
         //petugas
-        $user = user::find(Auth::id());
-        // dd($user);
-        $id = $user->id;
+        $User = User::find(Auth::id());
+        // dd($User);
+        $id = $User->id;
 
         $pinjam->status = 2;
         $pinjam->petugas_id = $id;

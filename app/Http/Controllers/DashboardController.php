@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\kunjungan;
 use App\Models\peminjaman;
-use App\Models\user;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -14,9 +14,9 @@ class DashboardController extends Controller
 
     public function storeKunjungan(Request $request)
     {
-        $user = user::find(Auth::id());
-        // dd($user);
-        $id = $user->id;
+        $User = User::find(Auth::id());
+        // dd($User);
+        $id = $User->id;
 
         $today = Carbon::today();
         $existingKunjungan = kunjungan::where('id_user', $id)->whereDate('tanggal', $today)->first();
@@ -43,15 +43,15 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $userrfid = user::where('is_deleted', 0)->where('id_posisi', 2)
+        $userrfid = User::where('is_deleted', 0)->where('id_posisi', 2)
             ->get();
         // dd($userrfid);
         $swiperData = $this->getSwiperData($userrfid);
         $pengunjung = kunjungan::count();
-        $anggota = user::where('is_deleted', 0)->where('id_posisi', 3)->count();
-        $anggota_rfid = user::where('is_deleted', 0)->where('id_posisi', 2)->count();
-        $anggota_minta = user::where('is_deleted', 0)->where('id_posisi', 3)->where('permintaan', 1)->count();
-        $hapus = user::where('is_deleted', 1)->count();
+        $anggota = User::where('is_deleted', 0)->where('id_posisi', 3)->count();
+        $anggota_rfid = User::where('is_deleted', 0)->where('id_posisi', 2)->count();
+        $anggota_minta = User::where('is_deleted', 0)->where('id_posisi', 3)->where('permintaan', 1)->count();
+        $hapus = User::where('is_deleted', 1)->count();
 
         $pinjam = peminjaman::select('peminjaman.*', 'users.name as name_user')
             ->where('peminjaman.is_deleted', 0)
@@ -65,15 +65,15 @@ class DashboardController extends Controller
     }
     public function index_anggota()
     {
-        $userrfid = user::where('is_deleted', 0)->where('id_posisi', 2)
+        $userrfid = User::where('is_deleted', 0)->where('id_posisi', 2)
             ->get();
         // dd($userrfid);
         $swiperData = $this->getSwiperData($userrfid);
         $pengunjung = kunjungan::count();
-        $anggota = user::where('is_deleted', 0)->where('id_posisi', 3)->count();
-        $anggota_rfid = user::where('is_deleted', 0)->where('id_posisi', 2)->count();
-        $anggota_minta = user::where('is_deleted', 0)->where('id_posisi', 3)->where('permintaan', 1)->count();
-        $hapus = user::where('is_deleted', 1)->count();
+        $anggota = User::where('is_deleted', 0)->where('id_posisi', 3)->count();
+        $anggota_rfid = User::where('is_deleted', 0)->where('id_posisi', 2)->count();
+        $anggota_minta = User::where('is_deleted', 0)->where('id_posisi', 3)->where('permintaan', 1)->count();
+        $hapus = User::where('is_deleted', 1)->count();
         // dd($pengunjung);
         return view('account-pages/dashboard', compact('userrfid', 'swiperData', 'hapus', 'pengunjung', 'anggota', 'anggota_rfid', 'anggota_minta'));
     }
@@ -82,10 +82,10 @@ class DashboardController extends Controller
     {
         $swiperData = [];
 
-        foreach ($userrfid as $user) {
+        foreach ($userrfid as $User) {
             $swiperData[] = [
-                'name' => $user->name,
-                'nis' => $user->nis,
+                'name' => $User->name,
+                'nis' => $User->nis,
             ];
         }
 

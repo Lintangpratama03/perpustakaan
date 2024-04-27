@@ -7,7 +7,7 @@ use App\Models\Buku;
 use App\Models\keranjang;
 use App\Models\peminjaman;
 use App\Models\pengembalian;
-use App\Models\user;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,9 +19,9 @@ class PengembalianAnggotaController extends Controller
      */
     public function index()
     {
-        $user = user::find(Auth::id());
-        // dd($user);
-        $id_card = $user->id_card;
+        $User = User::find(Auth::id());
+        // dd($User);
+        $id_card = $User->id_card;
         $pinjam = peminjaman::select('peminjaman.*', 'users.name as name_user')
             ->where('peminjaman.is_deleted', 0)
             ->where(function ($query) use ($id_card) {
@@ -72,9 +72,9 @@ class PengembalianAnggotaController extends Controller
 
     public function index_sukses()
     {
-        $user = user::find(Auth::id());
-        // dd($user);
-        $id_card = $user->id_card;
+        $User = User::find(Auth::id());
+        // dd($User);
+        $id_card = $User->id_card;
         $pinjam = pengembalian::select('pengembalian.*', 'users.name as name_user', 'peminjaman.tanggal_pinjam')
             ->where('pengembalian.is_deleted', 0)
             ->where('pengembalian.status', 1)

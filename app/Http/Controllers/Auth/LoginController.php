@@ -30,8 +30,8 @@ class LoginController extends Controller
         $rememberMe = $request->rememberMe ? true : false;
 
         if (Auth::attempt($credentials, $rememberMe)) {
-            $user = Auth::user();
-            if ($user->id_posisi == 2 || $user->id_posisi == 3) {
+            $User = Auth::User();
+            if ($User->id_posisi == 2 || $User->id_posisi == 3) {
                 $request->session()->regenerate();
                 return redirect()->intended('/anggota/dashboard-anggota');
             } else {

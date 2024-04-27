@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\anggota;
 
 use App\Http\Controllers\Controller;
-use App\Models\user;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,10 +13,10 @@ class PengajuanRfid extends Controller
 {
     public function index()
     {
-        $user = user::find(Auth::id());
-        // dd($user);
-        $id = $user->id;
-        $users = user::where('is_deleted', 0)->where('id_posisi', 3)->where('id', $id)->get();
+        $User = User::find(Auth::id());
+        // dd($User);
+        $id = $User->id;
+        $users = User::where('is_deleted', 0)->where('id_posisi', 3)->where('id', $id)->get();
         // dd($users);
         return view('account-pages.pengajuan-rfid.pengajuan', compact('users'));
     }
@@ -24,7 +24,7 @@ class PengajuanRfid extends Controller
 
     public function edit($id)
     {
-        $anggota = user::find($id);
+        $anggota = User::find($id);
         $image = $anggota->image ? asset('assets/img/foto-profil/' . $anggota->image) : asset('assets/img/default-image.png');
         return response()->json([
             'id' => $anggota->id,
@@ -42,7 +42,7 @@ class PengajuanRfid extends Controller
 
     public function update(Request $request, $id)
     {
-        $anggota = user::find($id);
+        $anggota = User::find($id);
         // dd($id);
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
