@@ -12,7 +12,7 @@ class ProfileController extends Controller
     public function index()
     {
         $User = User::find(Auth::id());
-        return view('laravel-examples.User-profile', compact('User'));
+        return view('laravel-examples.user-profile', compact('User'));
     }
 
     public function update(Request $request)
