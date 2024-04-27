@@ -57,7 +57,7 @@ class ProfileController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $publicHtmlPath = $_SERVER['DOCUMENT_ROOT'] . '/../public_html/assets/img/foto-profil/';
+            $publicHtmlPath = $_SERVER['DOCUMENT_ROOT'] . '/assets/img/foto-profil/';
             $imagePath = $publicHtmlPath . $imageName;
             $image->move($publicHtmlPath, $imageName);
 
@@ -126,7 +126,7 @@ class ProfileController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $publicHtmlPath = $_SERVER['DOCUMENT_ROOT'] . '/../public_html/assets/img/foto-profil/';
+            $publicHtmlPath = $_SERVER['DOCUMENT_ROOT'] . '/assets/img/foto-profil/';
             $imagePath = $publicHtmlPath . $imageName;
             $image->move($publicHtmlPath, $imageName);
 

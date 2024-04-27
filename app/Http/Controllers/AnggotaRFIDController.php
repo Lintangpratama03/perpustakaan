@@ -66,7 +66,7 @@ class AnggotaRFIDController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $publicHtmlPath = $_SERVER['DOCUMENT_ROOT'] . '../public_html/assets/img/foto-profil/';
+            $publicHtmlPath = $_SERVER['DOCUMENT_ROOT'] . '/assets/img/foto-profil/';
             $imagePath = $publicHtmlPath . $fileName;
             $file->move($publicHtmlPath, $fileName);
         }
@@ -94,7 +94,7 @@ class AnggotaRFIDController extends Controller
     public function edit($id)
     {
         $anggota = User::find($id);
-        $image = $anggota->image ? asset('../public_html/assets/img/foto-profil/' . $anggota->image) : asset('../public_html/assets/img/default-image.png');
+        $image = $anggota->image ? asset('assets/img/foto-profil/' . $anggota->image) : asset('assets/img/default-image.png');
         return response()->json([
             'id' => $anggota->id,
             'name' => $anggota->name,
@@ -175,7 +175,7 @@ class AnggotaRFIDController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $publicHtmlPath = $_SERVER['DOCUMENT_ROOT'] . '/../public_html/assets/img/foto-profil/';
+            $publicHtmlPath = $_SERVER['DOCUMENT_ROOT'] . '/assets/img/foto-profil/';
             $imagePath = $publicHtmlPath . $fileName;
 
             // Hapus file gambar lama jika ada

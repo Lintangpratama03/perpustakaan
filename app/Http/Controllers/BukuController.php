@@ -392,7 +392,7 @@ class BukuController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $publicHtmlPath = $_SERVER['DOCUMENT_ROOT'] . '../public_html/assets/img/buku/';
+            $publicHtmlPath = $_SERVER['DOCUMENT_ROOT'] . '/assets/img/buku/';
             $imagePath = $publicHtmlPath . $fileName;
             $file->move($publicHtmlPath, $fileName);
         }
@@ -421,7 +421,7 @@ class BukuController extends Controller
         if (!$buku) {
             return response()->json(['message' => 'buku not found'], 404);
         }
-        $image = $buku->image ? asset('../public_html/assets/img/buku/' . $buku->image) : asset('../public_html/assets/img/default-image.png');
+        $image = $buku->image ? asset('assets/img/buku/' . $buku->image) : asset('assets/img/default-image.png');
         return response()->json([
             'id' => $buku->id,
             'name' => $buku->name,
@@ -487,7 +487,7 @@ class BukuController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $publicHtmlPath = $_SERVER['DOCUMENT_ROOT'] . '../public_html/assets/img/buku/';
+            $publicHtmlPath = $_SERVER['DOCUMENT_ROOT'] . '/assets/img/buku/';
             $file->move($publicHtmlPath, $fileName);
 
             if ($buku->image) {
