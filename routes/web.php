@@ -79,6 +79,8 @@ Route::prefix('anggota')->group(function () {
                 Route::get('/add-book/{id}', [BukuAnggotaController::class, 'addBooktoCart'])->name('addbook.to.cart');
             });
             Route::post('/logoutt', [LoginController::class, 'destroy'])->name('logoutt');
+            Route::get('/kelola-user/user-profile', [ProfileController::class, 'index_anggota'])->name('users.profile.anggota');
+            Route::put('/kelola-user/user-profile/update', [ProfileController::class, 'update_anggota'])->name('users.update_profile.anggota');
         });
         Route::middleware(['posisi:3'])->group(function () {
             Route::prefix('pengajuan')->group(function () {
@@ -111,8 +113,6 @@ Route::prefix('anggota')->group(function () {
                 Route::get('/', [PengembalianAnggotaController::class, 'index_sukses'])->name('sukses-pengembalian-buku');
                 Route::get('/edit/{id}', [PengembalianAnggotaController::class, 'edit_sukses'])->name('pengembalian-buku.edit');
             });
-            Route::get('/kelola-user/user-profile', [ProfileController::class, 'index'])->name('users.profile');
-            Route::put('/kelola-user/user-profile/update', [ProfileController::class, 'update'])->name('users.update_profile');
         });
     });
 });
