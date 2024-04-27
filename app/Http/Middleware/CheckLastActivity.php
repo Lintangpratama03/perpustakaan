@@ -26,7 +26,7 @@ class CheckLastActivity
             }
 
             Auth::logout();
-            return redirect()->route('login')->withErrors(['session_expired' => 'Sesi Anda telah berakhir karena tidak ada aktivitas dalam waktu yang cukup lama.']);
+            return redirect()->route('sign-in')->withErrors(['session_expired' => 'Sesi Anda telah berakhir karena tidak ada aktivitas dalam waktu yang cukup lama.']);
         }
 
         return $next($request);
