@@ -168,13 +168,11 @@
                                                         <p class="text-muted mb-0">Stok: <span
                                                                 class="fw-bold">{{ $book->jumlah }}</span></p>
                                                     </div>
-                                                    <div class="d-flex justify-content-between">
-                                                        <a href="#" class="btn btn-primary"><i
-                                                                class="fas fa-eye"></i>
-                                                            Lihat</a>
-                                                        <a class="btn btn-outline-danger add-cart"><i
-                                                                class="fas fa-plus" data-id="{{ $book->id }}"></i>
-                                                            Keranjang</a>
+                                                    <div class="d-flex justify-content-end">
+                                                        <a class="btn btn-outline-danger add-cart">
+                                                            <i class="fas fa-plus" data-id="{{ $book->id }}"></i>
+                                                            Keranjang
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
