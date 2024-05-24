@@ -80,6 +80,8 @@
                         <ul>
                             <li><a href="{{ route('ajuan') }}" class="text-white">Ajuan Peminjaman</a></li>
                             <li><a href="{{ route('ajuan.sukses') }}" class="text-white">Peminjaman Sukses</a></li>
+                            <li><a href="{{ route('ajuan.panjang') }}" class="text-white">Perpanjang Pinjam</a>
+                            </li>
                         </ul>
                     </div>
                 </li>

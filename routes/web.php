@@ -111,6 +111,7 @@ Route::prefix('anggota')->group(function () {
             Route::prefix('pengembalian')->group(function () {
                 Route::get('/', [PengembalianAnggotaController::class, 'index'])->name('pengembalian-buku');
                 Route::get('/edit/{id}', [PengembalianAnggotaController::class, 'edit'])->name('pengembalian-buku.edit');
+                Route::post('/panjang/{id}', [PengembalianAnggotaController::class, 'panjang'])->name('pengembalian-buku.panjang');
             });
             Route::prefix('pengembalian-sukses')->group(function () {
                 Route::get('/', [PengembalianAnggotaController::class, 'index_sukses'])->name('sukses-pengembalian-buku');
@@ -230,6 +231,12 @@ Route::group(['middleware' => ['auth', 'posisi:1', 'check.last.activity']], func
     Route::prefix('kelola-pinjam-sukses')->group(function () {
         Route::get('/', [PeminjamanController::class, 'index_sukses'])->name('ajuan.sukses');
         Route::get('/edit_sukses/{id}', [PeminjamanController::class, 'edit_sukses'])->name('ajuan.sukses.edit');
+    });
+    Route::prefix('kelola-pinjam-panjang')->group(function () {
+        Route::get('/', [PeminjamanController::class, 'index_panjang'])->name('ajuan.panjang');
+        Route::get('/edit_sukses/{id}', [PeminjamanController::class, 'edit_panjang'])->name('ajuan.panjang.edit');
+        Route::get('/edit_scan/{id}', [PeminjamanController::class, 'edit_scan_panjang'])->name('panjang.scan.edit');
+        Route::post('/scan/{id}/{id_card}', [PeminjamanController::class, 'scan_panjang'])->name('panjang.scan');
     });
 
     Route::prefix('kelola-kembali')->group(function () {

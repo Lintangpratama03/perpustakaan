@@ -108,4 +108,22 @@ class PengembalianAnggotaController extends Controller
         // dd($data);
         return response()->json($data);
     }
+
+    public function panjang($id)
+    {
+        $peminjaman = peminjaman::find($id);
+
+        if ($peminjaman) {
+            $peminjaman->status_perpanjang = 1;
+            $peminjaman->save();
+
+            return response()->json([
+                'message' => 'Perpanjangan peminjaman berhasil diajukan.'
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat mengajukan perpanjangan peminjaman.'
+            ], 400);
+        }
+    }
 }

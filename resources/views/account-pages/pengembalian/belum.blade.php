@@ -26,10 +26,10 @@
                                 Tenggat Kembali</th>
                             <th
                                 class="text-center text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
-                                ID RFID</th>
+                                Status Pinjam</th>
                             <th
                                 class="text-center text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
-                                Status</th>
+                                Ajuan Perpanjang</th>
                             <th
                                 class="text-center text-uppercase font-weight-bold bg-transparent border-bottom text-secondary">
                                 Total Denda</th>
@@ -55,7 +55,6 @@
                                     <td class="text-center">{{ $pjm->id }}</td>
                                     <td class="text-center">{{ $pjm->tanggal_pinjam }}</td>
                                     <td class="text-center">{{ $pjm->tenggat_kembali }}</td>
-                                    <td class="text-center">{{ $pjm->id_card }}</td>
                                     <td class="text-center">
                                         @if ($pjm->status == 3)
                                             <span
@@ -63,6 +62,20 @@
                                         @elseif ($pjm->status == 4)
                                             <span
                                                 class="badge badge-sm border border-warning text-warning bg-warning">{{ 'Proses Scan' }}</span>
+                                        @else
+                                            {{ 'N/A' }}
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        @if ($pjm->status_perpanjang == 0)
+                                            <span
+                                                class="badge badge-sm border border-danger text-danger bg-danger">{{ 'Tidak Mengajukan' }}</span>
+                                        @elseif ($pjm->status_perpanjang == 1)
+                                            <span
+                                                class="badge badge-sm border border-warning text-warning bg-warning">{{ 'Proses Scan' }}</span>
+                                        @elseif ($pjm->status_perpanjang == 2)
+                                            <span
+                                                class="badge badge-sm border border-success text-success bg-success">{{ 'Berhasil' }}</span>
                                         @else
                                             {{ 'N/A' }}
                                         @endif
@@ -81,6 +94,13 @@
                                             </a>
                                         @else
                                             {{ 'N/A' }}
+                                        @endif
+                                        @if ($pjm->status_perpanjang == 0)
+                                            <a href="#" class="mx-3 panjang-btn" data-bs-toggle="modal"
+                                                data-bs-target="#panjangModal" data-id="{{ $pjm->id }}">
+                                                <i class="fas fa-upload text-secondary"></i>
+                                            </a>
+                                        @else
                                         @endif
                                     </td>
                                 </tr>
@@ -154,6 +174,35 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-8">
+                <div class="modal fade" id="panjangModal" tabindex="-1" role="dialog" aria-labelledby="modal-form"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body p-0">
+                                <div class="card card-plain">
+                                    <div class="card-header pb-0 text-left">
+                                        <h3 class="font-weight-bolder text-dark">Perpanjangan Peminjaman</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form method="post" id="panjangForm">
+                                            @csrf
+                                            <input type="hidden" id="panjang_id" name="panjang_id"
+                                                value="" />
+                                            <p>Apakah ingin mengajukan perpanjangan peminjaman?</p>
+                                            <div class="text-center mt-4">
+                                                <button type="button" class="btn btn-secondary mr-3"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Konfirmasi</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <x-guest.footer />
         </div>
         <div class="container mt-4">
@@ -211,6 +260,40 @@
         $('.table').DataTable({
             "searching": true,
             "paging": true
+        });
+    });
+    $(document).on('click', '.panjang-btn', function() {
+        let id = $(this).data('id');
+        $('#panjangModal').modal('show');
+        $('#panjang_id').val(id);
+    });
+
+    $('#panjangForm').on('submit', function(e) {
+        e.preventDefault();
+        let id = $('#panjang_id').val();
+        $.ajax({
+            url: '/anggota/pengembalian/panjang/' + id,
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                $('#panjangModal').modal('hide');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sukses',
+                    text: response.message
+                }).then(() => {
+                    location.reload();
+                });
+            },
+            error: function(xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Terjadi kesalahan saat mengajukan perpanjangan peminjaman.'
+                });
+            }
         });
     });
 </script>

@@ -28,7 +28,7 @@ class LoginController extends Controller
         $credentials = $request->only('username', 'password');
         $rememberMe = $request->rememberMe ? true : false;
 
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password], $rememberMe)) {
+        if (Auth::attempt($credentials, $rememberMe)) {
             $user = Auth::user();
             $request->session()->regenerate();
 
@@ -54,7 +54,7 @@ class LoginController extends Controller
         $credentials = $request->only('username', 'password');
         $rememberMe = $request->rememberMe ? true : false;
 
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password], $rememberMe)) {
+        if (Auth::attempt($credentials, $rememberMe)) {
             $user = Auth::user();
             $request->session()->regenerate();
 
