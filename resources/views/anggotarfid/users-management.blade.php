@@ -16,9 +16,9 @@
                         <div class="pb-0 card-header">
                             <div class="row">
                                 <div class="col-6">
-                                    <h5 class="">Kelola Anggota</h5>
+                                    <h5 class="">Kelola Anggota RFID</h5>
                                     <p class="mb-0 text-sm">
-                                        Data Anggota
+                                        Data Anggota RFID
                                     </p>
                                 </div>
                                 <div class="col-6 text-end">

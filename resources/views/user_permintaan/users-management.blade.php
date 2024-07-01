@@ -16,7 +16,7 @@
                         <div class="pb-0 card-header">
                             <div class="row">
                                 <div class="col-6">
-                                    <h5 class="">Kelola Anggota</h5>
+                                    <h5 class="">Kelola Anggota Pengajuan RFID</h5>
                                     <p class="mb-0 text-sm">
                                         Data Anggota Yang Mengajukan RFID
                                     </p>
