@@ -27,7 +27,7 @@ class ProfileAnggotaController extends Controller
             'username' => 'required|regex:/^[a-zA-Z0-9_]+$/|max:255|unique:users,username,' . Auth::id(),
             'email' => 'required|email|max:255|unique:users,email,' . Auth::id(),
             'alamat' => 'max:255',
-            'hp' => 'numeric|digits:10',
+            'hp' => 'numeric|digits:15',
             'nis' => 'max:255',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image file
         ], [

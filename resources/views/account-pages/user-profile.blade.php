@@ -2,7 +2,7 @@
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <x-navbar-guest />
         <div class="px-5 py-4 container-fluid mt-n8">
-            <form action={{ route('users.update_profile') }} method="POST" enctype="multipart/form-data">
+            <form action={{ route('users.update_profile.anggota') }} method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="mt-5 mb-5 mt-lg-9 row justify-content-center">
