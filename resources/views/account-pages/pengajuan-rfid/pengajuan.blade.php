@@ -140,12 +140,12 @@
                                                     <div class="input-group mb-3">
                                                         <input type="text" class="form-control" placeholder="Name"
                                                             name="name" aria-label="Name"
-                                                            aria-describedby="name-addon">
+                                                            aria-describedby="name-addon" readonly>
                                                     </div>
                                                     <span class="text-danger error-name"
                                                         style="font-size: 0.8rem;"></span>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group d-none">
                                                     <label>Email</label>
                                                     <div class="input-group mb-3">
                                                         <input type="email" class="form-control" placeholder="Email"
@@ -155,7 +155,7 @@
                                                     <span class="text-danger error-email"
                                                         style="font-size: 0.8rem;"></span>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group d-none">
                                                     <label>Password</label>
                                                     <div class="input-group mb-3">
                                                         <input type="password" class="form-control"
@@ -165,7 +165,7 @@
                                                     <span class="text-danger error-password"
                                                         style="font-size: 0.8rem;"></span>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group d-none">
                                                     <label for="image">Foto</label>
                                                     <input type="file" name="image" id="image"
                                                         accept="image/*" onchange="previewImage1(event)"
@@ -200,7 +200,7 @@
                                                     <span class="text-danger error-nis"
                                                         style="font-size: 0.8rem;"></span>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group d-none">
                                                     <label>Username</label>
                                                     <div class="input-group mb-3">
                                                         <input type="text" class="form-control"
@@ -210,7 +210,7 @@
                                                     <span class="text-danger error-username"
                                                         style="font-size: 0.8rem;"></span>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group d-none">
                                                     <label>HP</label>
                                                     <div class="input-group mb-3">
                                                         <input type="text" class="form-control" placeholder="HP"
@@ -220,7 +220,7 @@
                                                     <span class="text-danger error-hp"
                                                         style="font-size: 0.8rem;"></span>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group d-none">
                                                     <label>Alamat</label>
                                                     <div class="input-group mb-3">
                                                         <textarea class="form-control" placeholder="Alamat" name="alamat"></textarea>

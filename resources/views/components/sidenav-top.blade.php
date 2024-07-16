@@ -70,165 +70,26 @@
                         <span class="navbar-toggler-bar bar3"></span>
                     </span>
                 </button>
-                {{-- <div class="collapse navbar-collapse" id="navigation">
-                    <ul class="navbar-nav d-lg-none ms-auto">
-                        @auth
-                            @if (Auth::user()->id_posisi == 2 || Auth::user()->id_posisi == 3)
-                                <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
-                                    <a href="{{ route('dashboard-anggota') }}" id="dashboard-link"
-                                        class="nav-link text-black p-0">Dashboard</a>
-                                </li>
-                            @endif
-                            @if (Auth::user()->id_posisi == 2 || Auth::user()->id_posisi == 3)
-                                <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center dropdown">
-                                    <a href="#" class="nav-link text-black p-0 dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-expanded="false">Buku</a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-                                        <li><a class="dropdown-item" href="{{ route('buku-anggota') }}">Katalog Buku</a>
-                                        </li>
-                                        @if (Auth::user()->id_posisi == 2)
-                                            <li><a class="dropdown-item" href="{{ route('shopping.cart') }}">Keranjang
-                                                    Buku</a></li>
-                                        @endif
-                                    </ul>
-                                </li>
-                            @endif
-                            @if (Auth::user()->id_posisi == 3)
-                                <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
-                                    <a href="{{ route('pengajuan') }}" class="nav-link text-black p-0">Pengajuan
-                                        RFID</a>
-                                </li>
-                            @endif
-                            @if (Auth::user()->id_posisi == 2)
-                                <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center dropdown">
-                                    <a href="#" class="nav-link text-black p-0 dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-expanded="false">Peminjaman</a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-                                        <li><a class="dropdown-item" href="{{ route('ajuan-peminjaman-anggota') }}">Ajuan
-                                                Peminjaman</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('sukses-peminjaman-anggota') }}">History
-                                                Peminjaman</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center dropdown">
-                                    <a href="#" class="nav-link text-black p-0 dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-expanded="false">Pengembalian</a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-                                        <li><a class="dropdown-item" href="{{ route('pengembalian-buku') }}">Belum
-                                                Kembali</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('sukses-pengembalian-buku') }}">Sukses
-                                                Kembali</a></li>
-                                    </ul>
-                                </li>
-                            @endif
-                            <li
-                                class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center font-weight-bold breadcrumb-text text-black">
-                                <form method="POST" action="{{ route('logoutt') }}">
-                                    @csrf
-                                    <a href="login" onclick="event.preventDefault();this.closest('form').submit();">
-                                        <button class="btn btn-sm btn-white mb-0 me-1 text-black logout-btn"
-                                            type="submit">Log out</button>
-                                    </a>
-                                </form>
-                            </li>
-                        @endauth
-                    </ul>
-                    <ul class="navbar-nav d-none d-lg-flex ms-auto">
-                        @auth
-                            @if (Auth::user()->id_posisi == 2 || Auth::user()->id_posisi == 3)
-                                <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
-                                    <a href="{{ route('dashboard-anggota') }}" id="dashboard-link"
-                                        class="nav-link text-black p-0">Dashboard</a>
-                                </li>
-                            @endif
-                            @if (Auth::user()->id_posisi == 2 || Auth::user()->id_posisi == 3)
-                                <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center dropdown">
-                                    <a href="#" class="nav-link text-black p-0 dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-expanded="false">Buku</a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-                                        <li><a class="dropdown-item" href="{{ route('buku-anggota') }}">Katalog Buku</a>
-                                        </li>
-                                        @if (Auth::user()->id_posisi == 2)
-                                            <li><a class="dropdown-item" href="{{ route('shopping.cart') }}">Keranjang
-                                                    Buku</a></li>
-                                        @endif
-                                    </ul>
-                                </li>
-                            @endif
-                            @if (Auth::user()->id_posisi == 3)
-                                <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
-                                    <a href="{{ route('pengajuan') }}" class="nav-link text-black p-0">Pengajuan
-                                        RFID</a>
-                                </li>
-                            @endif
-                            @if (Auth::user()->id_posisi == 2)
-                                <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center dropdown">
-                                    <a href="#" class="nav-link text-black p-0 dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-expanded="false">Peminjaman</a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-                                        <li><a class="dropdown-item" href="{{ route('ajuan-peminjaman-anggota') }}">Ajuan
-                                                Peminjaman</a></li>
-                                        <li><a class="dropdown-item"
-                                                href="{{ route('sukses-peminjaman-anggota') }}">History Peminjaman</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center dropdown">
-                                    <a href="#" class="nav-link text-black p-0 dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-expanded="false">Pengembalian</a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-                                        <li><a class="dropdown-item" href="{{ route('pengembalian-buku') }}">Belum
-                                                Kembali</a></li>
-                                        <li><a class="dropdown-item"
-                                                href="{{ route('sukses-pengembalian-buku') }}">Sukses Kembali</a></li>
-                                    </ul>
-                                </li>
-                            @endif
-                            <li class="nav-item d-flex align-items-center font-weight-bold breadcrumb-text text-black">
-                                <form method="POST" action="{{ route('logoutt') }}">
-                                    @csrf
-                                    <a href="login" onclick="event.preventDefault();this.closest('form').submit();">
-                                        <button class="btn btn-sm btn-white mb-0 me-1 text-black logout-btn"
-                                            type="submit">Log out</button>
-                                    </a>
-                                </form>
-                            </li>
-                        @endauth
-                        <li class="nav-item d-flex align-items-center ps-2">
-                            <a href="javascript:;" class="nav-link text-black font-weight-bold px-0">
-                        <li class="nav-item dropdown pe-2 d-flex align-items-center">
-                            <div class="avatar avatar-sm position-relative">
-                                <img src="../assets/img/team-2.jpg" alt="profile_image"
-                                    class="w-100 border-radius-md">
-                            </div>
-                        </li>
-                        </a>
-                        </li>
-                    </ul>
-                </div> --}}
                 <div class="collapse navbar-collapse" id="navigation">
-                    <ul class="navbar-nav d-lg-none ms-auto">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
+                            <a href="{{ route('dashboard-anggota') }}" id="dashboard-link"
+                                class="nav-link text-black p-0">Dashboard</a>
+                        </li>
+                        <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center dropdown">
+                            <a href="#" class="nav-link text-black p-0 dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false">Buku</a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
+                                <li><a class="dropdown-item" href="{{ route('buku-anggota') }}">Katalog Buku</a></li>
+                                @auth
+                                    @if (Auth::user()->id_posisi == 2)
+                                        <li><a class="dropdown-item" href="{{ route('shopping.cart') }}">Pinjam
+                                                Buku</a></li>
+                                    @endif
+                                @endauth
+                            </ul>
+                        </li>
                         @auth
-                            @if (Auth::user()->id_posisi == 2 || Auth::user()->id_posisi == 3)
-                                <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
-                                    <a href="{{ route('dashboard-anggota') }}" id="dashboard-link"
-                                        class="nav-link text-black p-0">Dashboard</a>
-                                </li>
-                            @endif
-                            @if (Auth::user()->id_posisi == 2 || Auth::user()->id_posisi == 3)
-                                <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center dropdown">
-                                    <a href="#" class="nav-link text-black p-0 dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-expanded="false">Buku</a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-                                        <li><a class="dropdown-item" href="{{ route('buku-anggota') }}">Katalog Buku</a>
-                                        </li>
-                                        @if (Auth::user()->id_posisi == 2)
-                                            <li><a class="dropdown-item" href="{{ route('shopping.cart') }}">Keranjang
-                                                    Buku</a></li>
-                                        @endif
-                                    </ul>
-                                </li>
-                            @endif
                             @if (Auth::user()->id_posisi == 3)
                                 <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
                                     <a href="{{ route('pengajuan') }}" class="nav-link text-black p-0">Pengajuan
@@ -257,83 +118,6 @@
                                     </ul>
                                 </li>
                             @endif
-                            <li
-                                class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center font-weight-bold breadcrumb-text text-black">
-                                <form method="POST" action="{{ route('logoutt') }}">
-                                    @csrf
-                                    <a href="login" onclick="event.preventDefault();this.closest('form').submit();">
-                                        <button class="btn btn-sm btn-white mb-0 me-1 text-black logout-btn"
-                                            type="submit">Log out</button>
-                                    </a>
-                                </form>
-                            </li>
-                            <li class="nav-item dropdown px-3 py-3 border-radius-sm d-flex align-items-center">
-                                <a class="nav-link p-0 text-black d-flex align-items-center" href="#"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <div class="avatar avatar-sm position-relative me-2">
-                                        <img src="../assets/img/team-2.jpg" alt="profile_image"
-                                            class="w-100 border-radius-md">
-                                    </div>
-                                    <span class="font-weight-bold">{{ Auth::user()->name }}</span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-                                    <li><a class="dropdown-item" href="{{ route('users.profile.anggota') }}">Profile</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endauth
-                    </ul>
-                    <ul class="navbar-nav d-none d-lg-flex ms-auto">
-                        @auth
-                            @if (Auth::user()->id_posisi == 2 || Auth::user()->id_posisi == 3)
-                                <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
-                                    <a href="{{ route('dashboard-anggota') }}" id="dashboard-link"
-                                        class="nav-link text-black p-0">Dashboard</a>
-                                </li>
-                            @endif
-                            @if (Auth::user()->id_posisi == 2 || Auth::user()->id_posisi == 3)
-                                <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center dropdown">
-                                    <a href="#" class="nav-link text-black p-0 dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-expanded="false">Buku</a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-                                        <li><a class="dropdown-item" href="{{ route('buku-anggota') }}">Katalog Buku</a>
-                                        </li>
-                                        @if (Auth::user()->id_posisi == 2)
-                                            <li><a class="dropdown-item" href="{{ route('shopping.cart') }}">Keranjang
-                                                    Buku</a></li>
-                                        @endif
-                                    </ul>
-                                </li>
-                            @endif
-                            @if (Auth::user()->id_posisi == 3)
-                                <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
-                                    <a href="{{ route('pengajuan') }}" class="nav-link text-black p-0">Pengajuan
-                                        RFID</a>
-                                </li>
-                            @endif
-                            @if (Auth::user()->id_posisi == 2)
-                                <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center dropdown">
-                                    <a href="#" class="nav-link text-black p-0 dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-expanded="false">Peminjaman</a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-                                        <li><a class="dropdown-item" href="{{ route('ajuan-peminjaman-anggota') }}">Ajuan
-                                                Peminjaman</a></li>
-                                        <li><a class="dropdown-item"
-                                                href="{{ route('sukses-peminjaman-anggota') }}">History Peminjaman</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center dropdown">
-                                    <a href="#" class="nav-link text-black p-0 dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-expanded="false">Pengembalian</a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-                                        <li><a class="dropdown-item" href="{{ route('pengembalian-buku') }}">Belum
-                                                Kembali</a></li>
-                                        <li><a class="dropdown-item"
-                                                href="{{ route('sukses-pengembalian-buku') }}">Sukses Kembali</a></li>
-                                    </ul>
-                                </li>
-                            @endif
                             <li class="nav-item d-flex align-items-center font-weight-bold breadcrumb-text text-black">
                                 <form method="POST" action="{{ route('logoutt') }}">
                                     @csrf
@@ -356,6 +140,10 @@
                                     <li><a class="dropdown-item" href="{{ route('users.profile.anggota') }}">Profile</a>
                                     </li>
                                 </ul>
+                            </li>
+                        @else
+                            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
+                                <a href="{{ route('sign-in') }}" class="nav-link text-black p-0">Login</a>
                             </li>
                         @endauth
                     </ul>

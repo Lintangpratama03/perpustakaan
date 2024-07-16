@@ -8,7 +8,7 @@
             <div class="d-flex justify-content-end mb-3">
                 <a class="btn btn-outline-dark" href="#" onclick="showCartWarning()">
                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                    Keranjang
+                    Pinjam
                     <span class="badge text-bg-danger">{{ count((array) session('cart')) }}</span>
                 </a>
 
@@ -18,7 +18,7 @@
                         @if (Auth::user()->id_posisi != 2)
                             Swal.fire({
                                 title: 'Oops!',
-                                text: 'Anda tidak memiliki hak akses untuk melihat keranjang belanja.',
+                                text: 'Anda tidak memiliki hak akses untuk melihat Pinjam belanja.',
                                 icon: 'warning',
                                 confirmButtonText: 'OK'
                             });
@@ -171,7 +171,7 @@
                                                     <div class="d-flex justify-content-end">
                                                         <a class="btn btn-outline-danger add-cart">
                                                             <i class="fas fa-plus" data-id="{{ $book->id }}"></i>
-                                                            Keranjang
+                                                            Pinjam
                                                         </a>
                                                     </div>
                                                 </div>
@@ -219,7 +219,7 @@
                 // Tampilkan konfirmasi SweetAlert2
                 Swal.fire({
                     title: 'Konfirmasi',
-                    text: 'Apakah Anda yakin ingin menambahkan buku ini ke keranjang?',
+                    text: 'Apakah Anda yakin ingin meminjam buku ini?',
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: 'Ya, Tambahkan',
@@ -233,7 +233,7 @@
                 // Pengguna bukan anggota (posisi selain 2)
                 Swal.fire({
                     title: 'Oops!',
-                    text: 'Anda tidak memiliki hak akses untuk menambahkan buku ke keranjang.',
+                    text: 'Anda tidak memiliki hak akses untuk menambahkan buku ke Pinjam.',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                 });
@@ -259,7 +259,7 @@
                 },
                 success: function(response) {
                     Swal.fire({
-                        title: 'Berhasil Masuk Keranjang!',
+                        title: 'Berhasil Masuk Pinjam!',
                         text: response.message,
                         icon: 'success',
                         timer: 1000,

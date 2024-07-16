@@ -55,6 +55,6 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('sign-in');
     }
 }

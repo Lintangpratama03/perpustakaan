@@ -36,7 +36,7 @@ use App\Http\Controllers\UserUpgradeController;
 // Guest Routes
 Route::middleware('guest')->group(function () {
     Route::get('/', function () {
-        return redirect('/sign-in');
+        return redirect('/anggota/dashboard-anggota');
     });
 
     Route::get('/sign-up', [RegisterController::class, 'create'])
@@ -67,18 +67,19 @@ Route::middleware('guest')->group(function () {
 });
 
 
+
 Route::prefix('anggota')->group(function () {
+    Route::prefix('dashboard-anggota')->group(function () {
+        Route::get('/', [DashboardController::class, 'index_anggota'])->name('dashboard-anggota');
+        Route::post('/kunjungan', [DashboardController::class, 'storeKunjungan'])->name('kunjungan.store');
+        Route::get('/get-kunjungan-umum', [DashboardController::class, 'getKunjunganData'])->name('kunjungan.dashboard.umum');
+    });
+    Route::prefix('buku')->group(function () {
+        Route::get('/', [BukuAnggotaController::class, 'index'])->name('buku-anggota');
+        Route::get('/add-book/{id}', [BukuAnggotaController::class, 'addBooktoCart'])->name('addbook.to.cart');
+    });
     Route::middleware(['auth', 'check.last.activity'])->group(function () {
         Route::middleware(['posisi:2,3'])->group(function () {
-            Route::prefix('dashboard-anggota')->group(function () {
-                Route::get('/', [DashboardController::class, 'index_anggota'])->name('dashboard-anggota');
-                Route::post('/kunjungan', [DashboardController::class, 'storeKunjungan'])->name('kunjungan.store');
-                Route::get('/get-kunjungan-umum', [DashboardController::class, 'getKunjunganData'])->name('kunjungan.dashboard.umum');
-            });
-            Route::prefix('buku')->group(function () {
-                Route::get('/', [BukuAnggotaController::class, 'index'])->name('buku-anggota');
-                Route::get('/add-book/{id}', [BukuAnggotaController::class, 'addBooktoCart'])->name('addbook.to.cart');
-            });
             Route::post('/logoutt', [LoginController::class, 'destroy'])->name('logoutt');
             Route::prefix('kelola-user')->group(function () {
                 Route::get('/', [ProfileAnggotaController::class, 'index_anggota'])->name('users.profile.anggota');
