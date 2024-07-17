@@ -101,8 +101,8 @@
                                     <a href="#" class="nav-link text-black p-0 dropdown-toggle"
                                         data-bs-toggle="dropdown" aria-expanded="false">Peminjaman</a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-                                        <li><a class="dropdown-item" href="{{ route('ajuan-peminjaman-anggota') }}">Ajuan
-                                                Peminjaman</a></li>
+                                        {{-- <li><a class="dropdown-item" href="{{ route('ajuan-peminjaman-anggota') }}">Ajuan
+                                                Peminjaman</a></li> --}}
                                         <li><a class="dropdown-item" href="{{ route('sukses-peminjaman-anggota') }}">History
                                                 Peminjaman</a></li>
                                     </ul>
