@@ -96,6 +96,7 @@ Route::prefix('anggota')->group(function () {
         Route::middleware(['posisi:2'])->group(function () {
             Route::prefix('shopping-cart')->group(function () {
                 Route::get('/', [BukuAnggotaController::class, 'bookCart'])->name('shopping.cart');
+                Route::get('/edit_scan', [BukuAnggotaController::class, 'edit_scan'])->name('buku.edit_scan');
                 Route::post('/checkout', [BukuAnggotaController::class, 'checkout'])->name('checkout');
                 Route::patch('/update-shopping-cart', [BukuAnggotaController::class, 'updateCart'])->name('update.sopping.cart');
                 Route::post('/delete-cart-product/{id}', [BukuAnggotaController::class, 'deleteProduct'])->name('delete.cart.product');

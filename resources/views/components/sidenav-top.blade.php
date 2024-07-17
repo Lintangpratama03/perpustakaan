@@ -130,10 +130,17 @@
                             <li class="nav-item dropdown px-3 py-3 border-radius-sm d-flex align-items-center">
                                 <a class="nav-link p-0 text-black d-flex align-items-center" href="#"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    <div class="avatar avatar-sm position-relative me-2">
-                                        <img src="../assets/img/team-2.jpg" alt="profile_image"
-                                            class="w-100 border-radius-md">
-                                    </div>
+                                    @if (Auth::user()->image)
+                                        <div class="avatar avatar-sm position-relative me-2">
+                                            <img src="{{ asset('assets/img/foto-profil/' . Auth::user()->image) }}"
+                                                class="w-100 border-radius-md" alt="profile_image">
+                                        </div>
+                                    @else
+                                        <div class="avatar avatar-sm position-relative me-2">
+                                            <img src="../assets/img/team-2.jpg" alt="profile_image"
+                                                class="w-100 border-radius-md">
+                                        </div>
+                                    @endif
                                     <span class="font-weight-bold">{{ Auth::user()->name }}</span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animated">

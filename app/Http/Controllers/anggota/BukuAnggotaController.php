@@ -4,6 +4,7 @@ namespace App\Http\Controllers\anggota;
 
 use App\Http\Controllers\Controller;
 use App\Models\buku;
+use App\Models\data;
 use App\Models\keranjang;
 use App\Models\peminjaman;
 use App\Models\penerbit;
@@ -70,7 +71,6 @@ class BukuAnggotaController extends Controller
                 "image" => $book->image
             ];
         }
-        // dd($cart);
         session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Buku Berhasil tambah ke Cart!');
     }
@@ -97,20 +97,16 @@ class BukuAnggotaController extends Controller
         }
     }
 
-
     public function checkout(Request $request)
     {
         $User = User::find(Auth::id());
-        // dd($User);
         $id_card = $User->id_card;
         $tanggalAjuan = now();
-        // $tenggatKembali = now()->addDays(7);
         try {
             $peminjaman = new peminjaman;
             $peminjaman->tanggal_ajuan = $tanggalAjuan;
-            // $peminjaman->tenggat_kembali = $tenggatKembali;
             $peminjaman->id_card = $id_card;
-            $peminjaman->status = 1;
+            $peminjaman->status = 3;
             $peminjaman->save();
 
             $ids = $request->input('ids');
@@ -135,5 +131,15 @@ class BukuAnggotaController extends Controller
         } catch (Exception $e) {
             return response()->json(['message' => 'Gagal menyimpan data. Silakan coba lagi.'], 500);
         }
+    }
+
+    public function edit_scan(Request $request)
+    {
+        $scan = data::select('data.value', 'users.name')
+            ->leftJoin('users', 'data.value', '=', 'users.id_card')
+            ->orderBy('data.created_at', 'desc')
+            ->first();
+        // dd($scan);
+        return response()->json($scan);
     }
 }
