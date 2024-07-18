@@ -26,7 +26,7 @@
                         <div class="card-body text-start p-4 w-100">
                             <h3 class="text-white mb-2">SELAMAT DATANG DI PERPUSTAKAAN SMPN 1 LAWANG 🔥</h3>
                             <p class="mb-4 font-weight-semibold">
-                                Silahkan Absen Terlebih Dahulu !!!
+
                             </p>
                             @auth
                                 <button type="button"
